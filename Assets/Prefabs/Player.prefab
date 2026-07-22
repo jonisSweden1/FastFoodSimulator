@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8219988594806824334}
   - component: {fileID: 8649995202418447580}
   - component: {fileID: 4718680010650104891}
+  - component: {fileID: 5433680357425520939}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -204,6 +205,20 @@ MonoBehaviour:
   crouchHeightCameraOffset: 1
   playerInput: {fileID: 0}
   characterController: {fileID: 0}
+--- !u!114 &5433680357425520939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6018303803822000623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd546448885b9a4f9419cec8b96d8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  pickDistance: 5
+  playerInput: {fileID: 6791718056141417908}
 --- !u!1 &8982404771195473659
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +283,7 @@ GameObject:
   - component: {fileID: 6791718056141417908}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
