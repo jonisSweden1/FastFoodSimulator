@@ -63,8 +63,8 @@ public class PlayerPickAndDropSystem : MonoBehaviour
     {
         if (playerInput != null)
         {
-            _interactAction = null;
             _interactAction.started -= _interactAction_performed;
+            _interactAction = null;
         }
 
         currentState.ExitState(this);
