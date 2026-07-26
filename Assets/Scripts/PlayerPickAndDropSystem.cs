@@ -53,16 +53,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         if(playerInput != null)
         {
             _interactAction = playerInput.actions.FindAction("Interact");
-            _interactAction.performed += _interactAction_performed;
+            _interactAction.started += _interactAction_performed;
+
+            Debug.Log(_interactAction);
         }
-
-        currentState = nonItemState;
-        currentState.EnterState(this);
-    }
-
-    private void _interactAction_performed(InputAction.CallbackContext obj)
-    {
-        currentState.EnterButton(this);
     }
 
     private void OnDisable()
@@ -70,15 +64,15 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         if (playerInput != null)
         {
             _interactAction = null;
-            _interactAction.performed -= _interactAction_performed;
+            _interactAction.started -= _interactAction_performed;
         }
 
         currentState.ExitState(this);
     }
 
-    public void SpawnHoldItemObject(Vector3 position, Quaternion quaternion)
+    private void _interactAction_performed(InputAction.CallbackContext obj)
     {
-        Instantiate(_itemObject, position, quaternion);
+        currentState.EnterButton(this);
     }
 
     // Update is called once per frame
@@ -92,6 +86,11 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         if (dropDistance.CompareTo(DropDistance) != 0)
         {
             DropDistance = dropDistance;
+        }
+
+        if(_interactAction.WasPressedThisFrame())
+        {
+            Debug.Log("Button Works");
         }
 
         currentState.UpdateState(this);

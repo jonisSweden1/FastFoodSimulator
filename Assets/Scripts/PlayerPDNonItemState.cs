@@ -7,18 +7,20 @@ public class PlayerPDNonItemState : PlayerPDBaseState
         RaycastHit hit;
         if(!Physics.Raycast(manager.transform.position, manager.transform.forward, out hit, manager.PickDistance))
         {
+            Debug.LogError($"Raycast could hit anything.");
             return;
         }
         
         if(hit.collider.gameObject == null)
         {
+            Debug.LogError($"Object couldn't be found");
             return;
         }
 
         if(hit.collider.tag == "Item")
         {
             manager.ItemObject = hit.collider.gameObject;
-            GameObject.Destroy(manager.ItemObject);
+            manager.ItemObject.SetActive(false);
             manager.SwitchState(manager.holdItemState);
         }
     }

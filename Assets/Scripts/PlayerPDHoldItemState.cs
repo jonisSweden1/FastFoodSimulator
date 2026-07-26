@@ -10,8 +10,9 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             return;
         }
 
-        Quaternion angle = Quaternion.FromToRotation(Vector3.up, hit.normal);
-        manager.SpawnHoldItemObject(hit.point, angle);
+        manager.ItemObject.transform.position = hit.point;
+        manager.ItemObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        manager.ItemObject.SetActive(true);
 
         manager.ItemObject = null;
 
