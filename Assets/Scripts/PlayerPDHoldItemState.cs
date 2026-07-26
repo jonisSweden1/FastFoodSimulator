@@ -2,10 +2,10 @@
 
 public class PlayerPDHoldItemState : PlayerPDBaseState
 {
-    public override void EnterButton(PlayerPickAndDropSystem manager)
+    public override void EnterButton(PlayerPickAndDropSystem manager, Transform headTransform)
     {
         RaycastHit hit;
-        if(!Physics.Raycast(manager.transform.position, manager.transform.forward, out hit, manager.DropDistance))
+        if(!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.DropDistance))
         {
             return;
         }
@@ -17,20 +17,5 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         manager.ItemObject = null;
 
         manager.SwitchState(manager.nonItemState);
-    }
-
-    public override void EnterState(PlayerPickAndDropSystem manager)
-    {
-        
-    }
-
-    public override void ExitState(PlayerPickAndDropSystem manager)
-    {
-        
-    }
-
-    public override void UpdateState(PlayerPickAndDropSystem manager)
-    {
-        
     }
 }

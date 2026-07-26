@@ -3,8 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerPickAndDropSystem : MonoBehaviour
 {
-    PlayerPDBaseState currentState;
+    public bool HasObjectHold { get; private set; }
 
+    public static PlayerPickAndDropSystem Instance { get; private set; }
+
+    PlayerPDBaseState currentState;
     public PlayerPDNonItemState nonItemState { get; private set; }
     public PlayerPDHoldItemState holdItemState { get; private set; }
 
@@ -32,12 +35,19 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     [SerializeField] private float dropDistance = 10;
 
-    [SerializeField] private PlayerInput playerInput;
-    InputAction _interactAction;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Singleton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         nonItemState = new PlayerPDNonItemState();
         holdItemState = new PlayerPDHoldItemState();
 
@@ -45,34 +55,20 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         DropDistance = dropDistance;
 
         currentState = nonItemState;
-        currentState.EnterState(this);
     }
 
-    private void OnEnable()
+    public void TryPickOrDropAction(Transform headTransform)
     {
-        if(playerInput != null)
+        currentState.EnterButton(this, headTransform);
+
+        if(currentState == holdItemState)
         {
-            _interactAction = playerInput.actions.FindAction("Interact");
-            _interactAction.started += _interactAction_performed;
-
-            Debug.Log(_interactAction);
+            HasObjectHold = true;
         }
-    }
-
-    private void OnDisable()
-    {
-        if (playerInput != null)
+        else if(currentState == nonItemState)
         {
-            _interactAction.started -= _interactAction_performed;
-            _interactAction = null;
+            HasObjectHold = false;
         }
-
-        currentState.ExitState(this);
-    }
-
-    private void _interactAction_performed(InputAction.CallbackContext obj)
-    {
-        currentState.EnterButton(this);
     }
 
     // Update is called once per frame
@@ -87,22 +83,12 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         {
             DropDistance = dropDistance;
         }
-
-        if(_interactAction.WasPressedThisFrame())
-        {
-            Debug.Log("Button Works");
-        }
-
-        currentState.UpdateState(this);
     }
 
     public void SwitchState(PlayerPDBaseState state)
     {
-        state.ExitState(this);
         currentState = state;
 
         Debug.Log($"Switched to {state}");
-
-        currentState.EnterState(this);
     }
 }

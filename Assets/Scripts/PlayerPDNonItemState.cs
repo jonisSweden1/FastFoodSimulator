@@ -2,10 +2,10 @@
 
 public class PlayerPDNonItemState : PlayerPDBaseState
 {
-    public override void EnterButton(PlayerPickAndDropSystem manager)
+    public override void EnterButton(PlayerPickAndDropSystem manager, Transform headTransform)
     {
         RaycastHit hit;
-        if(!Physics.Raycast(manager.transform.position, manager.transform.forward, out hit, manager.PickDistance))
+        if(!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.PickDistance))
         {
             Debug.LogError($"Raycast could hit anything.");
             return;
@@ -19,24 +19,9 @@ public class PlayerPDNonItemState : PlayerPDBaseState
 
         if(hit.collider.tag == "Item")
         {
-            manager.ItemObject = hit.collider.gameObject;
+            manager.ItemObject = hit.collider.transform.parent.gameObject;
             manager.ItemObject.SetActive(false);
             manager.SwitchState(manager.holdItemState);
         }
-    }
-
-    public override void EnterState(PlayerPickAndDropSystem manager)
-    {
-        
-    }
-
-    public override void ExitState(PlayerPickAndDropSystem manager)
-    {
-        
-    }
-
-    public override void UpdateState(PlayerPickAndDropSystem manager)
-    {
-        
     }
 }
