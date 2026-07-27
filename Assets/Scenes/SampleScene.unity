@@ -165,7 +165,19 @@ MonoBehaviour:
   maxTimeToActivate: 4
   eventHandler:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8666445386043383311}
+        m_TargetAssemblyTypeName: PaperActivationBurgerStack, Assembly-CSharp
+        m_MethodName: AddBottomBun
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &143136460
 Transform:
   m_ObjectHideFlags: 0
@@ -1058,6 +1070,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 897eb62f518b49f4599daa3cb913cc58, type: 3}
+--- !u!114 &8666445386043383311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8640187967046747863, guid: 897eb62f518b49f4599daa3cb913cc58, type: 3}
+  m_PrefabInstance: {fileID: 8666445386043383310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668e7ac69ddf1b949a7aa46798aa4b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
