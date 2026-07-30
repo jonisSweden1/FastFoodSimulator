@@ -5,25 +5,15 @@ public class BurgerSystem : MonoBehaviour
 {
     private int currentStackIndex = -1;
 
-    private List<GameObject> _burgerStack;
-
-    private GameObject _currentStacked;
-    private GameObject _previousStacked;
+    private GameObject[] _burgerStack;
 
     private bool _canStackBurger = false;
 
     private Transform _topPointBun;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _topPointBun = transform.GetChild(1);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ActivateBurgerStack()
@@ -35,17 +25,22 @@ public class BurgerSystem : MonoBehaviour
     {
         if(_canStackBurger)
         {
-            if(_currentStacked != null)
+            GameObject instance;
+
+            if(currentStackIndex > -1)
             {
-                Instantiate(burgerItem, _currentStacked.transform.GetChild(1).position, Quaternion.identity, transform);
+                instance = Instantiate(burgerItem, _burgerStack[currentStackIndex].transform.GetChild(1).position, Quaternion.identity, transform);
+                Debug.Log("Added");
             }
             else
             {
-                Instantiate(burgerItem, _topPointBun.position, Quaternion.identity, transform);
+                instance = Instantiate(burgerItem, _topPointBun.position, Quaternion.identity, transform);
+                Debug.Log("Added on the top of the bottom bun");
             }
 
-            _burgerStack.Add(burgerItem);
-            _currentStacked = burgerItem;
+            currentStackIndex++;
+            _burgerStack[currentStackIndex] = instance;
+            
 
             if(type == TypeOfBurgerStack.TopBun)
             {
@@ -58,21 +53,19 @@ public class BurgerSystem : MonoBehaviour
     {
         if (_canStackBurger)
         {
-            if( _currentStacked != null)
-            {
-
-            }
+            _burgerStack[currentStackIndex] = null;
+            currentStackIndex--;
         }
     }
 
     public GameObject[] ListAllStackedItemsInBurger()
     {
-        return _burgerStack.ToArray();
+        return _burgerStack;
     }
+}
 
-    public enum TypeOfBurgerStack
-    {
-        Vegetable,
-        TopBun
-    }
+public enum TypeOfBurgerStack
+{
+    Vegetable,
+    TopBun
 }
