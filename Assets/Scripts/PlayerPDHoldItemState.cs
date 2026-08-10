@@ -10,6 +10,13 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             return;
         }
 
+        if(hit.collider.tag == "Item")
+        {
+            Transform item = hit.collider.transform.parent;
+
+            
+        }
+
         manager.ItemObject.transform.position = hit.point;
         manager.ItemObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
         manager.ItemObject.SetActive(true);

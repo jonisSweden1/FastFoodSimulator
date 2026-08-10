@@ -66,6 +66,7 @@ public class BurgerSystem : MonoBehaviour
 
 public enum TypeOfBurgerStack
 {
-    Vegetable,
+    Patty,
+    Vegetables,
     TopBun
 }
