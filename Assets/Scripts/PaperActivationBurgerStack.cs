@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class PaperActivationBurgerStack : MonoBehaviour
 {
-    [SerializeField] private GameObject bottomBun;
-
-    public void AddBottomBun()
+    public void AddBottomBun(Transform bottomBunItem)
     {
-        if (bottomBun != null)
+        bottomBunItem.position = transform.position;
+        bottomBunItem.parent = transform;
+
+        BurgerSystem burgerSystem;
+
+        if (bottomBunItem.TryGetComponent<BurgerSystem>(out burgerSystem))
         {
-            GameObject instance = Instantiate(bottomBun, transform.position, Quaternion.identity, transform);
-
-            BurgerSystem burgerSystemInInstance;
-
-            if(instance.TryGetComponent<BurgerSystem>(out burgerSystemInInstance))
-            {
-                burgerSystemInInstance.ActivateBurgerStack();
-            }
+            burgerSystem.ActivateBurgerStack();
         }
     }
 }

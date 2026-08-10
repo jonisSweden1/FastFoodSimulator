@@ -25,24 +25,24 @@ public class BurgerSystem : MonoBehaviour
     {
         if(_canStackBurger)
         {
-            GameObject instance;
-
             if(currentStackIndex > -1)
             {
-                instance = Instantiate(burgerItem, _burgerStack[currentStackIndex].transform.GetChild(1).position, Quaternion.identity, transform);
+                burgerItem.transform.position = _burgerStack[currentStackIndex].transform.GetChild(1).position;
                 Debug.Log("Added");
             }
             else
             {
-                instance = Instantiate(burgerItem, _topPointBun.position, Quaternion.identity, transform);
+                burgerItem.transform.position = _topPointBun.position;
                 Debug.Log("Added on the top of the bottom bun");
             }
 
+            burgerItem.transform.parent = transform;
+
             currentStackIndex++;
-            _burgerStack[currentStackIndex] = instance;
+            _burgerStack[currentStackIndex] = burgerItem;
             
 
-            if(type == TypeOfBurgerStack.TopBun)
+            if(burgerItem.GetComponent<ItemIdentifier>().CurrentType == TypeOfItem.TopBun)
             {
                 _canStackBurger = false;
             }
@@ -67,6 +67,5 @@ public class BurgerSystem : MonoBehaviour
 public enum TypeOfBurgerStack
 {
     Patty,
-    Vegetables,
-    TopBun
+    Vegetables
 }

@@ -14,7 +14,24 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         {
             Transform item = hit.collider.transform.parent;
 
-            
+            if(item.TryGetComponent<ItemIdentifier>(out ItemIdentifier identifier))
+            {
+                if(identifier.CurrentType == TypeOfItem.Paper)
+                {
+                    if(manager.ItemObject.GetComponent<ItemIdentifier>().CurrentType == TypeOfItem.BottomBun)
+                    {
+                        item.GetComponent<PaperActivationBurgerStack>().AddBottomBun(manager.ItemObject.transform);
+                        manager.ItemObject.SetActive(true);
+                        manager.ItemObject = null;
+                        manager.SwitchState(manager.nonItemState);
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
         }
 
         manager.ItemObject.transform.position = hit.point;
