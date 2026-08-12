@@ -14,10 +14,19 @@ public class ItemIdentifier : MonoBehaviour
     [SerializeField] private TypeOfItem currentType;
     [SerializeField] private TypeOfBurgerStack currentBurgerType;
 
-    public void HasAddedBurgerItemToStack(GameObject bottomBun)
+    public void AddBurgerItemToStack(GameObject bottomBun)
     {
         _isBurgerStacked = true;
         _bottomBun = bottomBun;
+    }
+
+    public void RemoveBurgerItemFromStack()
+    {
+        if(_bottomBun != null)
+        {
+            _bottomBun = null;
+            _isBurgerStacked = false;
+        }
     }
 }
 

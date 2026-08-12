@@ -33,7 +33,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                     if (holdItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun)
                     {
                         raycastItem.GetComponent<PaperActivationBurgerStack>().AddBottomBun(holdItem);
-                        holdItemId.HasAddedBurgerItemToStack(holdItem.gameObject);
+                        holdItemId.AddBurgerItemToStack(holdItem.gameObject);
                         manager.ItemObject.SetActive(true);
                         manager.ItemObject = null;
                         manager.SwitchState(manager.nonItemState);
@@ -52,7 +52,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         GameObject bottomBun = raycastItemId.BottomBun;
 
                         bottomBun.GetComponent<BurgerSystem>().AddItemToBurger(holdItem);
-                        holdItemId.HasAddedBurgerItemToStack(bottomBun);
+                        holdItemId.AddBurgerItemToStack(bottomBun);
                         manager.ItemObject.SetActive(true);
                         manager.ItemObject = null;
                         manager.SwitchState(manager.nonItemState);

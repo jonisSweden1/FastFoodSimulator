@@ -56,7 +56,7 @@ public class BurgerSystem : MonoBehaviour
 
             currentStackIndex++;
             _burgerStack.Add(burgerItem.gameObject);
-            burgerItemId.HasAddedBurgerItemToStack(gameObject);
+            burgerItemId.AddBurgerItemToStack(gameObject);
 
             if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
             {
