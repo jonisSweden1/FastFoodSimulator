@@ -7,6 +7,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     public static PlayerPickAndDropSystem Instance { get; private set; }
 
+    // State Machine
     PlayerPDBaseState currentState;
     public PlayerPDNonItemState nonItemState { get; private set; }
     public PlayerPDHoldItemState holdItemState { get; private set; }
@@ -31,6 +32,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     private GameObject _itemObject;
 
+    // Can be set in the inspector, but can also be changed at runtime
     [SerializeField] private float pickDistance = 5;
 
     [SerializeField] private float dropDistance = 10;

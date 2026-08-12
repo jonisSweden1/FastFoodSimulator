@@ -16,8 +16,8 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             Transform raycastItem = hit.collider.transform.parent;
             Transform holdItem = manager.ItemObject.transform;
 
-            Debug.Log("Raycast hit item: " + raycastItem.name);
-            Debug.Log("Held item: " + holdItem.name);
+            //Debug.Log("Raycast hit item: " + raycastItem.name);
+            //Debug.Log("Held item: " + holdItem.name);
 
             // Get the ItemIdentifier components of both the raycasted item and the held item
             ItemIdentifier raycastItemId = raycastItem.GetComponent<ItemIdentifier>();
@@ -51,7 +51,9 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                     {
                         GameObject bottomBun = raycastItemId.BottomBun;
 
-                        bottomBun.GetComponent<BurgerSystem>().AddItemToBurger(holdItem);
+                        if(!bottomBun.GetComponent<BurgerSystem>().AddItemToBurger(holdItem))
+                            return;
+                        
                         holdItemId.AddBurgerItemToStack(bottomBun);
                         manager.ItemObject.SetActive(true);
                         manager.ItemObject = null;
@@ -68,8 +70,12 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         manager.ItemObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
         manager.ItemObject.SetActive(true);
 
+        Debug.Log("Dropped item at: " + hit.point);
+
         manager.ItemObject = null;
 
         manager.SwitchState(manager.nonItemState);
+
+        
     }
 }

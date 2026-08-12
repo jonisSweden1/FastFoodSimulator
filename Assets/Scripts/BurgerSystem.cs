@@ -28,7 +28,7 @@ public class BurgerSystem : MonoBehaviour
         _canStackBurger = false;
     }
 
-    public void AddItemToBurger(Transform burgerItem)
+    public bool AddItemToBurger(Transform burgerItem)
     {
         if(_canStackBurger)
         {
@@ -37,7 +37,7 @@ public class BurgerSystem : MonoBehaviour
             if(burgerItemId.CurrentType != TypeOfItem.BurgerItem)
             {
                 Debug.Log("This item is not a burger item");
-                return;
+                return false;
             }
 
             if (currentStackIndex > -1)
@@ -62,16 +62,35 @@ public class BurgerSystem : MonoBehaviour
             {
                 _canStackBurger = false;
             }
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("Cannot stack burger items at this time.");
+            return false;
         }
     }
 
-    public void RemoveItemFromBurger()
+    public bool RemoveItemFromBurger(out GameObject removedItem)
     {
-        if (_canStackBurger)
+        if (currentStackIndex < 0)
         {
-            _burgerStack[currentStackIndex] = null;
-            currentStackIndex--;
+            removedItem = null;
+            return false;
         }
+
+        removedItem = _burgerStack[currentStackIndex];
+        _burgerStack.RemoveAt(currentStackIndex);
+        currentStackIndex--;
+
+        // If the removed item was the top bun, allow stacking again
+        if (!_canStackBurger)
+        {
+            _canStackBurger = true;
+        }
+
+        return true;
     }
 
     public GameObject[] ListAllStackedItemsInBurger()
