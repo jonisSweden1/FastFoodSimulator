@@ -1,34 +1,34 @@
 ﻿using UnityEngine;
+using UnityEngine.Identifiers;
 
 public class PlayerPDHoldItemState : PlayerPDBaseState
 {
     public override void EnterButton(PlayerPickAndDropSystem manager, Transform headTransform)
     {
         RaycastHit hit;
-        if(!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.DropDistance))
+        if (!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.DropDistance))
         {
             return;
         }
 
-        if(hit.collider.tag == "Item")
+        if (hit.collider.tag == "Item")
         {
-            Transform item = hit.collider.transform.parent;
+            Transform raycastItem = hit.collider.transform.parent;
+            Transform holdItem = manager.ItemObject.transform;
 
-            if(item.TryGetComponent<ItemIdentifier>(out ItemIdentifier identifier))
+            ItemIdentifier raycastItemId = raycastItem.GetComponent<ItemIdentifier>();
+            ItemIdentifier holdItemId = holdItem.GetComponent<ItemIdentifier>();
+
+            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
-                if(identifier.CurrentType == TypeOfItem.Paper)
+                if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
                 {
-                    if(manager.ItemObject.GetComponent<ItemIdentifier>().CurrentType == TypeOfItem.BottomBun)
+                    if (holdItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun)
                     {
-                        item.GetComponent<PaperActivationBurgerStack>().AddBottomBun(manager.ItemObject.transform);
+                        raycastItem.GetComponent<PaperActivationBurgerStack>().AddBottomBun(holdItem);
                         manager.ItemObject.SetActive(true);
-                        manager.ItemObject = null;
-                        manager.SwitchState(manager.nonItemState);
-                        return;
-                    }
-                    else
-                    {
-                        return;
+
+                        raycastItemId.HasAddedBurgerItemToStack(holdItem.gameObject);
                     }
                 }
             }

@@ -5,7 +5,7 @@ public class BurgerSystem : MonoBehaviour
 {
     private int currentStackIndex = -1;
 
-    private GameObject[] _burgerStack;
+    private List<GameObject> _burgerStack;
 
     private bool _canStackBurger = false;
 
@@ -13,6 +13,8 @@ public class BurgerSystem : MonoBehaviour
 
     void Start()
     {
+        _burgerStack = new List<GameObject>();
+
         _topPointBun = transform.GetChild(1);
     }
 
@@ -21,13 +23,27 @@ public class BurgerSystem : MonoBehaviour
         _canStackBurger = true;
     }
 
-    public void AddItemToBurger(GameObject burgerItem, TypeOfBurgerStack type)
+    public void DeactivateBurgerStack()
+    {
+        _canStackBurger = false;
+    }
+
+    public void AddItemToBurger(Transform burgerItem)
     {
         if(_canStackBurger)
         {
-            if(currentStackIndex > -1)
+            ItemIdentifier burgerItemId = burgerItem.GetComponent<ItemIdentifier>();
+
+            if(burgerItemId.CurrentType != TypeOfItem.BurgerItem)
             {
-                burgerItem.transform.position = _burgerStack[currentStackIndex].transform.GetChild(1).position;
+                Debug.Log("This item is not a burger item");
+                return;
+            }
+
+            if (currentStackIndex > -1)
+            {
+                burgerItem.position = _burgerStack[currentStackIndex].transform.GetChild(1).position;
+                Debug.Log(_burgerStack[currentStackIndex].transform.GetChild(1));
                 Debug.Log("Added");
             }
             else
@@ -39,10 +55,10 @@ public class BurgerSystem : MonoBehaviour
             burgerItem.transform.parent = transform;
 
             currentStackIndex++;
-            _burgerStack[currentStackIndex] = burgerItem;
-            
+            _burgerStack.Add(burgerItem.gameObject);
+            burgerItemId.HasAddedBurgerItemToStack(gameObject);
 
-            if(burgerItem.GetComponent<ItemIdentifier>().CurrentType == TypeOfItem.TopBun)
+            if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
             {
                 _canStackBurger = false;
             }
@@ -60,12 +76,15 @@ public class BurgerSystem : MonoBehaviour
 
     public GameObject[] ListAllStackedItemsInBurger()
     {
-        return _burgerStack;
+        return _burgerStack.ToArray();
     }
 }
 
 public enum TypeOfBurgerStack
 {
     Patty,
-    Vegetables
+    Vegetables,
+    Paper,
+    BottomBun,
+    TopBun,
 }
