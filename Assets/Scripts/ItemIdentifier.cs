@@ -16,7 +16,7 @@ public class ItemIdentifier : MonoBehaviour
 
     public void HasAddedBurgerItemToStack(GameObject bottomBun)
     {
-        _isBurgerStacked |= (bottomBun != null);
+        _isBurgerStacked = true;
         _bottomBun = bottomBun;
     }
 }

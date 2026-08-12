@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: currentType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5311849325791977331, guid: 2eadc5649262719439283aa9e2920928, type: 3}
+      propertyPath: currentBurgerType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6914458099184048282, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.84572
@@ -144,4 +148,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668e7ac69ddf1b949a7aa46798aa4b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  bottomBun: {fileID: 2936898395359868219, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}

@@ -87,4 +87,5 @@ public enum TypeOfBurgerStack
     Paper,
     BottomBun,
     TopBun,
+    Sauce,
 }
