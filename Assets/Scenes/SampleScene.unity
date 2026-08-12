@@ -460,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_Name
-      value: BurgerStackItem (1)
+      value: VegetableItem (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -995,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_Name
-      value: BurgerStackItem (2)
+      value: VegetableItem (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1202,7 +1202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_Name
-      value: BurgerStackItem
+      value: PattyItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
