@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ItemIdentifier : MonoBehaviour
 {
+    // This is a data class that will be used to identify the type of item and the type of burger stack it belongs to.
     public TypeOfItem CurrentType { get { return currentType; } }
     public TypeOfBurgerStack CurrentBurgerType { get { return currentBurgerType; } }
 
