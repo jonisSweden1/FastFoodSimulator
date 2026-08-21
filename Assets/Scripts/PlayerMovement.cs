@@ -1,5 +1,4 @@
 using System;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        // Enable the PlayerInput components action map when the script is enabled
         playerInput = GetComponent<PlayerInput>();
         playerInput.currentActionMap?.Enable();
 
