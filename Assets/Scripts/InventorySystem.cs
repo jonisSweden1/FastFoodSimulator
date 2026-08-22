@@ -57,6 +57,8 @@ public class InventorySystem : MonoBehaviour
     // This is to take a stored item in the inventory, and use it for the player to pick up
     public void TakeStoredItemFromInventory(InventorySlot itemSlot)
     {
+        Debug.Log("Method called");
+
         GameObject storedItem;
 
         if (_inventorySlots.Contains(itemSlot))
