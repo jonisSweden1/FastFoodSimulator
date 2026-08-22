@@ -15,6 +15,8 @@ public class ShowInventoryHandler : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _showInventoryAction = _playerInput.actions.FindAction("Show Inventory");
 
+        Debug.Log(_showInventoryAction);
+
         _showInventoryAction.started += _showInventoryAction_started;
     }
 
@@ -27,12 +29,32 @@ public class ShowInventoryHandler : MonoBehaviour
     {
         if (!_hasInventoryShowed)
         {
+            Debug.Log("Show Inventory");
+
             UserInterfaceManager.instance.GoToMenu(0); // Assuming 0 is the index of the inventory menu
+
+            _playerInput.SwitchCurrentActionMap("UI");
+            _showInventoryAction =_playerInput.currentActionMap.FindAction("Show Inventory");
+            _showInventoryAction.started += _showInventoryAction_started;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             _hasInventoryShowed = true;
         }
         else
         {
+            Debug.Log("Not showing inventory");
+
             UserInterfaceManager.instance.CloseMenu();
+
+            _playerInput.SwitchCurrentActionMap("Player");
+            _showInventoryAction = _playerInput.currentActionMap.FindAction("Show Inventory");
+            _showInventoryAction.started += _showInventoryAction_started;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             _hasInventoryShowed = false;
         }
     }
