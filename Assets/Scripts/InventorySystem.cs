@@ -8,6 +8,8 @@ public class InventorySystem : MonoBehaviour
 {
     private List<InventorySlot> _inventorySlots;
 
+    private int currentAvailableSlotIndex;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,13 +32,15 @@ public class InventorySystem : MonoBehaviour
         
     }
 
-    public void AddStoredItemToInventory(InventorySlot itemSlot, GameObject itemToStore)
+    public void AddStoredItemToInventory(GameObject itemToStore)
     {
         if (itemToStore != null)
         {
-            if (_inventorySlots.Contains(itemSlot))
+            if(currentAvailableSlotIndex < _inventorySlots.Count)
             {
-
+                itemToStore.SetActive(false);
+                _inventorySlots[currentAvailableSlotIndex].AddItem(itemToStore);
+                currentAvailableSlotIndex++;
             }
         }
     }
@@ -50,6 +54,7 @@ public class InventorySystem : MonoBehaviour
             if(itemSlot.TryToTakeOut(out storedItem))
             {
                 Destroy(storedItem);
+                --currentAvailableSlotIndex;
             }
         }
     }
