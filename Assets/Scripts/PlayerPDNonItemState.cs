@@ -53,9 +53,9 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             }
 
             // If the item that is raycasted is a bottom bun, we need to deactivate the burger stack system of the item, so that it can be picked up and held by the player.
-            if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun)
+            if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun && raycastItemObject.transform.parent != null)
             {
-                raycastItemObject.GetComponent<BurgerSystem>().DeactivateBurgerStack();
+                raycastItemObject.transform.parent.GetComponent<PaperActivationBurgerStack>().RemoveBottomBun();
             }
 
             manager.ItemObject = raycastItemObject;

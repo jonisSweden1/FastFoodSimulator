@@ -25,6 +25,8 @@ public class PaperActivationBurgerStack : MonoBehaviour
     {
         if (_bottomBunItem != null)
         {
+            _bottomBunItem.SetParent(null, true);
+
             BurgerSystem burgerSystem;
 
             if(!_bottomBunItem.TryGetComponent<BurgerSystem>(out burgerSystem))

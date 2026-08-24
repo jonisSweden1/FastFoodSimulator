@@ -81,6 +81,7 @@ public class BurgerSystem : MonoBehaviour
         }
 
         removedItem = _burgerStack[currentStackIndex];
+        removedItem.transform.SetParent(null, true);
         _burgerStack.RemoveAt(currentStackIndex);
         currentStackIndex--;
 
