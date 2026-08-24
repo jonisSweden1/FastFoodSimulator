@@ -22,12 +22,19 @@ public class InventorySystem : MonoBehaviour
 
         foreach (InventorySlot item in inventorySlots)
         {
+            // Later on, this will be integrated with the pick and drop system.
+            // In this feature, the object that the player is holding will determine which item will be placed, and which item can take out.
             item.gameObject.GetComponent<Button>().onClick.AddListener(() => TakeStoredItemFromInventory(item));
         }
     }
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    public void TakeOrAddItemToTheInventory(InventorySlot itemSlot, GameObject itemToStore)
     {
         
     }
