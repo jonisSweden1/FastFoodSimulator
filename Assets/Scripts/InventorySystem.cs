@@ -6,6 +6,9 @@ using UnityEngine.UI;
 // This script is in charge of handling the slots of item and updating UI in the inventory.
 public class InventorySystem : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _inventoryParent;
+
     private List<InventorySlot> _inventorySlots;
 
     private int currentAvailableSlotIndex;
@@ -13,18 +16,18 @@ public class InventorySystem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Transform inventoryParent = transform.GetChild(0);
-
-        InventorySlot[] inventorySlots = inventoryParent.GetComponentsInChildren<InventorySlot>();
+        InventorySlot[] inventorySlots = _inventoryParent.GetComponentsInChildren<InventorySlot>();
 
         _inventorySlots = new List<InventorySlot>();
         _inventorySlots.AddRange(inventorySlots.Select(item => item.GetComponent<InventorySlot>()));
+
+        Debug.Log("Inventory Slots Count: " + _inventorySlots.Count);
 
         foreach (InventorySlot item in inventorySlots)
         {
             // Later on, this will be integrated with the pick and drop system.
             // In this feature, the object that the player is holding will determine which item will be placed, and which item can take out.
-            item.gameObject.GetComponent<Button>().onClick.AddListener(() => TakeStoredItemFromInventory(item));
+            item.gameObject.GetComponent<Button>().onClick.AddListener(() => TakeStoredItemFromInventory(item, out GameObject storedItem));
         }
     }
 
@@ -41,6 +44,7 @@ public class InventorySystem : MonoBehaviour
         
     }
 
+    // This method is to add an item to the inventory, and store it in the inventory slot.
     public void AddStoredItemToInventory(GameObject itemToStore)
     {
         if (itemToStore != null)
@@ -69,17 +73,20 @@ public class InventorySystem : MonoBehaviour
     }
 
     // This is to take a stored item in the inventory, and use it for the player to pick up
-    public void TakeStoredItemFromInventory(InventorySlot itemSlot)
+    public void TakeStoredItemFromInventory(InventorySlot itemSlot, out GameObject storedItem)
     {
         Debug.Log("Method called");
 
-        GameObject storedItem;
+        storedItem = null;
 
         if (_inventorySlots.Contains(itemSlot))
         {
+            Debug.Log("Item slot is in the inventory");
+
             if(itemSlot.TryToTakeOut(out storedItem))
             {
                 // Add logic to integrate with Pick and Drop system
+                --currentAvailableSlotIndex;
             }
         }
     }

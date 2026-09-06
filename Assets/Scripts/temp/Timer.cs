@@ -16,9 +16,6 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private UnityEvent onTimerComplete;
 
-    [SerializeField]
-    private GameObject prefabObject;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
