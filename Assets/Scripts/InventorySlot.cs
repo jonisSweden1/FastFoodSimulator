@@ -24,6 +24,10 @@ public class InventorySlot : MonoBehaviour
         {
             item = _itemInSlot;
             _itemInSlot = null;
+
+            // Change the color of the button to white to indicate that the slot is empty
+            GetComponent<Button>().image.color = Color.white;
+
             return true;
         }
 
@@ -45,6 +49,10 @@ public class InventorySlot : MonoBehaviour
         if(_itemInSlot == null)
         {
             _itemInSlot = item;
+
+            // Change the color of the button to red to indicate that the slot is occupied
+            // Later on, this will be changed to the sprite of the item that is in the slot.
+            GetComponent<Button>().image.color = Color.red;
         }
         else
         {
