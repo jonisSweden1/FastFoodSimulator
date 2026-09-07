@@ -1,16 +1,14 @@
+using System;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void RefreshUI()
     {
-        
-    }
+        Transform collection = transform.GetChild(0);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        InventorySlot[] uiSlots = collection.GetComponentsInChildren<InventorySlot>();
+
+
     }
 }

@@ -13,6 +13,9 @@ public class InventorySystem : MonoBehaviour
 
     private List<InventorySlot> _inventorySlots;
 
+    [SerializeField]
+    private InventoryUI _inventoryUI;
+
     private int currentAvailableSlotIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,14 +35,14 @@ public class InventorySystem : MonoBehaviour
             item.Initialize();
 
             item.gameObject.GetComponent<Button>().onClick.AddListener(() => TakeStoredItemFromInventory(item, out GameObject storedItem));
-
-            item.SetSlotIndex(i);
         }
 
-        List<int> unsortedGameObjects = new List<int>();
+        _inventorySlots = inventorySlots
+            .OrderBy(slot => slot.CheckIfItemInSlot() ? 1 : 0)
+            .ToList();
 
-        List<GameObject> storedItems = new List<GameObject>();
-
+        if (_inventoryUI != null)
+            _inventoryUI.RefreshUI();
 
         Debug.Log("Calling SortItemsInInventory() from Start() method");
     }

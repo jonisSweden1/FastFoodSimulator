@@ -54,6 +54,27 @@ public class InventorySlot : MonoBehaviour
         return false;
     }
 
+    public void ClearItem()
+    {
+        if (_itemInSlot != null)
+        {
+            _itemInSlot = null;
+            // Change the color of the button to white to indicate that the slot is empty
+            GetComponent<Image>().color = Color.white;
+        }
+    }
+
+    public bool TryPeek(out GameObject item)
+    {
+        if (_itemInSlot != null)
+        {
+            item = _itemInSlot;
+            return true;
+        }
+        item = null;
+        return false;
+    }
+
     public void SetSlotIndex(int index)
     {
         SlotIndex = index;
