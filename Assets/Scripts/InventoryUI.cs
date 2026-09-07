@@ -8,7 +8,5 @@ public class InventoryUI : MonoBehaviour
         Transform collection = transform.GetChild(0);
 
         InventorySlot[] uiSlots = collection.GetComponentsInChildren<InventorySlot>();
-
-
     }
 }
