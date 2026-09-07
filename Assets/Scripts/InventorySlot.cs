@@ -4,12 +4,26 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
+    // Temporary reference to the prefab. It will be removed later on when the inventory system is fully implemented.
     [SerializeField] private GameObject _prefab;
 
     public int SlotIndex { get; private set; } = -1;
 
     // Reference to the GameObject representing the item in the slot
     private GameObject _itemInSlot;
+
+    private void OnEnable()
+    {
+        if (_itemInSlot != null)
+        {
+            GetComponent<Image>().color = Color.red; // Change the color of the button to red to indicate that the slot is occupied
+        }
+        else
+        {
+            // Change the color of the button to white to indicate that the slot is empty
+            GetComponent<Image>().color = Color.white;
+        }
+    }
 
     public void Initialize()
     {
@@ -26,9 +40,9 @@ public class InventorySlot : MonoBehaviour
         {
             item = _itemInSlot;
 
-            Debug.Log(item);
-
             _itemInSlot = null;
+
+            Debug.Log(item);
 
             // Change the color of the button to white to indicate that the slot is empty
             GetComponent<Image>().color = Color.white;
@@ -59,6 +73,7 @@ public class InventorySlot : MonoBehaviour
         if(_itemInSlot == null)
         {
             _itemInSlot = item;
+            Debug.Log("Item added to slot: " + item.name + " in slot index: " + SlotIndex);
 
             // Change the color of the button to red to indicate that the slot is occupied
             // Later on, this will be changed to the sprite of the item that is in the slot.

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 // This script is in charge of handling the slots of item and updating UI in the inventory.
 public class InventorySystem : MonoBehaviour
@@ -32,22 +33,28 @@ public class InventorySystem : MonoBehaviour
 
             item.gameObject.GetComponent<Button>().onClick.AddListener(() => TakeStoredItemFromInventory(item, out GameObject storedItem));
 
-            if(item.CheckIfItemInSlot())
-            {
-                currentAvailableSlotIndex++;
-                item.SetSlotIndex(currentAvailableSlotIndex);
-            }
+            item.SetSlotIndex(i);
         }
+
+        List<int> unsortedGameObjects = new List<int>();
+
+        List<GameObject> storedItems = new List<GameObject>();
 
 
         Debug.Log("Calling SortItemsInInventory() from Start() method");
-        StartCoroutine(SortItemsInInventory());
+    }
 
+    private void OnCoroutineDone()
+    {
         for (int i = 0; i < _inventorySlots.Count; i++)
         {
+            int slotIndex = 0;
+
             InventorySlot item = _inventorySlots[i];
             if (item.CheckIfItemInSlot())
             {
+                item.SetSlotIndex(slotIndex);
+                slotIndex++;
                 Debug.Log("Item in slot: " + item.name + " with index: " + i);
             }
         }
@@ -83,8 +90,6 @@ public class InventorySystem : MonoBehaviour
         {
             if(itemSlot.TryToTakeOut(out storedItem))
             {
-                StartCoroutine(SortItemsInInventory());
-
                 Destroy(storedItem);
                 --currentAvailableSlotIndex;
             }
@@ -104,46 +109,9 @@ public class InventorySystem : MonoBehaviour
             {
                 Debug.Log("Item taken out from inventory: " + storedItem.name);
 
-                StartCoroutine(SortItemsInInventory());
-
                 // Add logic to integrate with Pick and Drop system
                 --currentAvailableSlotIndex;
             }
-        }
-    }
-
-    // This method is to sort the items in the inventory, and update the UI accordingly.
-    private IEnumerator SortItemsInInventory()
-    {
-        // This method will be used to sort the items in the inventory, and update the UI accordingly.
-        // The sorting can be based on item type, item name, or any other criteria.
-
-        // Selection Sort Algorithm to sort the items in the inventory based on the order of the item in the slots in the inventory.
-        // The items will be sorted in ascending order based on the order of the item in the slots in the inventory.
-        for (int i = 0; i < _inventorySlots.Count; i++)
-        {
-            int min = i;
-            for (int j = i + 1; j < _inventorySlots.Count; j++)
-            {
-                if (_inventorySlots[j].SlotIndex < _inventorySlots[min].SlotIndex)
-                {
-                    min = j;
-                }
-            }
-
-            if(i != min)
-            {
-                GameObject temp;
-                GameObject temp2;
-
-                if (_inventorySlots[i].TryToTakeOut(out temp) && _inventorySlots[min].TryToTakeOut(out temp2))
-                {
-                    _inventorySlots[i].AddItem(temp2);
-                    _inventorySlots[min].AddItem(temp);
-                }
-            }
-
-            yield return null;
         }
     }
 }
