@@ -8,6 +8,12 @@ using System;
 // This script is in charge of handling the slots of item and updating UI in the inventory.
 public class InventorySystem : MonoBehaviour
 {
+    // To-Do: Add new parameter such as the maximum number of slots.
+    // This is to initialize the inventory system, and set the maximum number of slots in the inventory. 
+    // This is going to be initialized together with the InventoryUI script, and the InventorySlot script, to make sure that the inventory system is working properly.
+    [SerializeField]
+    private int _maxSlots;
+
     [SerializeField]
     private Transform _inventoryParent;
 
