@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private InventorySystem _inventorySystem;
 
-    public void RefreshUI()
+    public void RefreshUI(InventorySlot[] slots)
     {
-        int totalSlots = _inventorySystem.InventorySlots.Count;
+        int totalSlots = slots.Length;
 
         Transform collectionObject = transform.GetChild(0);
 
@@ -31,6 +32,8 @@ public class InventoryUI : MonoBehaviour
             {
                 GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
                 // You can add additional logic here to set up the slot based on the inventory data
+
+                slot.GetComponent<Button>().onClick.AddListener(() => { _inventorySystem.TryTakeOutItem(i, out GameObject item); });
             }
         }
     }

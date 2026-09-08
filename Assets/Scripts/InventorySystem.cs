@@ -14,7 +14,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField]
     private int _maxSlots;
 
-    public List<InventorySlot> InventorySlots { get; private set; } = new List<InventorySlot>();
+    private List<InventorySlot> _inventorySlots = new List<InventorySlot>();
 
     [SerializeField]
     private InventoryUI _inventoryUI;
@@ -23,17 +23,22 @@ public class InventorySystem : MonoBehaviour
 
     public void SortByName()
     {
-        InventorySlots = InventorySlots
+        _inventorySlots = _inventorySlots
             .OrderBy(slot => slot.IsEmpty)
             .ThenBy(slot => slot.ItemName)
             .ToList();
 
-        _inventoryUI.RefreshUI();
+        _inventoryUI.RefreshUI(_inventorySlots.ToArray());
+    }
+
+    public int GetMaxSlots()
+    {
+        return _maxSlots;
     }
 
     // This method is to take an item from the inventory, or add an item to the inventory.
     // This method will be integrated with the pick and drop system, where the player can pick up an item and store it in the inventory, or take an item from the inventory and use it.
-    public void TakeOrAddItemToTheInventory(InventorySlot itemSlot, ref GameObject itemToStore)
+    public void TakeOrAddItemToTheInventory(int slotIndex, ref GameObject itemToStore)
     {
         
     }
@@ -48,5 +53,20 @@ public class InventorySystem : MonoBehaviour
     public void RemoveStoredItemFromInventory(InventorySlot itemSlot)
     {
         
+    }
+
+    public bool TryTakeOutItem(int slotIndex, out GameObject itemToTakeOut)
+    {
+        itemToTakeOut = null;
+
+        if (_inventorySlots != null)
+        {
+            if(_inventorySlots[slotIndex].TryTakeItem(out itemToTakeOut))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1471,7 +1471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6a0b7613342cb449e015cba4a0678b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _inventorySystem: {fileID: 0}
+  _inventorySlotPrefab: {fileID: 2083016656357627404, guid: 87f2c436eb8f9fc4aa65351f8255709f, type: 3}
+  _inventorySystem: {fileID: 1868585795}
 --- !u!1 &1868585794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
   _maxSlots: 0
-  _inventoryUI: {fileID: 0}
+  _inventoryUI: {fileID: 1766259362}
 --- !u!4 &1868585796
 Transform:
   m_ObjectHideFlags: 0
