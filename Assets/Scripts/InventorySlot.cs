@@ -1,108 +1,45 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+[Serializable]
+public class InventorySlot
 {
-    // Temporary reference to the prefab. It will be removed later on when the inventory system is fully implemented.
-    [SerializeField] private GameObject _prefab;
+    private GameObject _itemObject;
 
-    public int SlotIndex { get; private set; } = -1;
+    public bool IsEmpty { get; private set; }
+    public string ItemName { get; private set; }
 
-    // Reference to the GameObject representing the item in the slot
-    private GameObject _itemInSlot;
-
-    private void OnEnable()
+    public InventorySlot()
     {
-        if (_itemInSlot != null)
-        {
-            GetComponent<Image>().color = Color.red; // Change the color of the button to red to indicate that the slot is occupied
-        }
-        else
-        {
-            // Change the color of the button to white to indicate that the slot is empty
-            GetComponent<Image>().color = Color.white;
-        }
+        IsEmpty = true;
+        ItemName = string.Empty;
     }
 
-    public void Initialize()
+    public void StoreItem(GameObject item)
     {
-        if (_prefab != null)
-        {
-            _itemInSlot = _prefab;
-        }
+        _itemObject = item;
+        IsEmpty = false;
+        ItemName = item.name;
     }
 
-    // Can take out item from the slot
-    public bool TryToTakeOut(out GameObject item)
+    public bool TryTakeItem(out GameObject item)
     {
-        if(_itemInSlot != null)
-        {
-            item = _itemInSlot;
-
-            _itemInSlot = null;
-
-            Debug.Log(item);
-
-            // Change the color of the button to white to indicate that the slot is empty
-            GetComponent<Image>().color = Color.white;
-
-            return true;
-        }
-
         item = null;
-        return false;
-    }
-
-    public void ClearItem()
-    {
-        if (_itemInSlot != null)
+        if (_itemObject != null)
         {
-            _itemInSlot = null;
-            // Change the color of the button to white to indicate that the slot is empty
-            GetComponent<Image>().color = Color.white;
-        }
-    }
-
-    public bool TryPeek(out GameObject item)
-    {
-        if (_itemInSlot != null)
-        {
-            item = _itemInSlot;
+            item = _itemObject;
+            _itemObject = null;
             return true;
         }
-        item = null;
         return false;
     }
 
-    public void SetSlotIndex(int index)
+    public void RemoveItem()
     {
-        SlotIndex = index;
-    }
-
-    public bool CheckIfItemInSlot()
-    {
-        if (_itemInSlot != null)
-            return true;
-
-        return false;
-    }
-
-    // Can add item, but can't be replaced
-    public void AddItem(GameObject item)
-    {
-        if(_itemInSlot == null)
-        {
-            _itemInSlot = item;
-            Debug.Log("Item added to slot: " + item.name + " in slot index: " + SlotIndex);
-
-            // Change the color of the button to red to indicate that the slot is occupied
-            // Later on, this will be changed to the sprite of the item that is in the slot.
-            GetComponent<Image>().color = Color.red;
-        }
-        else
-        {
-            Debug.LogError("There is already an item in the slot");
-        }
+        _itemObject = null;
+        IsEmpty = true;
+        ItemName = string.Empty;
     }
 }
