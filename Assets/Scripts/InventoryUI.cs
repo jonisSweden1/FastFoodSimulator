@@ -35,16 +35,22 @@ public class InventoryUI : MonoBehaviour
                 GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
 
                 slot.GetComponent<Image>().color = slots[i].IsEmpty ? Color.white : Color.red;
-
-                int indexCopy = i; // Create a copy of the index to avoid closure issues in the lambda expression
-
-                slot.GetComponent<Button>().onClick.AddListener(() =>
-                {
-                    _inventorySystem.TryTakeOutItem(indexCopy, out GameObject item);
-                });
-
-                
             }
+        }
+    }
+
+    public void SetAllButtonListener(InventorySystem inventorySystem)
+    {
+        Transform collectionObject = transform.GetChild(0);
+
+        for(int i = 0; i < collectionObject.childCount; i++)
+        {
+            int index = i;
+            Button button = collectionObject.GetChild(i).GetComponent<Button>();
+            button.onClick.AddListener(() => 
+            { 
+                inventorySystem.TryTakeOutItem(index, out GameObject itemToTakeOut);
+            });
         }
     }
 }
