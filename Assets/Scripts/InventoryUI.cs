@@ -16,14 +16,15 @@ public class InventoryUI : MonoBehaviour
 
     public void RefreshUI(InventorySlot[] slots)
     {
+        Transform collectionObject = transform.GetChild(0);
+
         int totalSlots = slots.Length;
 
-        if(_collectionObject != null)
+        if(collectionObject != null)
         {
-
-            if (_collectionObject.childCount > 0)
+            if (collectionObject.childCount > 0)
             {
-                foreach (Transform child in _collectionObject)
+                foreach (Transform child in collectionObject)
                 {
                     Destroy(child.gameObject);
                 }
@@ -31,7 +32,7 @@ public class InventoryUI : MonoBehaviour
 
             for (int i = 0; i < slots.Length; i++)
             {
-                GameObject slot = Instantiate(_inventorySlotPrefab, _collectionObject);
+                GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
 
                 slot.GetComponent<Image>().color = slots[i].IsEmpty ? Color.white : Color.red;
 

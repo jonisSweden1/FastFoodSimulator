@@ -52,7 +52,18 @@ public class InventorySystem : MonoBehaviour
     // This method will be integrated with the pick and drop system, where the player can pick up an item and store it in the inventory, or take an item from the inventory and use it.
     public void TakeOrAddItemToTheInventory(int slotIndex, ref GameObject itemToStore)
     {
-        
+        if(itemToStore == null)
+        {
+            if(TryTakeOutItem(slotIndex, out GameObject itemToTakeOut))
+            {
+                itemToStore = itemToTakeOut;
+            }
+        }
+        else
+        {
+            AddStoredItemToInventory(itemToStore);
+            itemToStore = null;
+        }
     }
 
     // This method is to add an item to the inventory, and store it in the inventory slot.
