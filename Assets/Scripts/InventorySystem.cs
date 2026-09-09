@@ -14,7 +14,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField]
     private int _maxSlots;
 
-    private List<InventorySlot> _inventorySlots = new List<InventorySlot>();
+    private InventorySlot[] _inventorySlots;
 
     [SerializeField]
     private InventoryUI _inventoryUI;
@@ -23,23 +23,24 @@ public class InventorySystem : MonoBehaviour
 
     private void Start()
     {
-        _inventorySlots.AddRange(Enumerable.Repeat(new InventorySlot(), _maxSlots));
-        SortByName();
-
-        foreach (InventorySlot slot in _inventorySlots)
+        _inventorySlots = new InventorySlot[_maxSlots];
+        for (int i = 0; i < _maxSlots; i++)
         {
-            Debug.Log(slot);
+            _inventorySlots[i] = new InventorySlot();
+            Debug.Log(_inventorySlots[i]);
         }
+        SortByName();
     }
 
     public void SortByName()
     {
         _inventorySlots = _inventorySlots
+            .ToList()
             .OrderBy(slot => slot.IsEmpty)
             .ThenBy(slot => slot.ItemName)
-            .ToList();
+            .ToArray();
 
-        _inventoryUI.RefreshUI(_inventorySlots.ToArray());
+        _inventoryUI.RefreshUI(_inventorySlots);
     }
 
     public int GetMaxSlots()
@@ -57,13 +58,29 @@ public class InventorySystem : MonoBehaviour
     // This method is to add an item to the inventory, and store it in the inventory slot.
     public void AddStoredItemToInventory(GameObject itemToStore)
     {
-        
+        if (itemToStore == null)
+        {
+            Debug.LogWarning("Item to store is null. Cannot add to inventory.");
+            return;
+        }
+
+        if(currentAvailableSlotIndex < _maxSlots)
+        {
+            _inventorySlots[currentAvailableSlotIndex].StoreItem(itemToStore, itemToStore.name);
+            currentAvailableSlotIndex++;
+            SortByName();
+        }
+        else
+        {
+            Debug.LogWarning("Inventory is full. Cannot add more items.");
+        }
     }
 
     // This method is to remove an item from the inventory, and destroy it from the inventory slot.
     public void RemoveStoredItemFromInventory(int slotIndex)
     {
         _inventorySlots[slotIndex].RemoveItem();
+        currentAvailableSlotIndex--;
         SortByName();
     }
 
@@ -77,6 +94,7 @@ public class InventorySystem : MonoBehaviour
         {
             if(_inventorySlots[slotIndex].TryTakeItem(out itemToTakeOut))
             {
+                currentAvailableSlotIndex--;
                 SortByName();
                 return true;
             }
