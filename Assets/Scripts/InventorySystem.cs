@@ -21,6 +21,17 @@ public class InventorySystem : MonoBehaviour
 
     private int currentAvailableSlotIndex = 0;
 
+    private void Start()
+    {
+        _inventorySlots.AddRange(Enumerable.Repeat(new InventorySlot(), _maxSlots));
+        SortByName();
+
+        foreach (InventorySlot slot in _inventorySlots)
+        {
+            Debug.Log(slot);
+        }
+    }
+
     public void SortByName()
     {
         _inventorySlots = _inventorySlots
@@ -50,19 +61,23 @@ public class InventorySystem : MonoBehaviour
     }
 
     // This method is to remove an item from the inventory, and destroy it from the inventory slot.
-    public void RemoveStoredItemFromInventory(InventorySlot itemSlot)
+    public void RemoveStoredItemFromInventory(int slotIndex)
     {
-        
+        _inventorySlots[slotIndex].RemoveItem();
+        SortByName();
     }
 
     public bool TryTakeOutItem(int slotIndex, out GameObject itemToTakeOut)
     {
         itemToTakeOut = null;
 
+        Debug.Log(slotIndex);
+
         if (_inventorySlots != null)
         {
             if(_inventorySlots[slotIndex].TryTakeItem(out itemToTakeOut))
             {
+                SortByName();
                 return true;
             }
         }

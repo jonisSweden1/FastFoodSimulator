@@ -33,6 +33,10 @@ public class InventoryUI : MonoBehaviour
                 GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
                 // You can add additional logic here to set up the slot based on the inventory data
 
+                Debug.Log(i);
+
+                slot.GetComponent<Image>().color = slots[i].IsEmpty ? Color.white : Color.red; // Example: Change color based on whether the slot is empty
+
                 slot.GetComponent<Button>().onClick.AddListener(() => { _inventorySystem.TryTakeOutItem(i, out GameObject item); });
             }
         }
