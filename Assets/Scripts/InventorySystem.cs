@@ -44,69 +44,40 @@ public class InventorySystem : MonoBehaviour
         _inventoryUI.SetAllButtonListener(this);
     }
 
-    public int GetMaxSlots()
-    {
-        return _maxSlots;
-    }
-
     // This method is to take an item from the inventory, or store it in the inventory slot.
     // This method is going to be called when the player pick a slot in the inventory, and the item is going to be taken out of the inventory, or stored in the inventory slot.
     // It is going to check if the GameObject item is null, and if it is not null, it is going to check if the item is already in the inventory, and if it is not, it is going to store it in the inventory slot.
-    public bool TakeOrAddItemToTheInventory(int slotIndex, ref GameObject item, out InventorySlotState state)
+    public void TakeOrAddItemToTheInventory(int slotIndex)
     {
-        if (item == null)
+        InventorySlot slot = _inventorySlots[slotIndex];
+
+        GameObject item;
+
+        if (slot != null)
         {
-            if(TryTakeOutItem(slotIndex, out item))
+            if(slot.IsEmpty)
             {
-                state = InventorySlotState.Empty;
-                return true;
+                if (PlayerPickAndDropSystem.Instance.TryTakeOutItem(out item))
+                {
+                    slot.StoreItem(item);
+                    currentAvailableSlotIndex++;
+                }
+                else
+                    return;
             }
             else
             {
-                state = InventorySlotState.Empty;
-                return false;
-            }
-        }
-        else
-        {
-            if(TryAddStoredItemToInventory(item))
-            {
-                state = InventorySlotState.Occupied;
-                return true;
-            }
-            else
-            {
-                state = InventorySlotState.Occupied;
-                return false;
-            }
-        }
-    }
+                item = slot.TakeItem();
 
-    // This method is to add an item to the inventory, and store it in the inventory slot.
-    public bool TryAddStoredItemToInventory(GameObject itemToStore)
-    {
-        if (itemToStore == null)
-        {
-            Debug.LogWarning("Item to store is null. Cannot add to inventory.");
-            return false;
-        }
+                if (PlayerPickAndDropSystem.Instance.TryPickUpItem(item))
+                {
+                    currentAvailableSlotIndex--;
+                }
+                else
+                    return;
+            }
 
-        if(currentAvailableSlotIndex > _maxSlots)
-        {
-            Debug.LogWarning("Inventory is full. Cannot add more items.");
-            return false;
-            
-        }
-
-        if(!_inventorySlots[currentAvailableSlotIndex].TryStoreItem(itemToStore, itemToStore.name))
-        {
-            return false;
-        }
-        else
-        {
-            currentAvailableSlotIndex++;
             SortByName();
-            return true;
         }
     }
 
@@ -116,25 +87,6 @@ public class InventorySystem : MonoBehaviour
         _inventorySlots[slotIndex].RemoveItem();
         currentAvailableSlotIndex--;
         SortByName();
-    }
-
-    public bool TryTakeOutItem(int slotIndex, out GameObject itemToTakeOut)
-    {
-        itemToTakeOut = null;
-
-        Debug.Log(slotIndex);
-
-        if (_inventorySlots != null)
-        {
-            if(_inventorySlots[slotIndex].TryTakeItem(out itemToTakeOut))
-            {
-                currentAvailableSlotIndex--;
-                SortByName();
-                return true;
-            }
-        }
-
-        return false;
     }
 }
 

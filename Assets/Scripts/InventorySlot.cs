@@ -17,18 +17,17 @@ public class InventorySlot
         ItemName = string.Empty;
     }
 
-    public bool TryStoreItem(GameObject item, string itemName)
+    public void StoreItem(GameObject item)
     {
-        if (!IsEmpty) { return false; }
         _itemObject = item;
         IsEmpty = false;
-        ItemName = itemName;
-        return true;
+        ItemName = item.GetComponent<ItemIdentifier>().ItemName;
     }
 
-    public bool TryTakeItem(out GameObject item)
+    public GameObject TakeItem()
     {
-        item = null;
+        GameObject item;
+
         if (_itemObject != null)
         {
             item = _itemObject;
@@ -37,9 +36,10 @@ public class InventorySlot
             ItemName = string.Empty;
             IsEmpty = true;
 
-            return true;
+            return item;
         }
-        return false;
+
+        return null;
     }
 
     public void RemoveItem()

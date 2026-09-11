@@ -87,6 +87,18 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         return false;
     }
 
+    public bool TryPickUpItem(GameObject itemToTakeUp)
+    {
+        if(currentState == nonItemState)
+        {
+            ItemObject = itemToTakeUp;
+            SwitchState(holdItemState);
+            return true;
+        }
+
+        return false;
+    }
+
     // Update is called once per frame
     void Update()
     {

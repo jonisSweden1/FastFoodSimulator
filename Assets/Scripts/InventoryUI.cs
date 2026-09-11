@@ -48,8 +48,8 @@ public class InventoryUI : MonoBehaviour
             int index = i;
             Button button = collectionObject.GetChild(i).GetComponent<Button>();
             button.onClick.AddListener(() => 
-            { 
-                inventorySystem.TryTakeOutItem(index, out GameObject itemToTakeOut);
+            {
+                inventorySystem.TakeOrAddItemToTheInventory(index);
             });
         }
     }
