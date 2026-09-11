@@ -17,11 +17,13 @@ public class InventorySlot
         ItemName = string.Empty;
     }
 
-    public void StoreItem(GameObject item, string itemName)
+    public bool TryStoreItem(GameObject item, string itemName)
     {
+        if (!IsEmpty) { return false; }
         _itemObject = item;
         IsEmpty = false;
         ItemName = itemName;
+        return true;
     }
 
     public bool TryTakeItem(out GameObject item)
