@@ -9,48 +9,33 @@ public class InventoryUI : MonoBehaviour
     private GameObject _inventorySlotPrefab;
 
     [SerializeField]
-    private Transform _collectionObject;
-
-    [SerializeField]
     private InventorySystem _inventorySystem;
 
-    public void RefreshUI(InventorySlot[] slots)
+    public void RefreshUI(InventorySlot[] slots, InventorySystem inventorySystem)
     {
         Transform collectionObject = transform.GetChild(0);
+        if (collectionObject == null) return;
 
-        int totalSlots = slots.Length;
-
-        if(collectionObject != null)
+        for(int i = collectionObject.childCount - 1; i >= 0; i--)
         {
-            if (collectionObject.childCount > 0)
-            {
-                foreach (Transform child in collectionObject)
-                {
-                    Destroy(child.gameObject);
-                }
-            }
-
-            for (int i = 0; i < slots.Length; i++)
-            {
-                GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
-
-                slot.GetComponent<Image>().color = slots[i].IsEmpty ? Color.white : Color.red;
-            }
+            Destroy(collectionObject.GetChild(i).gameObject);
         }
-    }
 
-    public void SetAllButtonListener(InventorySystem inventorySystem)
-    {
-        Transform collectionObject = transform.GetChild(0);
-
-        for(int i = 0; i < collectionObject.childCount; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            int index = i;
-            Button button = collectionObject.GetChild(i).GetComponent<Button>();
-            button.onClick.AddListener(() => 
+            GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
+
+            if(slot.TryGetComponent<Image>(out var image))
             {
-                inventorySystem.TakeOrAddItemToTheInventory(index);
-            });
+                image.color = slots[i].IsEmpty ? Color.white : Color.red;
+            }
+
+            if(slot.TryGetComponent<Button>(out var button))
+            {
+                int index = i;
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => inventorySystem.TakeOrAddItemToTheInventory(index));
+            }
         }
     }
 }

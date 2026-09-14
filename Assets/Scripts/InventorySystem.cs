@@ -23,6 +23,8 @@ public class InventorySystem : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Calling this method");
+
         _inventorySlots = new InventorySlot[_maxSlots];
         for (int i = 0; i < _maxSlots; i++)
         {
@@ -40,8 +42,9 @@ public class InventorySystem : MonoBehaviour
             .ThenBy(slot => slot.ItemName)
             .ToArray();
 
-        _inventoryUI.RefreshUI(_inventorySlots);
-        _inventoryUI.SetAllButtonListener(this);
+        Debug.Log(_inventorySlots.Count());
+
+        _inventoryUI.RefreshUI(_inventorySlots, this);
     }
 
     // This method is to take an item from the inventory, or store it in the inventory slot.
@@ -87,6 +90,11 @@ public class InventorySystem : MonoBehaviour
         _inventorySlots[slotIndex].RemoveItem();
         currentAvailableSlotIndex--;
         SortByName();
+    }
+
+    public int GetMaxSlots()
+    {
+        return _inventorySlots.Count();
     }
 }
 
