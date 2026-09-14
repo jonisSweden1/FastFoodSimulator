@@ -3,6 +3,8 @@ using UnityEngine;
 public class ItemIdentifier : MonoBehaviour
 {
     // This is a data class that will be used to identify the type of item and the type of burger stack it belongs to.
+    public string ItemName { get { return _itemName; } }
+
     public TypeOfItem CurrentType { get { return currentType; } }
     public TypeOfBurgerStack CurrentBurgerType { get { return currentBurgerType; } }
 
@@ -12,8 +14,10 @@ public class ItemIdentifier : MonoBehaviour
     bool _isBurgerStacked = false;
     GameObject _bottomBun = null;
 
+    [SerializeField] private string _itemName;
     [SerializeField] private TypeOfItem currentType;
     [SerializeField] private TypeOfBurgerStack currentBurgerType;
+    
 
     public void AddBurgerItemToStack(GameObject bottomBun)
     {

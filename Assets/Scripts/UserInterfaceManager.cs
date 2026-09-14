@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UserInterfaceManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class UserInterfaceManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_PopUpMessage;
+
+    // This is to activate and deactivate action maps when the menu is open or closed. This is to prevent the player from moving while the menu is open.
 
     private void Awake()
     {
