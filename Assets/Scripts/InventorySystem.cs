@@ -58,8 +58,11 @@ public class InventorySystem : MonoBehaviour
 
         if (slot != null)
         {
-            if(slot.IsEmpty)
+            if (slot.IsEmpty)
+            // If a slot is empty, then store the item
             {
+                Debug.Log("Store item");
+
                 if (PlayerPickAndDropSystem.Instance.TryTakeOutItem(out item))
                 {
                     slot.StoreItem(item);
@@ -69,7 +72,15 @@ public class InventorySystem : MonoBehaviour
                     return;
             }
             else
+            // If a slot is full, then take the item
             {
+                Debug.Log("Take out item");
+
+                if(PlayerPickAndDropSystem.Instance.HasObjectHold)
+                {
+                    return;
+                }
+
                 item = slot.TakeItem();
 
                 if (PlayerPickAndDropSystem.Instance.TryPickUpItem(item))

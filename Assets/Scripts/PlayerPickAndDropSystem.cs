@@ -80,7 +80,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         {
             itemToTakeOut = ItemObject;
             ItemObject = null;
+
             SwitchState(nonItemState);
+            HasObjectHold = false;
+
             return true;
         }
 
@@ -93,6 +96,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         {
             ItemObject = itemToTakeUp;
             SwitchState(holdItemState);
+            HasObjectHold = true;
             return true;
         }
 
