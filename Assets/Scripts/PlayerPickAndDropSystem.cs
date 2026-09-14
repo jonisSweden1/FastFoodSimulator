@@ -33,8 +33,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
     private GameObject _itemObject;
 
     // Can be set in the inspector, but can also be changed at runtime
+    // This is a distance for how long the player can pick up an item.
     [SerializeField] private float pickDistance = 5;
 
+    // This is a distance for how long the player can drop an item.
     [SerializeField] private float dropDistance = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
