@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// TODO: Remove this class
 public class PaperActivationBurgerStack : MonoBehaviour
 {
     Transform _bottomBunItem = null;
