@@ -8,7 +8,6 @@ using System;
 // This script is in charge of handling the slots of item and updating UI in the inventory.
 public class InventorySystem : MonoBehaviour
 {
-    // To-Do: Add new parameter such as the maximum number of slots.
     // This is to initialize the inventory system, and set the maximum number of slots in the inventory. 
     // This is going to be initialized together with the InventoryUI script, and the InventorySlot script, to make sure that the inventory system is working properly.
     [SerializeField]
@@ -64,6 +63,7 @@ public class InventorySystem : MonoBehaviour
 
         GameObject item;
 
+        // If the slot is empty, then it will immediately skip
         if (slot != null)
         {
             if (slot.IsEmpty)
@@ -120,14 +120,9 @@ public class InventorySystem : MonoBehaviour
         SortByName();
     }
 
+    // get the max of the slots
     public int GetMaxSlots()
     {
         return _inventorySlots.Count();
     }
-}
-
-public enum InventorySlotState
-{
-    Empty,
-    Occupied
 }

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerPickAndDropSystem : MonoBehaviour
 {
-    public bool HasObjectHold { get; private set; }
+    public bool HasObjectHold { get; private set; } // Object hold bool property
 
     public static PlayerPickAndDropSystem Instance { get; private set; }
 
@@ -11,8 +11,6 @@ public class PlayerPickAndDropSystem : MonoBehaviour
     PlayerPDBaseState currentState;
     public PlayerPDNonItemState nonItemState { get; private set; }
     public PlayerPDHoldItemState holdItemState { get; private set; }
-
-    public float PickDistance { get; private set; }
 
     public GameObject ItemObject { get { return _itemObject; }
         set
@@ -28,7 +26,8 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         } 
     }
 
-    public float DropDistance { get; private set; }
+    public float PickDistance { get { return pickDistance; } } // Pick distance property
+    public float DropDistance { get { return dropDistance; } } // Drop distance property
 
     private GameObject _itemObject;
 
@@ -55,12 +54,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         nonItemState = new PlayerPDNonItemState();
         holdItemState = new PlayerPDHoldItemState();
 
-        PickDistance = pickDistance;
-        DropDistance = dropDistance;
-
         currentState = nonItemState;
     }
 
+    // Try to pick or drop based on the current state
     public void TryPickOrDropAction(Transform headTransform)
     {
         currentState.EnterButton(this, headTransform);
@@ -75,6 +72,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         }
     }
 
+    // Try to take out the item from the player's hand
     public bool TryTakeOutItem(out GameObject itemToTakeOut)
     {
         itemToTakeOut = null;
@@ -92,6 +90,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         return false;
     }
 
+    // Try to pick up the item from the inventory system
     public bool TryPickUpItem(GameObject itemToTakeUp)
     {
         if(currentState == nonItemState)
@@ -105,20 +104,7 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         return false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (pickDistance.CompareTo(PickDistance) != 0)
-        {
-            PickDistance = pickDistance;
-        }
-
-        if (dropDistance.CompareTo(DropDistance) != 0)
-        {
-            DropDistance = dropDistance;
-        }
-    }
-
+    // Switch state in the pick-and-drop system script
     public void SwitchState(PlayerPDBaseState state)
     {
         currentState = state;

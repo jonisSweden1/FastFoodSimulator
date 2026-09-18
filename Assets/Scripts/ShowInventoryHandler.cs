@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Handler for opening the inventory UI
 public class ShowInventoryHandler : MonoBehaviour
 {
     private PlayerInput _playerInput;

@@ -60,6 +60,7 @@ public class PlayerPDNonItemState : PlayerPDBaseState
 
             manager.ItemObject = raycastItemObject;
             manager.ItemObject.SetActive(false);
+
             manager.SwitchState(manager.holdItemState);
         }
     }

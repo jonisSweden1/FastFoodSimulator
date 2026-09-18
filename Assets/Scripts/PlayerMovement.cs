@@ -23,17 +23,17 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float jumpHeight = 1.5f;
 
-    [SerializeField] private float currentHeight;
-    [SerializeField] private float crouchHeight;
-
+    // To control the velocity between moving and jumping
     private Vector3 velocity;
 
+    // Input actions
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _sprintAction;
 
     private void Awake()
     {
+        // Get the character controller and ground checker
         controller = GetComponent<CharacterController>();
         groundChecker = GetComponentInChildren<PlayerGroundChecker>();
     }
