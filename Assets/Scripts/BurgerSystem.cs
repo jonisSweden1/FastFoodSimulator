@@ -13,6 +13,7 @@ public class BurgerSystem : MonoBehaviour
     // Bool field to condition
     private bool _canStackBurger = false;
 
+    // A point where the burger item should be placed
     private Transform _topPointBun;
 
     void Start()
@@ -86,6 +87,7 @@ public class BurgerSystem : MonoBehaviour
         }
         else
         {
+            // If the stacking is deactivated, then there should be a notification to the player that it can't place anymore burger items
             Debug.Log("Cannot stack burger items at this time.");
             return false;
         }
@@ -99,8 +101,13 @@ public class BurgerSystem : MonoBehaviour
             return false;
         }
 
+        // Setting the removedItem with the toppest stack burger item
         removedItem = _burgerStack[currentStackIndex];
+
+        // Remove parent from the stacked burger
         removedItem.transform.SetParent(null, true);
+
+        // Removing the burger item from the stack
         _burgerStack.RemoveAt(currentStackIndex);
         currentStackIndex--;
 
@@ -113,12 +120,14 @@ public class BurgerSystem : MonoBehaviour
         return true;
     }
 
+    // To list all information to the player that is wrapped
     public GameObject[] ListAllStackedItemsInBurger()
     {
         return _burgerStack.ToArray();
     }
 }
 
+// Type of differnt burger items
 public enum TypeOfBurgerStack
 {
     Patty,
