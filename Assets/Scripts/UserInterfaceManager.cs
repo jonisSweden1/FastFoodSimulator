@@ -6,40 +6,42 @@ using UnityEngine.UI;
 
 public class UserInterfaceManager : MonoBehaviour
 {
+    // Singleton
     public static UserInterfaceManager instance { get; private set; }
 
-    [SerializeField]
-    private int _defaultMenuIndex;
+    // Set default menu to be visible in the beginning of the scene
+    [SerializeField] private int _defaultMenuIndex;
+
+    // Integers for make up orders of the menus
     private int _previousMenuIndex = -1;
     private int _currentMenuIndex = -1;
 
-    [SerializeField]
-    private bool _showMenu = false;
+    // Boolean to show menu as soon as the player starts the scene
+    [SerializeField] private bool _showMenu = false;
 
-    [SerializeField]
-    private GameObject[] m_Menus;
+    // The list of menus that can be added
+    [SerializeField] private GameObject[] m_Menus;
 
-    [SerializeField]
-    private GameObject m_PopUpMessage;
+    // An individual UI for showing pop up messages for warnings or other information that the player should be warned about
+    [SerializeField] private GameObject m_PopUpMessage;
 
     // This is to activate and deactivate action maps when the menu is open or closed. This is to prevent the player from moving while the menu is open.
 
     private void Awake()
     {
+        // Destroy other instances if they are not from the first instance
         if (instance != null && instance != this)
-        {
             Destroy(this);
-        }
+        // Assign the instance of that
         else
-        {
             instance = this;
-        }
     }
 
     private void Start()
     {
         if (m_Menus != null)
         {
+            // Show the first menu at the start of the scene
             if (_showMenu)
             {
                 m_Menus[_defaultMenuIndex].SetActive(true);
@@ -48,6 +50,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Go to the menu in the order
     public void GoToMenu(int index)
     {
         if (m_Menus != null)
@@ -61,6 +64,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Go back to the previous menu that was in the order
     public void GoBack()
     {
         if (m_Menus != null)
@@ -73,6 +77,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Show the pop up message with an action whenever the player chooses "yes"
     public void ShowPopUp(string message, UnityAction action)
     {
         if (m_PopUpMessage != null)
@@ -88,6 +93,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Show the pop up message without an action
     public void ShowPopUp(string message)
     {
         if (m_PopUpMessage != null)
@@ -105,6 +111,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Close the pop up message
     public void ClosePopUp()
     {
         if (m_PopUpMessage != null)
@@ -113,6 +120,7 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    // Close the current menu
     public void CloseMenu()
     {
         _previousMenuIndex = _currentMenuIndex;
@@ -120,6 +128,7 @@ public class UserInterfaceManager : MonoBehaviour
         _currentMenuIndex = -1;
     }
 
+    // Force another menu to pop up and close the other menu
     public void ForceMenu(int index)
     {
         Debug.Log("Force menu");
