@@ -5,7 +5,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
     public override void EnterButton(PlayerPickAndDropSystem manager, Transform headTransform)
     {
         RaycastHit hit;
-        if (!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.DropDistance))
+        if (!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.DropDistance, manager.LayerToDrop))
         {
             return;
         }
