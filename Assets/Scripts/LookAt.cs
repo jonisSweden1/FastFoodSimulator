@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LookAt : MonoBehaviour
 {
-    private Transform _lookObject;
+    [SerializeField] private Transform _lookObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,7 +15,7 @@ public class LookAt : MonoBehaviour
     {
         if(_lookObject)
         {
-            Vector3 direction = _lookObject.position - transform.position;
+            Vector3 direction = transform.position - _lookObject.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = rotation;
         }
