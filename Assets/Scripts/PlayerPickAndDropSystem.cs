@@ -7,6 +7,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     public static PlayerPickAndDropSystem Instance { get; private set; }
 
+    public LayerMask LayerToDrop { get { return _layerToDrop; } }
+
+    [SerializeField] private LayerMask _layerToDrop;
+
     // State Machine
     PlayerPDBaseState currentState;
     public PlayerPDNonItemState nonItemState { get; private set; }

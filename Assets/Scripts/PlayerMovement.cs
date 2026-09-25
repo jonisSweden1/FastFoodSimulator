@@ -4,24 +4,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private CharacterController controller;
+    private CharacterController _controller;
 
-    private PlayerGroundChecker groundChecker;
+    private PlayerGroundChecker _groundChecker;
 
-    private PlayerCrouchController crouchController;
+    private PlayerCrouchController _crouchController;
 
-    private PlayerInput playerInput;
+    private PlayerInput _playerInput;
 
     [SerializeField][Tooltip("Place an orientation object")] private Transform orientation; 
 
-    private float speed = 30f;
+    private float _speed = 30f;
 
-    [SerializeField] private float walkSpeed = 30f;
-    [SerializeField] private float sprintSpeed = 50f;
+    [SerializeField] private float m_walkSpeed = 30f;
+    [SerializeField] private float m_sprintSpeed = 50f;
 
-    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float m_gravity = -9.81f;
 
-    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float m_jumpHeight = 1.5f;
 
     // To control the velocity between moving and jumping
     private Vector3 velocity;
@@ -34,25 +34,25 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // Get the character controller and ground checker
-        controller = GetComponent<CharacterController>();
-        groundChecker = GetComponentInChildren<PlayerGroundChecker>();
+        _controller = GetComponent<CharacterController>();
+        _groundChecker = GetComponentInChildren<PlayerGroundChecker>();
     }
 
     private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.currentActionMap?.Enable();
+        _playerInput = GetComponent<PlayerInput>();
+        _playerInput.currentActionMap?.Enable();
     }
 
     private void OnEnable()
     {
         // Enable the PlayerInput components action map when the script is enabled
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.currentActionMap?.Enable();
+        _playerInput = GetComponent<PlayerInput>();
+        _playerInput.currentActionMap?.Enable();
 
-        _moveAction = playerInput.actions.FindAction("Move");
-        _jumpAction = playerInput.actions.FindAction("Jump");
-        _sprintAction = playerInput.actions.FindAction("Sprint");
+        _moveAction = _playerInput.actions.FindAction("Move");
+        _jumpAction = _playerInput.actions.FindAction("Jump");
+        _sprintAction = _playerInput.actions.FindAction("Sprint");
 
         _jumpAction.started += _jumpAction_started;
     }
@@ -61,13 +61,13 @@ public class PlayerMovement : MonoBehaviour
     {
         _jumpAction.started -= _jumpAction_started;
 
-        playerInput.currentActionMap?.Disable();
+        _playerInput.currentActionMap?.Disable();
     }
 
     private void _jumpAction_started(InputAction.CallbackContext obj)
     {
-        if (groundChecker.IsGrounded)
-            velocity.y = Mathf.Sqrt(-2f * gravity * jumpHeight); 
+        if (_groundChecker.IsGrounded)
+            velocity.y = Mathf.Sqrt(-2f * m_gravity * m_jumpHeight); 
     }
 
     private void Update()
@@ -77,11 +77,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_sprintAction.IsPressed())
             {
-                speed = sprintSpeed; // Increase speed when sprinting
+                _speed = m_sprintSpeed; // Increase speed when sprinting
             }
             else
             {
-                speed = walkSpeed; // Reset to normal speed when not sprinting
+                _speed = m_walkSpeed; // Reset to normal speed when not sprinting
             }
         }
     }
@@ -89,18 +89,18 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Reset downward force accumulation when touching the ground
-        if (groundChecker.IsGrounded && velocity.y < 0)
+        if (_groundChecker.IsGrounded && velocity.y < 0)
         {
             velocity.y = -2f; // Slight downward force to keep grounded firmly
         }
         
-        velocity.y += gravity * Time.fixedDeltaTime;
+        velocity.y += m_gravity * Time.fixedDeltaTime;
         
-        controller.Move(velocity * Time.fixedDeltaTime);
+        _controller.Move(velocity * Time.fixedDeltaTime);
 
         // Handle continuous movement input
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
         Vector3 move = orientation.forward * moveInput.y + orientation.right * moveInput.x;
-        controller.Move(move * speed * Time.fixedDeltaTime);
+        _controller.Move(move * _speed * Time.fixedDeltaTime);
     }
 }
