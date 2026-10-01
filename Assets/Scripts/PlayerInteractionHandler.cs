@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// This script is to handle different interaction when the player use the Use action in the player input
 public class PlayerInteractionHandler : MonoBehaviour
 {
     private float interactDistance = 10;
@@ -41,11 +42,5 @@ public class PlayerInteractionHandler : MonoBehaviour
                     break;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

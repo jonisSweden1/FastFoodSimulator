@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1526778928779622456}
   - component: {fileID: 3477945787656097689}
   - component: {fileID: 4701945605934497461}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Item_model
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -157,5 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae32df5580e6b641b78a09611db2ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemIdentifier
+  _itemName: 
   currentType: 0
   currentBurgerType: 0

@@ -21,12 +21,14 @@ public class PlayerCrouchController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // If there is no player input, send message and skip
         if(playerInput == null)
         {
             Debug.LogError("PlayerInput component is not assigned. Please assign it in the inspector.");
             return;
         }
 
+        // Find action for the crouch action
         _crouchAction = playerInput.actions.FindAction("Crouch");
     }
 
@@ -39,16 +41,19 @@ public class PlayerCrouchController : MonoBehaviour
             return;
         }
 
+        // Activate the toggle between crouching and standing
         if (_crouchAction.triggered)
         {
             ToggleCrouch();
         }
 
+        // Check if the timer is under 1 second
         if(timer < 1f)
         {
             timer += Time.deltaTime * 10f;
         }
 
+        // Lerping between crouching and standing
         if(IsCrouching)
         {
             transform.localPosition = Vector3.Lerp(new Vector3(0, standingHeightCameraOffset, 0), new Vector3(0, crouchHeightCameraOffset, 0), timer);
@@ -74,6 +79,7 @@ public class PlayerCrouchController : MonoBehaviour
             IsCrouching = true;
         }
 
+        // Reset the timer
         timer = 0f;
     }
 }
