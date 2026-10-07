@@ -27,7 +27,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             // Check if the raycasted item is a burger item
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
-                if(raycastItemId.)
+                
             }
         }
 
