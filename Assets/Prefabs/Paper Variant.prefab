@@ -103,7 +103,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7502643460078935704, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8640187967046747863}
+      addedObject: {fileID: 8551133974856368979}
     - targetCorrespondingSourceObject: {fileID: 6755570498798306285, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8899376162098203861}
@@ -140,7 +140,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7502643460078935704, guid: 2eadc5649262719439283aa9e2920928, type: 3}
   m_PrefabInstance: {fileID: 2041091225852841800}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8640187967046747863
+--- !u!114 &8551133974856368979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,6 +149,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380591830983086544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668e7ac69ddf1b949a7aa46798aa4b64, type: 3}
+  m_Script: {fileID: 11500000, guid: 6055f2f32d185c84181fd6d0941db360, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::BurgerSystem

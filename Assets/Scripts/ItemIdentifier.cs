@@ -12,14 +12,14 @@ public class ItemIdentifier : MonoBehaviour
     // The current type of burger type property
     public TypeOfBurgerStack CurrentBurgerType { get { return currentBurgerType; } }
 
-    public GameObject BottomBun { get { return _bottomBun; } }
+    public GameObject WrapperPaper { get { return _wrapperPaper; } }
     public bool IsBurgerStacked { get { return _isBurgerStacked; } }
 
     // To check if the item is in the burger stack
     bool _isBurgerStacked = false;
 
     // Identify the bottom bun to get the burger system
-    GameObject _bottomBun = null;
+    GameObject _wrapperPaper = null;
 
     // Name of the item field
     [SerializeField] private string _itemName;
@@ -31,18 +31,21 @@ public class ItemIdentifier : MonoBehaviour
     [SerializeField] private TypeOfBurgerStack currentBurgerType;
     
     // Add the item to the stack
-    public void AddBurgerItemToStack(GameObject bottomBun)
+    public void AddBurgerItemToStack(GameObject wrapperPaper)
     {
         _isBurgerStacked = true;
-        _bottomBun = bottomBun;
+
+        // Wrapper paper is the burger system, so we need to store it in the item identifier to access the burger system later.
+        _wrapperPaper = wrapperPaper;
     }
 
     // Remove the burger item from the stack
     public void RemoveBurgerItemFromStack()
     {
-        if(_bottomBun != null)
+        if(_wrapperPaper != null)
         {
-            _bottomBun = null;
+            // Nullify the wrapper paper to avoid memory leak
+            _wrapperPaper = null;
             _isBurgerStacked = false;
         }
     }

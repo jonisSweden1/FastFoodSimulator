@@ -34,15 +34,15 @@ public class PlayerPDNonItemState : PlayerPDBaseState
                 // If the bottom bun of the burger stack is null, log an error and return
                 // The information about the bottom bun is stored in the ItemIdentifier component of the burger item in order to access the burger stack system and remove the item from the stack.
                 // If the bottom bun is null, it means that the burger stack is not properly set up, and we cannot remove the item from the stack.
-                if (raycastItemId.BottomBun == null)
+                if (raycastItemId.WrapperPaper == null)
                 {
-                    Debug.LogError($"Bottom bun of the burger stack is null.");
+                    Debug.LogError($"Wrapper paper of the burger stack is null.");
                     return;
                 }
 
                 // Try to remove the item from the burger stack using the BurgerSystem component of the bottom bun
                 // Otherwise, it will jump straight to the next if statement.
-                if (raycastItemId.BottomBun.GetComponent<BurgerSystem>().RemoveItemFromBurger(out GameObject removedItem))
+                if (raycastItemId.WrapperPaper.GetComponent<BurgerSystem>().TryRemoveItemFromBurger(out GameObject removedItem))
                 {
                     removedItem.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
                     manager.ItemObject = removedItem;
@@ -55,15 +55,6 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             Transform parentObject = raycastItemObject.transform.parent;
 
             Debug.Log(parentObject);
-
-            PaperActivationBurgerStack paper;
-
-            // If the item that is raycasted is a bottom bun, we need to deactivate the burger stack system of the item, so that it can be picked up and held by the player.
-            if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun && parentObject != null)
-            {
-                if (parentObject.TryGetComponent<PaperActivationBurgerStack>(out paper))
-                    paper.RemoveBottomBun();
-            }
 
             manager.ItemObject = raycastItemObject;
             manager.ItemObject.SetActive(false);

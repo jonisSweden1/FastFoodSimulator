@@ -27,49 +27,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             // Check if the raycasted item is a burger item
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
-                // Logic for adding bottom bun to paper in order to create a burger stack
-                // The paper activate the burger stack system on the bottom bun
-                if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
-                {
-                    if (holdItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun)
-                    {
-                        raycastItem.GetComponent<PaperActivationBurgerStack>().AddBottomBun(holdItem);
-
-                        holdItemId.AddBurgerItemToStack(holdItem.gameObject);
-
-                        manager.ItemObject.SetActive(true);
-                        manager.ItemObject = null;
-
-                        manager.SwitchState(manager.nonItemState);
-                        return;
-                    }
-                    else
-                        return;
-                }
-
-                // TODO: Reimplement the logic of activating the burger system when placing the wrapper paper and the burger system
-                // Logic for adding burger items to the stack
-                // The burger stack is deactivated when the top bun is added to the stack
-                else if (raycastItemId.IsBurgerStacked)
-                {
-                    if (holdItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
-                    {
-                        GameObject bottomBun = raycastItemId.BottomBun;
-
-                        if(!bottomBun.GetComponent<BurgerSystem>().AddItemToBurger(holdItem))
-                            return;
-                        
-                        holdItemId.AddBurgerItemToStack(bottomBun);
-
-                        manager.ItemObject.SetActive(true);
-                        manager.ItemObject = null;
-
-                        manager.SwitchState(manager.nonItemState);
-                        return;
-                    }
-                    else
-                        return;
-                }
+                if(raycastItemId.)
             }
         }
 
