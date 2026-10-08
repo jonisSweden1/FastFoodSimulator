@@ -1350,6 +1350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd546448885b9a4f9419cec8b96d8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickAndDropSystem
+  _layerToDrop:
+    serializedVersion: 2
+    m_Bits: 136
   pickDistance: 5
   dropDistance: 10
 --- !u!4 &1912725754
