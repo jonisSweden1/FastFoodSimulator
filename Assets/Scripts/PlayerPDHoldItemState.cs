@@ -25,50 +25,49 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
 
             // TODO: Reimplement the logic of activating the burger system when placing the wrapper paper and the burger system
             // Check if the raycasted item is a burger item
-            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem)
+            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.BurgerItem)
             {
-                // Logic for adding bottom bun to paper in order to create a burger stack
-                // The paper activate the burger stack system on the bottom bun
-                if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
+                Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
+
+                // Check if the raycasted item has a BurgerSystem component
+                if (raycastItem.TryGetComponent<BurgerSystem>(out BurgerSystem raycastBurgerSystem))
                 {
-                    if (holdItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun)
+                    Debug.Log("BurgerSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
+
+                    // Add the held burger item to the raycasted burger system
+                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem))
                     {
-                        raycastItem.GetComponent<PaperActivationBurgerStack>().AddBottomBun(holdItem);
-
-                        holdItemId.AddBurgerItemToStack(holdItem.gameObject);
-
-                        manager.ItemObject.SetActive(true);
-                        manager.ItemObject = null;
-
-                        manager.SwitchState(manager.nonItemState);
+                        // Successfully added the held burger item to the raycasted burger system
+                        Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
-                    else
-                        return;
+
+                    manager.ItemObject.SetActive(true);
+                    manager.ItemObject = null;
+                    manager.SwitchState(manager.nonItemState);
+
+                    return;
                 }
-
-                // TODO: Reimplement the logic of activating the burger system when placing the wrapper paper and the burger system
-                // Logic for adding burger items to the stack
-                // The burger stack is deactivated when the top bun is added to the stack
-                else if (raycastItemId.IsBurgerStacked)
+                else if (raycastItemId.BurgerSystem != null)
                 {
-                    if (holdItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
+                    Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
+
+                    // Add the held burger item to the raycasted burger system
+                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem))
                     {
-                        GameObject bottomBun = raycastItemId.BottomBun;
-
-                        if(!bottomBun.GetComponent<BurgerSystem>().AddItemToBurger(holdItem))
-                            return;
-                        
-                        holdItemId.AddBurgerItemToStack(bottomBun);
-
-                        manager.ItemObject.SetActive(true);
-                        manager.ItemObject = null;
-
-                        manager.SwitchState(manager.nonItemState);
+                        // Successfully added the held burger item to the raycasted burger system
+                        Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
-                    else
-                        return;
+                    manager.ItemObject.SetActive(true);
+                    manager.ItemObject = null;
+                    manager.SwitchState(manager.nonItemState);
+                    return;
+                }
+                else
+                {
+                    Debug.Log("Raycasted item does not have a BurgerSystem component or reference.");
+                    return;
                 }
             }
         }

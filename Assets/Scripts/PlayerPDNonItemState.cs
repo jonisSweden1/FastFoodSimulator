@@ -28,26 +28,23 @@ public class PlayerPDNonItemState : PlayerPDBaseState
 
             Debug.Log(raycastItemObject.name);
 
+            GameObject itemToTakeOut;
+
             // Check if the item is a burger item and is stacked
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsBurgerStacked)
             {
-                // If the bottom bun of the burger stack is null, log an error and return
-                // The information about the bottom bun is stored in the ItemIdentifier component of the burger item in order to access the burger stack system and remove the item from the stack.
-                // If the bottom bun is null, it means that the burger stack is not properly set up, and we cannot remove the item from the stack.
-                if (raycastItemId.BottomBun == null)
+                Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
+                if(raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
                 {
-                    Debug.LogError($"Bottom bun of the burger stack is null.");
+                    manager.ItemObject = itemToTakeOut;
+                    manager.ItemObject.SetActive(false);
+
+                    manager.SwitchState(manager.holdItemState);
                     return;
                 }
-
-                // Try to remove the item from the burger stack using the BurgerSystem component of the bottom bun
-                // Otherwise, it will jump straight to the next if statement.
-                if (raycastItemId.BottomBun.GetComponent<BurgerSystem>().RemoveItemFromBurger(out GameObject removedItem))
+                else
                 {
-                    removedItem.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
-                    manager.ItemObject = removedItem;
-                    manager.ItemObject.SetActive(false);
-                    manager.SwitchState(manager.holdItemState);
+                    Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
                     return;
                 }
             }
@@ -55,15 +52,6 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             Transform parentObject = raycastItemObject.transform.parent;
 
             Debug.Log(parentObject);
-
-            PaperActivationBurgerStack paper;
-
-            // If the item that is raycasted is a bottom bun, we need to deactivate the burger stack system of the item, so that it can be picked up and held by the player.
-            if (raycastItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun && parentObject != null)
-            {
-                if (parentObject.TryGetComponent<PaperActivationBurgerStack>(out paper))
-                    paper.RemoveBottomBun();
-            }
 
             manager.ItemObject = raycastItemObject;
             manager.ItemObject.SetActive(false);
