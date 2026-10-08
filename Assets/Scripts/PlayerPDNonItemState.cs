@@ -28,26 +28,23 @@ public class PlayerPDNonItemState : PlayerPDBaseState
 
             Debug.Log(raycastItemObject.name);
 
+            GameObject itemToTakeOut;
+
             // Check if the item is a burger item and is stacked
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsBurgerStacked)
             {
-                // If the bottom bun of the burger stack is null, log an error and return
-                // The information about the bottom bun is stored in the ItemIdentifier component of the burger item in order to access the burger stack system and remove the item from the stack.
-                // If the bottom bun is null, it means that the burger stack is not properly set up, and we cannot remove the item from the stack.
-                if (raycastItemId.WrapperPaper == null)
+                Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
+                if(raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
                 {
-                    Debug.LogError($"Wrapper paper of the burger stack is null.");
+                    manager.ItemObject = itemToTakeOut;
+                    manager.ItemObject.SetActive(false);
+
+                    manager.SwitchState(manager.holdItemState);
                     return;
                 }
-
-                // Try to remove the item from the burger stack using the BurgerSystem component of the bottom bun
-                // Otherwise, it will jump straight to the next if statement.
-                if (raycastItemId.WrapperPaper.GetComponent<BurgerSystem>().TryRemoveItemFromBurger(out GameObject removedItem))
+                else
                 {
-                    removedItem.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
-                    manager.ItemObject = removedItem;
-                    manager.ItemObject.SetActive(false);
-                    manager.SwitchState(manager.holdItemState);
+                    Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
                     return;
                 }
             }

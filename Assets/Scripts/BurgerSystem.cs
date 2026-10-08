@@ -58,7 +58,7 @@ public class BurgerSystem : MonoBehaviour
                 return false;
             }
 
-            // Or add burger item at the first burger item
+            // If the burger item is a bottom bun, then add it to the top point of the wrapper paper
             burgerItem.transform.position = _topPoint.position;
             Debug.Log("Added the bottom bun on the top of the wrapper paper");
         }
@@ -69,7 +69,7 @@ public class BurgerSystem : MonoBehaviour
         // Add burger item to the stack
         currentStackIndex++;
         _burgerStack.Add(burgerItem.gameObject);
-        burgerItemId.AddBurgerItemToStack(gameObject);
+        burgerItemId.AddBurgerItemToStack(this);
 
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
@@ -94,6 +94,7 @@ public class BurgerSystem : MonoBehaviour
 
         // Remove parent from the stacked burger
         removedItem.transform.SetParent(null, true);
+        removedItem.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
 
         // Removing the burger item from the stack
         _burgerStack.RemoveAt(currentStackIndex);

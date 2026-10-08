@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickAndDropSystem
   _layerToDrop:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   pickDistance: 5
   dropDistance: 10
 --- !u!1660057539 &9223372036854775807
