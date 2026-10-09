@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7502643460078935704, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: m_Name
-      value: BurgerStackItem Variant
+      value: BurgerStackItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
