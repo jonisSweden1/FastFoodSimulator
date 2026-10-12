@@ -191,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8380591830983086544, guid: 897eb62f518b49f4599daa3cb913cc58, type: 3}
       propertyPath: m_Name
-      value: Paper Variant
+      value: Wrapping Paper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -361,22 +361,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1916515486415968685, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0575
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245709617010012985, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245709617010012985, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2245709617010012985, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2245709617010012985, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.3076475
@@ -419,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2936898395359868219, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
       propertyPath: m_Name
-      value: Bottom Bun Variant
+      value: Bottom Bun
       objectReference: {fileID: 0}
     - target: {fileID: 2936898395359868219, guid: 698c45a752ae9c343a30712cf6ee9487, type: 3}
       propertyPath: m_IsActive

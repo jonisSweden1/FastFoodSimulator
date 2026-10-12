@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7502643460078935704, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: m_Name
-      value: Paper Variant
+      value: Wrapping Paper
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4701945605934497461, guid: 2eadc5649262719439283aa9e2920928, type: 3}
