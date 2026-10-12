@@ -30,9 +30,9 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
 
                 // Check if the raycasted item has a BurgerSystem component
-                if (raycastItem.TryGetComponent<BurgerSystem>(out BurgerSystem raycastBurgerSystem))
+                if (raycastItem.TryGetComponent<BurgerStackSystem>(out BurgerStackSystem raycastBurgerSystem))
                 {
-                    Debug.Log("BurgerSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
+                    Debug.Log("BurgerStackSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
                     if (!raycastBurgerSystem.TryAddItemToBurger(holdItem))

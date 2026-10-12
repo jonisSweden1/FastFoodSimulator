@@ -1,8 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BurgerSystem : MonoBehaviour
+public class BurgerStackSystem : MonoBehaviour
 {
+    // Statemachine field to manage the state of the burger stack
+    private BurgerStackBaseState _currentState;
+    public BurgerStackNormalState NormalState { get; private set; }
+    public BurgerStackSauceStackState SauceStackState { get; private set; }
+    public BurgerStackVegetableStackState VegetableStackState { get; private set; }
+    public BurgerStackWrapState WrapState { get; private set; }
+
     // Field for the current stack
     private int currentStackIndex = -1;
 
@@ -20,6 +27,24 @@ public class BurgerSystem : MonoBehaviour
         _burgerStack = new List<GameObject>();
 
         _topPoint = transform;
+
+        NormalState = new BurgerStackNormalState();
+        SauceStackState = new BurgerStackSauceStackState();
+        VegetableStackState = new BurgerStackVegetableStackState();
+        WrapState = new BurgerStackWrapState();
+
+        _currentState = NormalState;
+        _currentState.Enter(this);
+    }
+
+    private void OnDisable()
+    {
+        _currentState?.Exit(this);
+    }
+
+    public void WrapPaper()
+    {
+        _currentState.WrapPaper(this);
     }
 
     // This is to add burger items to the burger stack.
@@ -117,6 +142,13 @@ public class BurgerSystem : MonoBehaviour
         string json = JsonUtility.ToJson(_burgerStack.ToArray());
 
         return json;
+    }
+
+    public void SwitchState(BurgerStackBaseState state)
+    {
+        _currentState?.Exit(this);
+        _currentState = state;
+        _currentState.Enter(this);
     }
 }
 
