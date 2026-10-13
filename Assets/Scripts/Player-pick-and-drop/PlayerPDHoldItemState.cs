@@ -35,7 +35,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                     Debug.Log("BurgerStackSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
-                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem))
+                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem.gameObject))
                     {
                         // Successfully added the held burger item to the raycasted burger system
                         Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
@@ -53,7 +53,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                     Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
-                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem))
+                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem.gameObject))
                     {
                         // Successfully added the held burger item to the raycasted burger system
                         Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);

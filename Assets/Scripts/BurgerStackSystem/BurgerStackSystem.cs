@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class BurgerStackSystem : MonoBehaviour
 {
@@ -11,7 +12,12 @@ public class BurgerStackSystem : MonoBehaviour
     public BurgerStackWrapState WrapState { get; private set; }
 
     // Field for the current stack
-    private int currentStackIndex = -1;
+    private int currentStackIndex = 0;
+
+    public int CurrentStackIndex
+    {
+        get { return currentStackIndex; }
+    }
 
     // List field of burger stacks that are stacked on top of each other
     private List<GameObject> _burgerStack;
@@ -19,14 +25,12 @@ public class BurgerStackSystem : MonoBehaviour
     // Bool field to condition if the burger stack can be stacked or not
     private bool _canStackBurger = true;
 
-    // A point where the burger item should be placed
-    private Transform _topPoint;
-
     void Start()
     {
         _burgerStack = new List<GameObject>();
+        _burgerStack.Add(gameObject);
 
-        _topPoint = transform;
+        Debug.Log(_burgerStack[0]);
 
         NormalState = new BurgerStackNormalState();
         SauceStackState = new BurgerStackSauceStackState();
@@ -48,7 +52,7 @@ public class BurgerStackSystem : MonoBehaviour
     }
 
     // This is to add burger items to the burger stack.
-    public bool TryAddItemToBurger(Transform burgerItem)
+    public bool TryAddItemToBurger(GameObject burgerItem)
     {
         // Check if you can add burger item to the stack
         if (!_canStackBurger)
@@ -60,41 +64,12 @@ public class BurgerStackSystem : MonoBehaviour
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = burgerItem.GetComponent<ItemIdentifier>();
 
-        if (burgerItemId.CurrentType != TypeOfItem.BurgerItem)
+        currentStackIndex++;
+        if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack))
         {
-            Debug.Log("This item is not a burger item");
+            currentStackIndex--;
             return false;
         }
-
-        // Check if currentStackIndex is over the minimum index limitation
-        if (currentStackIndex > -1)
-        {
-            // Either add burger item to the recent burger stack
-            burgerItem.position = _burgerStack[currentStackIndex].transform.GetChild(1).position;
-            Debug.Log(_burgerStack[currentStackIndex].transform.GetChild(1));
-            Debug.Log("Added");
-        }
-        else
-        {
-            // If the currentStackIndex is -1, then check if the burger item is a bottom bun
-            if (burgerItemId.CurrentBurgerType != TypeOfBurgerStack.BottomBun)
-            {
-                Debug.Log("The first burger item must be a bottom bun");
-                return false;
-            }
-
-            // If the burger item is a bottom bun, then add it to the top point of the wrapper paper
-            burgerItem.transform.position = _topPoint.position;
-            Debug.Log("Added the bottom bun on the top of the wrapper paper");
-        }
-
-        // Set parent to the burger item
-        burgerItem.transform.parent = transform;
-
-        // Add burger item to the stack
-        currentStackIndex++;
-        _burgerStack.Add(burgerItem.gameObject);
-        burgerItemId.AddBurgerItemToStack(this);
 
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
@@ -107,22 +82,19 @@ public class BurgerStackSystem : MonoBehaviour
 
     public bool TryRemoveItemFromBurger(out GameObject removedItem)
     {
-        // Check if the currentStackIndex is less than 0, which means there are no items to remove
-        if (currentStackIndex < 0)
+        // Check if the currentStackIndex is less than 1, which means there are no items to remove
+        if (currentStackIndex < 1)
         {
             removedItem = null;
             return false;
         }
 
-        // Setting the removedItem with the toppest stack burger item
-        removedItem = _burgerStack[currentStackIndex];
+        if(!_currentState.RemoveItemFromBurger(this, out removedItem, _burgerStack))
+        {
+            removedItem = null;
+            return false;
+        }
 
-        // Remove parent from the stacked burger
-        removedItem.transform.SetParent(null, true);
-        removedItem.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
-
-        // Removing the burger item from the stack
-        _burgerStack.RemoveAt(currentStackIndex);
         currentStackIndex--;
 
         // If the removed item was the top bun, allow stacking again

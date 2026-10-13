@@ -1,12 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BurgerStackVegetableStackState : BurgerStackBaseState
 {
-    public override void AddItem(BurgerStackSystem manager, GameObject item)
-    {
-        
-    }
-
     public override void Enter(BurgerStackSystem manager)
     {
         
@@ -17,7 +13,12 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         
     }
 
-    public override void RemoveItem(BurgerStackSystem manager, out GameObject item)
+    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
     {
         throw new System.NotImplementedException();
     }
