@@ -11,13 +11,23 @@ public class BurgerStackSystem : MonoBehaviour
     public BurgerStackVegetableStackState VegetableStackState { get; private set; }
     public BurgerStackWrapState WrapState { get; private set; }
 
+    // Bool property to check if the burger stack is currently being stacked
+    public bool CurrentlyOnStacking { get; set; } = false;  
+
     // Field for the current stack
     private int currentStackIndex = 0;
 
+    // Property to get the current stack index
     public int CurrentStackIndex
     {
         get { return currentStackIndex; }
     }
+
+    // Prefab field for the cucumber or pickle points prefab (this is going to have a collection of defined points for the cucumber or pickles to stack)
+    [SerializeField] private GameObject _cucumberPicklePointsPrefab;
+
+    // Prefab field for the sauce point prefab (this is going to have the same collection of the same sauce prefab to spawn on the burger stack, but with different points for each sauce type)
+    [SerializeField] private GameObject _saucePointPrefab;
 
     // List field of burger stacks that are stacked on top of each other
     private List<GameObject> _burgerStack;
@@ -106,6 +116,14 @@ public class BurgerStackSystem : MonoBehaviour
         return true;
     }
 
+    public void SpawnCucumberPicklePoints(Transform pointToSpawn)
+    {
+        // Instantiate the cucumber or pickle points prefab at the position of the burger stack
+        GameObject points = Instantiate(_cucumberPicklePointsPrefab, pointToSpawn.position, Quaternion.identity);
+        // Set the parent of the points prefab to be the burger stack
+        points.transform.SetParent(pointToSpawn);
+    }
+
     // To list all information to the player that is wrapped,
     // And not disclose the actual information of the burger stack,
     // We will return a JSON string of the burger stack items.
@@ -128,7 +146,10 @@ public class BurgerStackSystem : MonoBehaviour
 public enum TypeOfBurgerStack
 {
     Patty,
-    Vegetables,
+    // Cucumber and pickle is combined into one type to inform the manager that the player has stacked a cucumber or pickle on the burger stack,
+    // and then switch state to the vegetable stack state, which will then instantiate the points prefab for the cucumber or pickle to be placed on the burger stack.
+    CucumberPickle,
+    Tomato,
     Paper,
     BottomBun,
     TopBun,

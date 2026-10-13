@@ -19,12 +19,17 @@ public class BurgerStackNormalState : BurgerStackBaseState
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
 
+        // Set the CurrentlyOnStacking to true before switching to another state, in order to inform the manager that the stacking process is ongoing
+        // This way, the other states can check this variable when entering, and if it's true, then they will initiate a different stacking process.
+        manager.CurrentlyOnStacking = true;
+
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
 
         if (burgerItemId.CurrentType != TypeOfItem.BurgerItem)
         {
             Debug.Log("This item is not a burger item");
+            manager.CurrentlyOnStacking = false;
             return false;
         }
 
@@ -35,8 +40,15 @@ public class BurgerStackNormalState : BurgerStackBaseState
             if (burgerItemId.CurrentBurgerType != TypeOfBurgerStack.BottomBun)
             {
                 Debug.Log("The first burger item must be a bottom bun");
+                manager.CurrentlyOnStacking = false;
                 return false;
             }
+        }
+
+        if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
+        {
+            manager.SwitchState(manager.VegetableStackState);
+            return false;
         }
 
         Debug.Log("Current Stack Index: " + currentStackIndex);
@@ -54,6 +66,8 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
         burgerStack.Add(item);
         burgerItemId.AddBurgerItemToStack(manager);
+
+        manager.CurrentlyOnStacking = false;
 
         return true;
     }

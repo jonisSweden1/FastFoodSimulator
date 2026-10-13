@@ -191,3 +191,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6055f2f32d185c84181fd6d0941db360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BurgerSystem
+  _cucumberPicklePointsPrefab: {fileID: 4996509481883919617, guid: 9e1f18d1da24ebd4ebbcee86b0d595f2, type: 3}
