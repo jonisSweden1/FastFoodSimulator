@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class BurgerStackVegetableStackState : BurgerStackBaseState
 {
-    public override void Enter(BurgerStackSystem manager)
+    public override void Enter(BurgerStackSystem manager, GameObject item)
     {
-        
+        if(manager.CurrentlyOnStacking)
+        {
+            manager.SpawnCucumberPicklePoints(manager.transform);
+        }
     }
 
     public override void Exit(BurgerStackSystem manager)

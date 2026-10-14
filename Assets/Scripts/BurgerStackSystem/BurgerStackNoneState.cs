@@ -8,7 +8,7 @@ public class BurgerStackNoneState : BurgerStackBaseState
         return false;
     }
 
-    public override void Enter(BurgerStackSystem manager)
+    public override void Enter(BurgerStackSystem manager, GameObject item)
     {
         
     }

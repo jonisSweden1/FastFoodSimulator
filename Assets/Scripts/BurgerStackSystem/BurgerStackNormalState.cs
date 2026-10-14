@@ -4,14 +4,14 @@ using UnityEngine.UIElements;
 
 public class BurgerStackNormalState : BurgerStackBaseState
 {
-    public override void Enter(BurgerStackSystem manager)
+    public override void Enter(BurgerStackSystem manager, GameObject item)
     {
 
     }
 
     public override void Exit(BurgerStackSystem manager)
     {
-
+        
     }
 
     public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
@@ -47,7 +47,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
         {
-            manager.SwitchState(manager.VegetableStackState);
+            manager.SwitchState(manager.VegetableStackState, item);
             return false;
         }
 
@@ -89,6 +89,6 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
     public override void WrapPaper(BurgerStackSystem manager)
     {
-        manager.SwitchState(manager.WrapState);
+        manager.SwitchState(manager.WrapState, null);
     }
 }

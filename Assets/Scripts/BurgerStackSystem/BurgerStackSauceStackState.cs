@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class BurgerStackSauceStackState : BurgerStackBaseState
 {
-    public override void Enter(BurgerStackSystem manager)
+    public override void Enter(BurgerStackSystem manager, GameObject item)
     {
 
     }
 
     public override void Exit(BurgerStackSystem manager)
     {
-
+        
     }
 
     public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)

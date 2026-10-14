@@ -48,7 +48,7 @@ public class BurgerStackSystem : MonoBehaviour
         WrapState = new BurgerStackWrapState();
 
         _currentState = NormalState;
-        _currentState.Enter(this);
+        _currentState.Enter(this, null);
     }
 
     private void OnDisable()
@@ -84,7 +84,7 @@ public class BurgerStackSystem : MonoBehaviour
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {
-            SwitchState(NoneState);
+            SwitchState(NoneState, null);
         }
 
         return true;
@@ -110,7 +110,7 @@ public class BurgerStackSystem : MonoBehaviour
         // If the removed item was the top bun, allow stacking again
         if (_currentState == NoneState)
         {
-            SwitchState(NormalState);
+            SwitchState(NormalState, null);
         }
 
         return true;
@@ -134,11 +134,11 @@ public class BurgerStackSystem : MonoBehaviour
         return json;
     }
 
-    public void SwitchState(BurgerStackBaseState state)
+    public void SwitchState(BurgerStackBaseState state, GameObject item)
     {
         _currentState?.Exit(this);
         _currentState = state;
-        _currentState.Enter(this);
+        _currentState.Enter(this, item);
     }
 }
 
