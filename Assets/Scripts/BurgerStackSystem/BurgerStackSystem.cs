@@ -5,7 +5,9 @@ using static UnityEditor.Progress;
 public class BurgerStackSystem : MonoBehaviour
 {
     // Statemachine field to manage the state of the burger stack
-    private BurgerStackBaseState _currentState;
+    BurgerStackBaseState _currentState;
+
+    public BurgerStackNoneState NoneState { get; private set; }
     public BurgerStackNormalState NormalState { get; private set; }
     public BurgerStackSauceStackState SauceStackState { get; private set; }
     public BurgerStackVegetableStackState VegetableStackState { get; private set; }
@@ -32,16 +34,14 @@ public class BurgerStackSystem : MonoBehaviour
     // List field of burger stacks that are stacked on top of each other
     private List<GameObject> _burgerStack;
 
-    // Bool field to condition if the burger stack can be stacked or not
-    private bool _canStackBurger = true;
-
     void Start()
     {
         _burgerStack = new List<GameObject>();
         _burgerStack.Add(gameObject);
 
-        Debug.Log(_burgerStack[0]);
+        // Debug.Log(_burgerStack[0]);
 
+        NoneState = new BurgerStackNoneState();
         NormalState = new BurgerStackNormalState();
         SauceStackState = new BurgerStackSauceStackState();
         VegetableStackState = new BurgerStackVegetableStackState();
@@ -65,7 +65,7 @@ public class BurgerStackSystem : MonoBehaviour
     public bool TryAddItemToBurger(GameObject burgerItem)
     {
         // Check if you can add burger item to the stack
-        if (!_canStackBurger)
+        if (_currentState == NoneState)
         {
             Debug.Log("Cannot stack burger items at this time.");
             return false;
@@ -84,7 +84,7 @@ public class BurgerStackSystem : MonoBehaviour
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {
-            _canStackBurger = false;
+            SwitchState(NoneState);
         }
 
         return true;
@@ -108,9 +108,9 @@ public class BurgerStackSystem : MonoBehaviour
         currentStackIndex--;
 
         // If the removed item was the top bun, allow stacking again
-        if (!_canStackBurger)
+        if (_currentState == NoneState)
         {
-            _canStackBurger = true;
+            SwitchState(NormalState);
         }
 
         return true;
