@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311849325791977331, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: currentBurgerType
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6914458099184048282, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,3 +192,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BurgerSystem
   _cucumberPicklePointsPrefab: {fileID: 4996509481883919617, guid: 9e1f18d1da24ebd4ebbcee86b0d595f2, type: 3}
+  _saucePointPrefab: {fileID: 6478483911038075456, guid: 046cbd6e86470b84f8745a7569af63ba, type: 3}
