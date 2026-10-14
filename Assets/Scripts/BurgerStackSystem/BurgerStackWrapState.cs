@@ -25,6 +25,6 @@ public class BurgerStackWrapState : BurgerStackBaseState
 
     public override void WrapPaper(BurgerStackSystem manager)
     {
-
+        manager.SwitchState(manager.NormalState, null);
     }
 }
