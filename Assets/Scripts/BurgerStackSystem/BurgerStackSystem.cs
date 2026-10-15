@@ -4,9 +4,10 @@ using static UnityEditor.Progress;
 
 public class BurgerStackSystem : MonoBehaviour
 {
-    // Statemachine field to manage the state of the burger stack
+    // State machine field to manage the state of the burger stack
     BurgerStackBaseState _currentState;
 
+    // The previous state to roll back
     BurgerStackBaseState _previousState;
 
     public BurgerStackNoneState NoneState { get; private set; }
@@ -190,8 +191,14 @@ public class BurgerStackSystem : MonoBehaviour
     public void SwitchToPreviousState()
     {
         _currentState?.Exit(this);
+
+        // Initialize a temporary variable to save for the previous state
+        BurgerStackBaseState temp = _currentState;
+
         // Assign the previous state to the current state
         _currentState = _previousState;
+        _previousState = temp;
+
         _currentState.Enter(this, _burgerStack);
     }
 }
