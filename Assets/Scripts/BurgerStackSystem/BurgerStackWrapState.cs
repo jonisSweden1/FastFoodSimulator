@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BurgerStackWrapState : BurgerStackBaseState
 {
-    public override void Enter(BurgerStackSystem manager, GameObject item)
+    public override void Enter(BurgerStackSystem manager, List<GameObject> burgerStack)
     {
 
     }
@@ -15,16 +15,17 @@ public class BurgerStackWrapState : BurgerStackBaseState
 
     public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
     {
-        throw new System.NotImplementedException();
+        item = null;
+        return false;
     }
 
     public override void WrapPaper(BurgerStackSystem manager)
     {
-        manager.SwitchState(manager.NormalState, null);
+        manager.SwitchToPreviousState();
     }
 }

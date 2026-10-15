@@ -7,6 +7,8 @@ public class BurgerStackSystem : MonoBehaviour
     // Statemachine field to manage the state of the burger stack
     BurgerStackBaseState _currentState;
 
+    BurgerStackBaseState _previousState;
+
     public BurgerStackNoneState NoneState { get; private set; }
     public BurgerStackNormalState NormalState { get; private set; }
     public BurgerStackSauceStackState SauceStackState { get; private set; }
@@ -17,7 +19,7 @@ public class BurgerStackSystem : MonoBehaviour
     public bool CurrentlyOnStacking { get; set; } = false;  
 
     // Field for the current stack
-    private int currentStackIndex = 0;
+    public int currentStackIndex = 0;
 
     // Property to get the current stack index
     public int CurrentStackIndex
@@ -48,7 +50,7 @@ public class BurgerStackSystem : MonoBehaviour
         WrapState = new BurgerStackWrapState();
 
         _currentState = NormalState;
-        _currentState.Enter(this, null);
+        _currentState.Enter(this, _burgerStack);
     }
 
     private void OnDisable()
@@ -74,17 +76,26 @@ public class BurgerStackSystem : MonoBehaviour
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = burgerItem.GetComponent<ItemIdentifier>();
 
+        Debug.Log("CurrentStackIndex: " + currentStackIndex);
+
         currentStackIndex++;
         if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack))
         {
+            Debug.Log("Subtracting the currentStackIndex");
             currentStackIndex--;
+
             return false;
+        }
+
+        if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle || burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
+        {
+            currentStackIndex--;
         }
 
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {
-            SwitchState(NoneState, null);
+            SwitchState(NoneState);
         }
 
         return true;
@@ -110,7 +121,7 @@ public class BurgerStackSystem : MonoBehaviour
         // If the removed item was the top bun, allow stacking again
         if (_currentState == NoneState)
         {
-            SwitchState(NormalState, null);
+            SwitchState(NormalState);
         }
 
         return true;
@@ -121,7 +132,20 @@ public class BurgerStackSystem : MonoBehaviour
         // Instantiate the cucumber or pickle points prefab at the position of the burger stack
         GameObject points = Instantiate(_cucumberPicklePointsPrefab, pointToSpawn.position, Quaternion.identity);
         // Set the parent of the points prefab to be the burger stack
-        points.transform.SetParent(pointToSpawn);
+        points.transform.SetParent(transform);
+
+        _burgerStack.Add(points);
+        //currentStackIndex++;
+    }
+
+    public void SpawnSaucePoint(Transform pointToSpawn)
+    {
+        // Instantiate the sauce point prefab at the position of the burger stack
+        GameObject points = Instantiate(_saucePointPrefab, pointToSpawn.position, Quaternion.identity);
+        // Set the parent of the points prefab to be the burger stack
+        points.transform.SetParent(transform);
+
+        _burgerStack.Add(points);
     }
 
     // To list all information to the player that is wrapped,
@@ -134,11 +158,41 @@ public class BurgerStackSystem : MonoBehaviour
         return json;
     }
 
-    public void SwitchState(BurgerStackBaseState state, GameObject item)
+    public void SwitchState(BurgerStackBaseState state)
     {
         _currentState?.Exit(this);
+
+        // Assign the previous state to the current state before switching to the new state
+        _previousState = _currentState;
+
+        // Assign the new state to the current state
         _currentState = state;
-        _currentState.Enter(this, item);
+        _currentState.Enter(this, _burgerStack);
+    }
+
+    public void DestroyPreviousStack()
+    {
+        int previousStackIndex = currentStackIndex - 1;
+
+        // Get reference of the object safely
+        GameObject objectToDestroy = _burgerStack[currentStackIndex];
+
+        // Remove the object from the list to prevent problem occuring
+        _burgerStack.RemoveAt(currentStackIndex);
+
+        // Destroy the object
+        Destroy(objectToDestroy);
+
+        // Subtract the current stack index
+        currentStackIndex--;
+    }
+
+    public void SwitchToPreviousState()
+    {
+        _currentState?.Exit(this);
+        // Assign the previous state to the current state
+        _currentState = _previousState;
+        _currentState.Enter(this, _burgerStack);
     }
 }
 

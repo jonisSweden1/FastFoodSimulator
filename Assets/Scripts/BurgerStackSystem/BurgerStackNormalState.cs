@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class BurgerStackNormalState : BurgerStackBaseState
 {
-    public override void Enter(BurgerStackSystem manager, GameObject item)
+    public override void Enter(BurgerStackSystem manager, List<GameObject> burgerStack)
     {
 
     }
@@ -45,10 +45,18 @@ public class BurgerStackNormalState : BurgerStackBaseState
             }
         }
 
+        // If the current burger item is a cucumber pickle, then switch to the vegetable stack state and return false to prevent the normal stacking process from continuing
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
         {
-            manager.SwitchState(manager.VegetableStackState, item);
-            return false;
+            manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
+
+            Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
+
+            item.transform.position = collectionPoint.GetChild(0).position;
+            item.transform.SetParent(collectionPoint.GetChild(0));
+
+            manager.SwitchState(manager.VegetableStackState);
+            return true;
         }
 
         Debug.Log("Current Stack Index: " + currentStackIndex);
@@ -89,6 +97,6 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
     public override void WrapPaper(BurgerStackSystem manager)
     {
-        manager.SwitchState(manager.WrapState, null);
+        manager.SwitchState(manager.WrapState);
     }
 }
