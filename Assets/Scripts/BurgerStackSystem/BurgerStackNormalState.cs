@@ -19,17 +19,12 @@ public class BurgerStackNormalState : BurgerStackBaseState
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
 
-        // Set the CurrentlyOnStacking to true before switching to another state, in order to inform the manager that the stacking process is ongoing
-        // This way, the other states can check this variable when entering, and if it's true, then they will initiate a different stacking process.
-        manager.CurrentlyOnStacking = true;
-
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
 
         if (burgerItemId.CurrentType != TypeOfItem.BurgerItem)
         {
             Debug.Log("This item is not a burger item");
-            manager.CurrentlyOnStacking = false;
             return false;
         }
 
@@ -40,7 +35,6 @@ public class BurgerStackNormalState : BurgerStackBaseState
             if (burgerItemId.CurrentBurgerType != TypeOfBurgerStack.BottomBun)
             {
                 Debug.Log("The first burger item must be a bottom bun");
-                manager.CurrentlyOnStacking = false;
                 return false;
             }
         }
@@ -59,6 +53,19 @@ public class BurgerStackNormalState : BurgerStackBaseState
             return true;
         }
 
+        if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
+        {
+            manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
+
+            Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
+
+            item.transform.position = collectionPoint.position;
+            item.transform.SetParent(collectionPoint);
+
+            manager.SwitchState(manager.SauceStackState);
+            return true;
+        }
+
         Debug.Log("Current Stack Index: " + currentStackIndex);
         Debug.Log("Previous Stack Index: " + previousStackIndex);
 
@@ -74,8 +81,6 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
         burgerStack.Add(item);
         burgerItemId.AddBurgerItemToStack(manager);
-
-        manager.CurrentlyOnStacking = false;
 
         return true;
     }

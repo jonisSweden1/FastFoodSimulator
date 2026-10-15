@@ -16,9 +16,6 @@ public class BurgerStackSystem : MonoBehaviour
     public BurgerStackVegetableStackState VegetableStackState { get; private set; }
     public BurgerStackWrapState WrapState { get; private set; }
 
-    // Bool property to check if the burger stack is currently being stacked
-    public bool CurrentlyOnStacking { get; set; } = false;  
-
     // Field for the current stack
     public int currentStackIndex = 0;
 

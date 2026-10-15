@@ -20,7 +20,23 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
 
-        manager.CurrentlyOnStacking = true;
+        ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
+
+        if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Patty ||
+            burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Tomato ||
+            burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
+        {
+            // Either add burger item to the recent burger stack
+            item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
+            Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
+            Debug.Log("Added");
+
+            // Set parent to the burger item
+            item.transform.parent = manager.transform;
+
+            burgerStack.Add(item);
+            burgerItemId.AddBurgerItemToStack(manager);
+        }
 
         Debug.Log(burgerStack[previousStackIndex].transform);
 
@@ -44,8 +60,6 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         Debug.Log("The burger stacking is completed");
 
         _currentAvailableVegetableStackIndex++;
-
-        manager.CurrentlyOnStacking = false;
 
         return true;
     }
