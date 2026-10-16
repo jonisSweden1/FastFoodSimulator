@@ -29,7 +29,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         }
 
         // Check if currentStackIndex is over the minimum index limitation
-        if (currentStackIndex == 0)
+        if (currentStackIndex == 1)
         {
             // If the currentStackIndex is 0, then check if the burger item is a bottom bun
             if (burgerItemId.CurrentBurgerType != TypeOfBurgerStack.BottomBun)
@@ -44,15 +44,21 @@ public class BurgerStackNormalState : BurgerStackBaseState
         {
             manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
 
-            Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
+            currentStackIndex = manager.CurrentStackIndex;
+            previousStackIndex = currentStackIndex - 1;
+
+            Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
 
             item.transform.position = collectionPoint.GetChild(0).position;
             item.transform.SetParent(collectionPoint.GetChild(0));
+
+            burgerItemId.AddBurgerItemToStack(manager);
 
             manager.SwitchState(manager.VegetableStackState);
             return true;
         }
 
+        /*
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
             manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
@@ -65,16 +71,18 @@ public class BurgerStackNormalState : BurgerStackBaseState
             manager.SwitchState(manager.SauceStackState);
             return true;
         }
+        */
 
-        Debug.Log("Current Stack Index: " + currentStackIndex);
-        Debug.Log("Previous Stack Index: " + previousStackIndex);
+        // Debug.Log("Current Stack Index: " + currentStackIndex);
+        // Debug.Log("Previous Stack Index: " + previousStackIndex);
 
-        Debug.Log(burgerStack[previousStackIndex]);
+        // Debug.Log(burgerStack[previousStackIndex]);
 
         // Either add burger item to the recent burger stack
         item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
-        Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
-        Debug.Log("Added");
+
+        // Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
+        // Debug.Log("Added");
 
         // Set parent to the burger item
         item.transform.parent = manager.transform;

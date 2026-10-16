@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311849325791977331, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: currentBurgerType
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6914458099184048282, guid: 2eadc5649262719439283aa9e2920928, type: 3}
       propertyPath: m_LocalScale.x

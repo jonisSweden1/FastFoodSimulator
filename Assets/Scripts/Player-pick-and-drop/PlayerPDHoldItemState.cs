@@ -50,13 +50,13 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 }
                 else if (raycastItemId.BurgerSystem != null)
                 {
-                    Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
+                    // Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
                     if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem.gameObject))
                     {
                         // Successfully added the held burger item to the raycasted burger system
-                        Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                        Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
                     manager.ItemObject.SetActive(true);

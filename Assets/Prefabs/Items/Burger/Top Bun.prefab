@@ -129,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5672303972829975012, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: currentBurgerType
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6411577450896807437, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_LocalPosition.x

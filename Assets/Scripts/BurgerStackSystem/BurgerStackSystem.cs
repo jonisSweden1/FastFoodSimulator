@@ -37,25 +37,37 @@ public class BurgerStackSystem : MonoBehaviour
     void Start()
     {
         _burgerStack = new List<GameObject>();
+
+        // Add the wrapping paper as the first stack in the burger
         _burgerStack.Add(gameObject);
 
-        // Debug.Log(_burgerStack[0]);
-
+        // Initialize all states
         NoneState = new BurgerStackNoneState();
         NormalState = new BurgerStackNormalState();
         SauceStackState = new BurgerStackSauceStackState();
         VegetableStackState = new BurgerStackVegetableStackState();
         WrapState = new BurgerStackWrapState();
 
+        // Set the state to normal stacking state
         _currentState = NormalState;
+
+        // Call the "Enter" method whenever the 
         _currentState.Enter(this, _burgerStack);
     }
 
     private void OnDisable()
     {
+        // Call the "Exit" whenever the script is disabled
         _currentState?.Exit(this);
     }
 
+    private void OnEnable()
+    {
+        // Call the "Enter" whenever the script is enabled
+        _currentState?.Enter(this, _burgerStack);
+    }
+
+    // Wrapping the 
     public void WrapPaper()
     {
         _currentState.WrapPaper(this);
@@ -74,17 +86,30 @@ public class BurgerStackSystem : MonoBehaviour
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = burgerItem.GetComponent<ItemIdentifier>();
 
-        Debug.Log("CurrentStackIndex: " + currentStackIndex);
+        if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
+        {
+            Debug.Log("Cannot place wrapping paper on the burger stack");
+            return false;
+        }
 
+        // Debug.Log("CurrentStackIndex: " + currentStackIndex);
+
+        //
         currentStackIndex++;
+
+        // Call the add item to burger. If it fails, then send error message, and return false to avoid from continuing
         if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack))
         {
-            Debug.Log("Subtracting the currentStackIndex");
+            Debug.LogError("Failed to add burger item");
+
+            // Subtract the current stack index
+            // Debug.Log("Subtracting the currentStackIndex");
             currentStackIndex--;
 
             return false;
         }
 
+        // If the current burger type is cucummberPickle or sauce, then subtract the current stack index
         if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle || burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
             currentStackIndex--;
@@ -99,8 +124,11 @@ public class BurgerStackSystem : MonoBehaviour
         return true;
     }
 
+    // TODO
     public bool TryRemoveItemFromBurger(out GameObject removedItem)
     {
+        int previousStackIndex = currentStackIndex - 1;
+
         // Check if the currentStackIndex is less than 1, which means there are no items to remove
         if (currentStackIndex < 1)
         {
@@ -108,18 +136,38 @@ public class BurgerStackSystem : MonoBehaviour
             return false;
         }
 
-        if(!_currentState.RemoveItemFromBurger(this, out removedItem, _burgerStack))
+        // Get the reference of the object currently on the top of the stack
+        GameObject currentItem = _burgerStack[currentStackIndex];
+
+        ItemIdentifier currentItemId;
+
+        // Check if the object is an item
+        if (currentItem.TryGetComponent<ItemIdentifier>(out currentItemId))
+        {
+            // If the object include these, then subtract the current stack index
+            if (currentItemId.CurrentBurgerType == TypeOfBurgerStack.Patty ||
+                currentItemId.CurrentBurgerType == TypeOfBurgerStack.Tomato ||
+                currentItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun ||
+                currentItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
+            {
+                currentStackIndex--;
+                
+            }
+        }
+
+        Debug.Log("currentStackIndex: " + currentStackIndex);
+
+        // Remove the item from the burger stack
+        if (!_currentState.RemoveItemFromBurger(this, out removedItem, _burgerStack))
         {
             removedItem = null;
             return false;
         }
 
-        currentStackIndex--;
-
         // If the removed item was the top bun, allow stacking again
         if (_currentState == NoneState)
         {
-            SwitchState(NormalState);
+            SwitchToPreviousState();
         }
 
         return true;
@@ -133,7 +181,7 @@ public class BurgerStackSystem : MonoBehaviour
         points.transform.SetParent(transform);
 
         _burgerStack.Add(points);
-        //currentStackIndex++;
+        currentStackIndex++;
     }
 
     public void SpawnSaucePoint(Transform pointToSpawn)
@@ -170,8 +218,6 @@ public class BurgerStackSystem : MonoBehaviour
 
     public void DestroyPreviousStack()
     {
-        int previousStackIndex = currentStackIndex - 1;
-
         // Get reference of the object safely
         GameObject objectToDestroy = _burgerStack[currentStackIndex];
 
@@ -204,6 +250,7 @@ public class BurgerStackSystem : MonoBehaviour
 public enum TypeOfBurgerStack
 {
     Patty,
+
     // Cucumber and pickle is combined into one type to inform the manager that the player has stacked a cucumber or pickle on the burger stack,
     // and then switch state to the vegetable stack state, which will then instantiate the points prefab for the cucumber or pickle to be placed on the burger stack.
     CucumberPickle,
