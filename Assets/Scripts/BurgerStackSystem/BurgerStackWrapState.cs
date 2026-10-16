@@ -18,9 +18,10 @@ public class BurgerStackWrapState : BurgerStackBaseState
         return false;
     }
 
-    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
     {
         item = null;
+        stackRemoved = false;
         return false;
     }
 

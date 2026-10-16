@@ -18,7 +18,7 @@ public class BurgerStackSauceStackState : BurgerStackBaseState
         throw new System.NotImplementedException();
     }
 
-    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
     {
         throw new System.NotImplementedException();
     }

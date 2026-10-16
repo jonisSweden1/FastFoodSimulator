@@ -12,7 +12,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
 
     public override void Exit(BurgerStackSystem manager)
     {
-        _currentAvailableVegetableStackIndex = 0;
+        
     }
 
     public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
@@ -20,8 +20,8 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
 
-        Debug.Log("currentStackIndex: " + currentStackIndex);
-        Debug.Log("previousStackIndex: " + previousStackIndex);
+        // Debug.Log("currentStackIndex: " + currentStackIndex);
+        // Debug.Log("previousStackIndex: " + previousStackIndex);
 
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
 
@@ -45,6 +45,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         }
 
         _currentAvailableVegetableStackIndex++;
+        Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
 
         //Debug.Log(burgerStack[previousStackIndex].transform);
 
@@ -61,29 +62,30 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
 
             _currentAvailableVegetableStackIndex = 0;
+            Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
 
             currentStackIndex = manager.CurrentStackIndex;
             previousStackIndex = currentStackIndex - 1;
 
             collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
 
-            Debug.Log("currentStackIndex: " + currentStackIndex);
-            Debug.Log("previousStackIndex: " + previousStackIndex);
+            // Debug.Log("currentStackIndex: " + currentStackIndex);
+            // Debug.Log("previousStackIndex: " + previousStackIndex);
         }
 
-        Debug.Log("Set vegetable to the burger stack");
+        // Debug.Log("Set vegetable to the burger stack");
 
         item.transform.position = collectionPoint.GetChild(_currentAvailableVegetableStackIndex).position;
         item.transform.SetParent(collectionPoint.GetChild(_currentAvailableVegetableStackIndex));
 
         burgerItemId.AddBurgerItemToStack(manager);
 
-        Debug.Log("The burger stacking is completed");
+        // Debug.Log("The burger stacking is completed");
 
         return true;
     }
 
-    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
     {
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
@@ -93,20 +95,24 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
 
         item = collectionPoint.GetChild(_currentAvailableVegetableStackIndex).GetChild(0).gameObject;
 
+        item.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
+
         item.transform.SetParent(null);
 
-        _currentAvailableVegetableStackIndex--;
+        stackRemoved = false;
 
-        if(_currentAvailableVegetableStackIndex < 0)
+        _currentAvailableVegetableStackIndex--;
+        Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
+
+        if (_currentAvailableVegetableStackIndex < 0)
         {
             manager.DestroyPreviousStack();
 
-            currentStackIndex = manager.CurrentStackIndex;
-            previousStackIndex = currentStackIndex - 1;
+            stackRemoved = true;
 
-            Debug.Log(burgerStack[currentStackIndex]);
+            // Debug.Log(burgerStack[previousStackIndex]);
 
-            GameObject burgerItemPrevious = burgerStack[currentStackIndex];
+            GameObject burgerItemPrevious = burgerStack[previousStackIndex];
 
             ItemIdentifier burgerItemPreId;
 
@@ -114,10 +120,13 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             {
                 if(burgerItemPrevious.name.Contains("Vegetable-stacking-point"))
                 {
-                    _currentAvailableVegetableStackIndex = 4;
+                    _currentAvailableVegetableStackIndex = collectionPoint.childCount - 1;
+                    Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
                     return true;
                 }
             }
+
+            _currentAvailableVegetableStackIndex = 0;
 
             if(burgerItemPreId.CurrentBurgerType == TypeOfBurgerStack.Patty ||
                 burgerItemPreId.CurrentBurgerType == TypeOfBurgerStack.Tomato ||

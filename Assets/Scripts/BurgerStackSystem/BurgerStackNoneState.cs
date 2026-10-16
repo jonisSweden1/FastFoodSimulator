@@ -18,8 +18,10 @@ public class BurgerStackNoneState : BurgerStackBaseState
         
     }
 
-    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack)
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
     {
+        int previousStackIndex = manager.CurrentStackIndex - 1;
+
         // Setting the removedItem with the toppest stack burger item
         item = burgerStack[manager.CurrentStackIndex];
 
@@ -29,6 +31,13 @@ public class BurgerStackNoneState : BurgerStackBaseState
 
         // Removing the burger item from the stack
         burgerStack.RemoveAt(manager.CurrentStackIndex);
+
+        stackRemoved = true;
+
+        if (burgerStack[previousStackIndex].name.Contains("Vegetable-stacking-point"))
+        {
+            manager.SwitchState(manager.VegetableStackState);
+        }
 
         return true;
     }
