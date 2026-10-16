@@ -124,13 +124,17 @@ public class BurgerStackSystem : MonoBehaviour
         return true;
     }
 
-    // TODO
     public bool TryRemoveItemFromBurger(out GameObject removedItem)
     {
-        int previousStackIndex = currentStackIndex - 1;
-
         // Check if the currentStackIndex is less than 1, which means there are no items to remove
         if (currentStackIndex < 1)
+        {
+            removedItem = null;
+            return false;
+        }
+
+        // Remove the item from the burger stack
+        if (!_currentState.RemoveItemFromBurger(this, out removedItem, _burgerStack))
         {
             removedItem = null;
             return false;
@@ -150,19 +154,12 @@ public class BurgerStackSystem : MonoBehaviour
                 currentItemId.CurrentBurgerType == TypeOfBurgerStack.BottomBun ||
                 currentItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
             {
+                Debug.Log("Subtracting");
                 currentStackIndex--;
-                
             }
         }
 
         Debug.Log("currentStackIndex: " + currentStackIndex);
-
-        // Remove the item from the burger stack
-        if (!_currentState.RemoveItemFromBurger(this, out removedItem, _burgerStack))
-        {
-            removedItem = null;
-            return false;
-        }
 
         // If the removed item was the top bun, allow stacking again
         if (_currentState == NoneState)

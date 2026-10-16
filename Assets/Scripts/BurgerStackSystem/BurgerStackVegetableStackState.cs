@@ -80,8 +80,6 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
 
         Debug.Log("The burger stacking is completed");
 
-        
-
         return true;
     }
 
