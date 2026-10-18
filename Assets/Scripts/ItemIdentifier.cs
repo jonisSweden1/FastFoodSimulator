@@ -12,14 +12,14 @@ public class ItemIdentifier : MonoBehaviour
     // The current type of burger type property
     public TypeOfBurgerStack CurrentBurgerType { get { return currentBurgerType; } }
 
-    public BurgerSystem BurgerSystem { get { return _burgerSystem; } }
+    public BurgerStackSystem BurgerSystem { get { return _burgerSystem; } }
     public bool IsBurgerStacked { get { return _isBurgerStacked; } }
 
     // To check if the item is in the burger stack
     bool _isBurgerStacked = false;
 
     // Identify the bottom bun to get the burger system
-    BurgerSystem _burgerSystem = null;
+    BurgerStackSystem _burgerSystem = null;
 
     // Name of the item field
     [SerializeField] private string _itemName;
@@ -31,7 +31,7 @@ public class ItemIdentifier : MonoBehaviour
     [SerializeField] private TypeOfBurgerStack currentBurgerType;
     
     // Add the item to the stack
-    public void AddBurgerItemToStack(BurgerSystem burgerSystem)
+    public void AddBurgerItemToStack(BurgerStackSystem burgerSystem)
     {
         _isBurgerStacked = true;
 

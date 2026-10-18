@@ -30,12 +30,12 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
 
                 // Check if the raycasted item has a BurgerSystem component
-                if (raycastItem.TryGetComponent<BurgerSystem>(out BurgerSystem raycastBurgerSystem))
+                if (raycastItem.TryGetComponent<BurgerStackSystem>(out BurgerStackSystem raycastBurgerSystem))
                 {
-                    Debug.Log("BurgerSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
+                    Debug.Log("BurgerStackSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
-                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem))
+                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem.gameObject))
                     {
                         // Successfully added the held burger item to the raycasted burger system
                         Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
@@ -50,13 +50,13 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 }
                 else if (raycastItemId.BurgerSystem != null)
                 {
-                    Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
+                    // Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
 
                     // Add the held burger item to the raycasted burger system
-                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem))
+                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem.gameObject))
                     {
                         // Successfully added the held burger item to the raycasted burger system
-                        Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                        Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
                     manager.ItemObject.SetActive(true);

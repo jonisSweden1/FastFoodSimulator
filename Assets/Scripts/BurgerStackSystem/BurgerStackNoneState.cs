@@ -1,0 +1,49 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BurgerStackNoneState : BurgerStackBaseState
+{
+    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        return false;
+    }
+
+    public override void Enter(BurgerStackSystem manager, List<GameObject> burgerStack)
+    {
+        
+    }
+
+    public override void Exit(BurgerStackSystem manager)
+    {
+        
+    }
+
+    public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
+    {
+        int previousStackIndex = manager.CurrentStackIndex - 1;
+
+        // Setting the removedItem with the toppest stack burger item
+        item = burgerStack[manager.CurrentStackIndex];
+
+        // Remove parent from the stacked burger
+        item.transform.SetParent(null, true);
+        item.GetComponent<ItemIdentifier>().RemoveBurgerItemFromStack();
+
+        // Removing the burger item from the stack
+        burgerStack.RemoveAt(manager.CurrentStackIndex);
+
+        stackRemoved = true;
+
+        if (burgerStack[previousStackIndex].name.Contains("Vegetable-stacking-point"))
+        {
+            manager.SwitchState(manager.VegetableStackState);
+        }
+
+        return true;
+    }
+
+    public override void WrapPaper(BurgerStackSystem manager)
+    {
+        
+    }
+}

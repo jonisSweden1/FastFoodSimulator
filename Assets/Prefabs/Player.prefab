@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   orientation: {fileID: 7200851454011522164}
   playerInput: {fileID: 6791718056141417908}
-  mouseSensitivity: 100
+  mouseSensitivity: 70
 --- !u!114 &4718680010650104891
 MonoBehaviour:
   m_ObjectHideFlags: 0
