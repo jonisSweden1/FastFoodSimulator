@@ -12,6 +12,8 @@ public class ItemIdentifier : MonoBehaviour
     // The current type of burger type property
     public TypeOfBurgerStack CurrentBurgerType { get { return currentBurgerType; } }
 
+    public TypeOfSauce CurrentSauceType { get { return currentSauceType; } }
+
     public BurgerStackSystem BurgerSystem { get { return _burgerSystem; } }
     public bool IsBurgerStacked { get { return _isBurgerStacked; } }
 
@@ -27,8 +29,11 @@ public class ItemIdentifier : MonoBehaviour
     // The current type of item field
     [SerializeField] private TypeOfItem currentType;
 
-    // The current type of burger type field
+    // The current type of burger field
     [SerializeField] private TypeOfBurgerStack currentBurgerType;
+
+    // The current type of sauce field
+    [SerializeField] private TypeOfSauce currentSauceType;
     
     // Add the item to the stack
     public void AddBurgerItemToStack(BurgerStackSystem burgerSystem)
@@ -55,4 +60,5 @@ public enum TypeOfItem
 {
     None,
     BurgerItem,
+    SauceDispenser,
 }

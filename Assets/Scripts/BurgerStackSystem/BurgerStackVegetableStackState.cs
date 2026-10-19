@@ -29,18 +29,16 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Tomato ||
             burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {
-            // Either add burger item to the recent burger stack
-            item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
-            //Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
-            //Debug.Log("Added");
+            AddAndSwitchStateToNormal(manager, item, burgerStack);
 
-            // Set parent to the burger item
-            item.transform.parent = manager.transform;
+            return true;
+        }
 
-            burgerStack.Add(item);
-            burgerItemId.AddBurgerItemToStack(manager);
-            manager.SwitchState(manager.NormalState);
+        Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
 
+        if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
+        {
+            AddAndSwitchStateToSauceStack(manager, item, burgerStack);
             return true;
         }
 
@@ -48,8 +46,6 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
 
         //Debug.Log(burgerStack[previousStackIndex].transform);
-
-        Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
 
         //Debug.Log(collectionPoint);
 
@@ -83,6 +79,41 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         // Debug.Log("The burger stacking is completed");
 
         return true;
+    }
+
+    public void AddAndSwitchStateToNormal(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        int currentStackIndex = manager.CurrentStackIndex;
+        int previousStackIndex = currentStackIndex - 1;
+
+        ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
+
+        // Either add burger item to the recent burger stack
+        item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
+        //Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
+        //Debug.Log("Added");
+
+        // Set parent to the burger item
+        item.transform.parent = manager.transform;
+
+        burgerStack.Add(item);
+        burgerItemId.AddBurgerItemToStack(manager);
+        manager.SwitchState(manager.NormalState);
+    }
+
+    public void AddAndSwitchStateToSauceStack(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        int currentStackIndex = manager.CurrentStackIndex;
+        int previousStackIndex = currentStackIndex - 1;
+
+        manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
+
+        Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
+
+        item.transform.position = collectionPoint.position;
+        item.transform.SetParent(collectionPoint);
+
+        manager.SwitchState(manager.SauceStackState);
     }
 
     public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
