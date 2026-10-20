@@ -31,7 +31,7 @@ public class BurgerStackSystem : MonoBehaviour
     // Prefab field for the sauce point prefab (this is going to have the same collection of the same sauce prefab to spawn on the burger stack, but with different points for each sauce type)
     [SerializeField] private GameObject _saucePointPrefab;
 
-    private GameObject _wrappedPaper;
+    private GameObject _wrappedPaperPrefab;
 
     // List field of burger stacks that are stacked on top of each other
     private List<GameObject> _burgerStack;
@@ -72,9 +72,25 @@ public class BurgerStackSystem : MonoBehaviour
     // Wrapping the paper
     public void WrapPaper()
     {
-        foreach(GameObject gameObject in _burgerStack)
+        if(_currentState != WrapState)
         {
-            gameObject.SetActive(false);
+            GameObject wrappedPaper = Instantiate(_wrappedPaperPrefab);
+
+            //wrappedPaper.
+
+            foreach(GameObject gameObject in _burgerStack)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            //Destroy()
+
+            foreach (GameObject gameObject in _burgerStack)
+            {
+                gameObject.SetActive(true);
+            }
         }
 
         _currentState.WrapPaper(this);
