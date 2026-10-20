@@ -50,6 +50,8 @@ public class SauceDispenser : MonoBehaviour
 
         _leverAnimator.SetTrigger(_triggerName);
 
+        _currentAmountSauce = _currentAmountSauce - _spraySauceAmount;
+
         return true;
     }
 
