@@ -60,5 +60,6 @@ public enum TypeOfItem
 {
     None,
     BurgerItem,
+    WrappedPaper,
     SauceDispenser,
 }
