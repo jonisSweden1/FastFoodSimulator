@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemIdentifier
   _itemName: Sauce Dispenser
-  currentType: 2
+  currentType: 3
   currentBurgerType: 0
   currentSauceType: 0
 --- !u!1001 &4257055667923185316

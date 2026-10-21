@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae32df5580e6b641b78a09611db2ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemIdentifier
-  _itemName: 
+  _itemName: Wrapped Paper
   currentType: 2
   currentBurgerType: 0
+  currentSauceType: 0
 --- !u!114 &8889041197558353795
 MonoBehaviour:
   m_ObjectHideFlags: 0
