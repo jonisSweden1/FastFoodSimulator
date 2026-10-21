@@ -72,10 +72,9 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         }
 
         // If no other items are identified anything different, then it is a item to drop
-
-        // Set item object's position and rotation to the point
         manager.ItemObject.transform.parent = null;
 
+        // Set item object's position and rotation to the point
         manager.ItemObject.transform.position = hit.point;
         manager.ItemObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
