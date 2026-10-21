@@ -6,11 +6,31 @@ public class BurgerInfo : MonoBehaviour
 {
     List<BurgerItemData> _burgerStackData;
 
-    public void FillInfoData(GameObject[] burgerStack)
+    GameObject[] _burgerStack;
+
+    BurgerStackSystem _burgerStackSystem;
+
+    public void UnwrapPaper()
+    {
+        foreach (GameObject burgerItem in _burgerStack)
+        {
+            burgerItem.SetActive(true);
+        }
+
+        _burgerStackSystem.UnwrapPaper();
+
+        Destroy(gameObject);
+    }
+
+    public void FillInfoData(GameObject[] burgerStack, BurgerStackSystem burgerStackSystem)
     {
         // Initialize the list of burger stack info
 
         _burgerStackData = new List<BurgerItemData>();
+
+        _burgerStack = burgerStack;
+
+        _burgerStackSystem = burgerStackSystem;
 
         // Go through each of the item in the GameObject[] burgerStack
         
@@ -35,8 +55,21 @@ public class BurgerInfo : MonoBehaviour
                         ItemIdentifier vegetableInBurgerId = vegetableInBurger.GetComponent<ItemIdentifier>();
 
                         // Check if an item has the same name as the other item that exist to increase the amount of it.
+                        if (_burgerStackData.Count > 0)
+                        {
+                            for (int i = 0; i < _burgerStackData.Capacity; i++)
+                            {
+                                if (_burgerStackData[i].Name == burgerItemId.ItemName)
+                                {
+                                    _burgerStackData[i].Amount++;
+                                    break;
+                                }
+                            }
+                        }
 
                         // If the item doesn't exist, then create a new item data
+                        var burgerVegetableData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
+                        _burgerStackData.Add(burgerVegetableData);
                     }
 
                     continue;
@@ -69,6 +102,8 @@ public class BurgerInfo : MonoBehaviour
                         }
 
                         // If the item doesn't exist, then create a new item data
+                        var burgerSauceData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
+                        _burgerStackData.Add(burgerSauceData);
                     }
 
                     continue;

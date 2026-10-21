@@ -1494,22 +1494,6 @@ PrefabInstance:
       value: 2.168
       objectReference: {fileID: 0}
     - target: {fileID: 1106888635404014942, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1106888635404014942, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1106888635404014942, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1106888635404014942, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1106888635404014942, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -1526,7 +1510,8 @@ PrefabInstance:
       value: WrappedPaper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1334931015710118148, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35bbefe6aa82fbd40b49e5bafbaa351a, type: 3}
