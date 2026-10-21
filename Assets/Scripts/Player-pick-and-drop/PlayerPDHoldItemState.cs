@@ -42,7 +42,6 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         return;
                     }
 
-                    manager.ItemObject.SetActive(true);
                     manager.ItemObject = null;
                     manager.SwitchState(manager.nonItemState);
 
@@ -59,7 +58,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
-                    manager.ItemObject.SetActive(true);
+                    
                     manager.ItemObject = null;
                     manager.SwitchState(manager.nonItemState);
                     return;
@@ -75,10 +74,10 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         // If no other items are identified anything different, then it is a item to drop
 
         // Set item object's position and rotation to the point
+        manager.ItemObject.transform.parent = null;
+
         manager.ItemObject.transform.position = hit.point;
         manager.ItemObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-
-        manager.ItemObject.SetActive(true);
 
         // Debug.Log("Dropped item at: " + hit.point);
 

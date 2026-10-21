@@ -1417,6 +1417,7 @@ MonoBehaviour:
     m_Bits: 136
   pickDistance: 5
   dropDistance: 10
+  _holdPoint: {fileID: 8376001645424578342}
 --- !u!4 &1912725754
 Transform:
   m_ObjectHideFlags: 0
@@ -1967,6 +1968,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5650a49e25b20e74ca14aa80a4786f6d, type: 3}
+--- !u!4 &8376001645424578342 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5055401410345030557, guid: 5650a49e25b20e74ca14aa80a4786f6d, type: 3}
+  m_PrefabInstance: {fileID: 8376001645424578341}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

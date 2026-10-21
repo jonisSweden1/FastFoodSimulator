@@ -38,7 +38,11 @@ public class PlayerPDNonItemState : PlayerPDBaseState
                 if(raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
                 {
                     manager.ItemObject = itemToTakeOut;
-                    manager.ItemObject.SetActive(false);
+
+                    Transform itemTransform = manager.ItemObject.transform;
+                    itemTransform.position = manager.HoldPoint.position;
+                    itemTransform.rotation = manager.HoldPoint.rotation;
+                    itemTransform.SetParent(manager.HoldPoint);
 
                     manager.SwitchState(manager.holdItemState);
                     return;
