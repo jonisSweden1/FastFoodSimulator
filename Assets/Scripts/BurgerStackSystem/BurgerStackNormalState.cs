@@ -42,36 +42,16 @@ public class BurgerStackNormalState : BurgerStackBaseState
         // If the current burger item is a cucumber pickle, then switch to the vegetable stack state and return false to prevent the normal stacking process from continuing
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
         {
-            manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
-
-            currentStackIndex = manager.CurrentStackIndex;
-            previousStackIndex = currentStackIndex - 1;
-
-            Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
-
-            item.transform.position = collectionPoint.GetChild(0).position;
-            item.transform.SetParent(collectionPoint.GetChild(0));
-
-            burgerItemId.AddBurgerItemToStack(manager);
-
-            manager.SwitchState(manager.VegetableStackState);
+            AddAndSwitchStateToVegetableStack(manager, item, burgerStack);
             return true;
         }
 
-        /*
+        
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
-            manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
-
-            Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
-
-            item.transform.position = collectionPoint.position;
-            item.transform.SetParent(collectionPoint);
-
-            manager.SwitchState(manager.SauceStackState);
+            AddAndSwitchStateToSauceStack(manager, item, burgerStack);
             return true;
         }
-        */
 
         // Debug.Log("Current Stack Index: " + currentStackIndex);
         // Debug.Log("Previous Stack Index: " + previousStackIndex);
@@ -91,6 +71,43 @@ public class BurgerStackNormalState : BurgerStackBaseState
         burgerItemId.AddBurgerItemToStack(manager);
 
         return true;
+    }
+
+    public void AddAndSwitchStateToVegetableStack(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        int currentStackIndex = manager.CurrentStackIndex;
+        int previousStackIndex = currentStackIndex - 1;
+
+        ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
+
+        manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
+
+        currentStackIndex = manager.CurrentStackIndex;
+        previousStackIndex = currentStackIndex - 1;
+
+        Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
+
+        item.transform.position = collectionPoint.GetChild(0).position;
+        item.transform.SetParent(collectionPoint.GetChild(0));
+
+        burgerItemId.AddBurgerItemToStack(manager);
+
+        manager.SwitchState(manager.VegetableStackState);
+    }
+
+    public void AddAndSwitchStateToSauceStack(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    {
+        int currentStackIndex = manager.CurrentStackIndex;
+        int previousStackIndex = currentStackIndex - 1;
+
+        manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
+
+        Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
+
+        item.transform.position = collectionPoint.position;
+        item.transform.SetParent(collectionPoint);
+
+        manager.SwitchState(manager.SauceStackState);
     }
 
     public override bool RemoveItemFromBurger(BurgerStackSystem manager, out GameObject item, List<GameObject> burgerStack, out bool stackRemoved)
