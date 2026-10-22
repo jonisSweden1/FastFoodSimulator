@@ -40,7 +40,21 @@ public class SauceDispenser : MonoBehaviour
 
         GameObject sauceInstance = Instantiate(_saucePrefab);
 
-        if(!targetObject.GetComponent<ItemIdentifier>().BurgerSystem.TryAddItemToBurger(sauceInstance))
+        ItemIdentifier targerObId;
+
+        if(!targetObject.TryGetComponent<ItemIdentifier>(out targerObId))
+        {
+            Debug.LogError("Cannot find item identifier");
+            return false;
+        }
+
+        if(!targerObId.IsBurgerStacked)
+        {
+            Debug.LogError("The burger item is not stacked");
+            return false;
+        }
+
+        if(!targerObId.BurgerSystem.TryAddItemToBurger(sauceInstance))
         {
             Debug.LogError("Cannot add sauce to the burger stack");
             Destroy(sauceInstance);
@@ -50,7 +64,7 @@ public class SauceDispenser : MonoBehaviour
 
         _leverAnimator.SetTrigger(_triggerName);
 
-        _currentAmountSauce = _currentAmountSauce - _spraySauceAmount;
+        _currentAmountSauce -= _spraySauceAmount;
 
         return true;
     }

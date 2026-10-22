@@ -25,7 +25,27 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
 
             // TODO: Reimplement the logic of activating the burger system when placing the wrapper paper and the burger system
             // Check if the raycasted item is a burger item
-            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.BurgerItem)
+            if(raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.SauceDispenser)
+            {
+                Debug.Log("The burger item is raycasted and the hold item is sauce dispenser. Preparing to sauce the dispenser");
+
+                SauceDispenser sauceDispenser;
+
+                if(!holdItem.TryGetComponent<SauceDispenser>(out sauceDispenser))
+                {
+                    Debug.LogError("Cannot find sauce dispenser script");
+                    return;
+                }
+
+                if(!sauceDispenser.SpraySauce(raycastItem.gameObject))
+                {
+                    Debug.LogError("Couldn't spray sauce");
+                    return;
+                }
+
+                return;
+            }
+            else if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.BurgerItem)
             {
                 Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
 
@@ -42,6 +62,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         return;
                     }
 
+                    manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
                     manager.ItemObject = null;
                     manager.SwitchState(manager.nonItemState);
 
@@ -58,7 +79,8 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
                     }
-                    
+
+                    manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
                     manager.ItemObject = null;
                     manager.SwitchState(manager.nonItemState);
                     return;
@@ -81,6 +103,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
         // Debug.Log("Dropped item at: " + hit.point);
 
         // Remove item object from the pick-and-drop system
+        manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
         manager.ItemObject = null;
 
         // Switch state to non item state

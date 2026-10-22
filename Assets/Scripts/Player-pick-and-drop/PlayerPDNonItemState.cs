@@ -39,10 +39,12 @@ public class PlayerPDNonItemState : PlayerPDBaseState
                 {
                     manager.ItemObject = itemToTakeOut;
 
-                    Transform itemTransform = manager.ItemObject.transform;
-                    itemTransform.position = manager.HoldPoint.position;
-                    itemTransform.rotation = manager.HoldPoint.rotation;
-                    itemTransform.SetParent(manager.HoldPoint);
+                    Transform itemTransformBurger = manager.ItemObject.transform;
+                    itemTransformBurger.position = manager.HoldPoint.position;
+                    itemTransformBurger.rotation = manager.HoldPoint.rotation;
+                    itemTransformBurger.SetParent(manager.HoldPoint);
+
+                    itemTransformBurger.GetChild(0).GetComponent<Collider>().enabled = false;
 
                     manager.SwitchState(manager.holdItemState);
                     return;
@@ -59,7 +61,12 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             Debug.Log(parentObject);
 
             manager.ItemObject = raycastItemObject;
-            manager.ItemObject.SetActive(false);
+            Transform itemTransform = manager.ItemObject.transform;
+            itemTransform.position = manager.HoldPoint.position;
+            itemTransform.rotation = manager.HoldPoint.rotation;
+            itemTransform.SetParent(manager.HoldPoint);
+
+            itemTransform.GetChild(0).GetComponent<Collider>().enabled = false;
 
             manager.SwitchState(manager.holdItemState);
         }

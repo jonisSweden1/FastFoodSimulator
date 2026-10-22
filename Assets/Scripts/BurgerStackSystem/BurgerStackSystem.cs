@@ -74,6 +74,12 @@ public class BurgerStackSystem : MonoBehaviour
     {
         if(_currentState != WrapState)
         {
+            if(currentStackIndex <= 0)
+            {
+                Debug.LogError("There is no burger item in the stack");
+                return;
+            }
+
             GameObject wrappedPaper = Instantiate(_wrappedPaperPrefab);
 
             wrappedPaper.GetComponent<BurgerInfo>().FillInfoData(_burgerStack.ToArray(), this);
@@ -116,24 +122,22 @@ public class BurgerStackSystem : MonoBehaviour
 
         // Debug.Log("CurrentStackIndex: " + currentStackIndex);
 
-        currentStackIndex++;
+        bool stackAdded;
 
         // Call the add item to burger. If it fails, then send error message, and return false to avoid from continuing
-        if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack))
+        if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack, out stackAdded))
         {
             Debug.LogError("Failed to add burger item");
 
             // Subtract the current stack index
             // Debug.Log("Subtracting the currentStackIndex");
-            currentStackIndex--;
 
             return false;
         }
 
-        // If the current burger type is cucummberPickle or sauce, then subtract the current stack index
-        if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle || burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
+        if(stackAdded)
         {
-            currentStackIndex--;
+            currentStackIndex++;
         }
 
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger

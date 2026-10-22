@@ -14,7 +14,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         
     }
 
-    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack, out bool stackAdded)
     {
         // Identify if the type of item is burger
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
@@ -25,16 +25,18 @@ public class BurgerStackNormalState : BurgerStackBaseState
         if (burgerItemId.CurrentType != TypeOfItem.BurgerItem)
         {
             Debug.Log("This item is not a burger item");
+            stackAdded = false;
             return false;
         }
 
         // Check if currentStackIndex is over the minimum index limitation
-        if (currentStackIndex == 1)
+        if (currentStackIndex == 0)
         {
             // If the currentStackIndex is 0, then check if the burger item is a bottom bun
             if (burgerItemId.CurrentBurgerType != TypeOfBurgerStack.BottomBun)
             {
                 Debug.Log("The first burger item must be a bottom bun");
+                stackAdded = false;
                 return false;
             }
         }
@@ -43,6 +45,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
         {
             AddAndSwitchStateToVegetableStack(manager, item, burgerStack);
+            stackAdded = true;
             return true;
         }
 
@@ -50,6 +53,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
             AddAndSwitchStateToSauceStack(manager, item, burgerStack);
+            stackAdded = true;
             return true;
         }
 
@@ -60,6 +64,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
         // Either add burger item to the recent burger stack
         item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
+        item.transform.rotation = Quaternion.identity;
 
         // Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
         // Debug.Log("Added");
@@ -70,6 +75,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         burgerStack.Add(item);
         burgerItemId.AddBurgerItemToStack(manager);
 
+        stackAdded = true;
         return true;
     }
 
@@ -88,6 +94,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
 
         item.transform.position = collectionPoint.GetChild(0).position;
+        item.transform.rotation = Quaternion.identity;
         item.transform.SetParent(collectionPoint.GetChild(0));
 
         burgerItemId.AddBurgerItemToStack(manager);
@@ -105,6 +112,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
 
         item.transform.position = collectionPoint.position;
+        item.transform.rotation = Quaternion.identity;
         item.transform.SetParent(collectionPoint);
 
         manager.SwitchState(manager.SauceStackState);
