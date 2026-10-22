@@ -54,24 +54,27 @@ public class PlayerInteractionHandler : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance))
         {
-            Transform item = hit.collider.transform.parent;
-            ItemIdentifier itemId;
-
-            // Check if the object is an item, which should have the ItemIdentifier
-            if(item.TryGetComponent<ItemIdentifier>(out itemId))
+            if(hit.collider.tag == "Item")
             {
-                if(itemId.CurrentType == TypeOfItem.WrappedPaper)
-                {
-                    item.GetComponent<BurgerInfo>().UnwrapPaper();
-                }
+                Transform item = hit.collider.transform.parent;
+                ItemIdentifier itemId;
 
-                // Check if the object is a burger item
-                else if(itemId.CurrentType == TypeOfItem.BurgerItem)
+                // Check if the object is an item, which should have the ItemIdentifier
+                if (item.TryGetComponent<ItemIdentifier>(out itemId))
                 {
-                    // Check if it is stacked on the burger
-                    if(itemId.IsBurgerStacked)
+                    if (itemId.CurrentType == TypeOfItem.WrappedPaper)
                     {
-                        itemId.BurgerSystem.WrapPaper();
+                        item.GetComponent<BurgerInfo>().UnwrapPaper();
+                    }
+
+                    // Check if the object is a burger item
+                    else if (itemId.CurrentType == TypeOfItem.BurgerItem)
+                    {
+                        // Check if it is stacked on the burger
+                        if (itemId.IsBurgerStacked)
+                        {
+                            itemId.BurgerSystem.WrapPaper();
+                        }
                     }
                 }
             }
