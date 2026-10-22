@@ -45,12 +45,16 @@ public class SauceDispenser : MonoBehaviour
         if(!targetObject.TryGetComponent<ItemIdentifier>(out targerObId))
         {
             Debug.LogError("Cannot find item identifier");
+            Destroy(sauceInstance);
+
             return false;
         }
 
         if(!targerObId.IsBurgerStacked)
         {
             Debug.LogError("The burger item is not stacked");
+            Destroy(sauceInstance);
+
             return false;
         }
 
@@ -62,7 +66,7 @@ public class SauceDispenser : MonoBehaviour
             return false;
         }
 
-        _leverAnimator.SetTrigger(_triggerName);
+        _leverAnimator.Play("Spray");
 
         _currentAmountSauce -= _spraySauceAmount;
 

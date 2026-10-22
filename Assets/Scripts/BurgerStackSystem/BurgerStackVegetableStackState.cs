@@ -37,7 +37,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {
             AddAndSwitchStateToNormal(manager, item, burgerStack);
-            stackAdded = true;
+            stackAdded = false;
             return true;
         }
 
@@ -46,7 +46,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
             AddAndSwitchStateToSauceStack(manager, item, burgerStack);
-            stackAdded = true;
+            stackAdded = false;
             return true;
         }
 
@@ -75,7 +75,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
 
             // Debug.Log("currentStackIndex: " + currentStackIndex);
             // Debug.Log("previousStackIndex: " + previousStackIndex);
-            stackAdded = true;
+            stackAdded = false;
         }
         else
         {
@@ -133,6 +133,32 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
 
         item.transform.position = collectionPoint.position;
         item.transform.rotation = Quaternion.identity;
+
+        Quaternion currentRotation = item.transform.rotation;
+
+        float yRotationHalf = manager.SauceYRotationRange / 2;
+
+        float yRotationMin = currentRotation.y - yRotationHalf;
+        float yRotationMax = currentRotation.y + yRotationHalf;
+
+        float yRotation = Random.Range(yRotationMin, yRotationMax);
+        Quaternion newRotation = new Quaternion(currentRotation.x, yRotation, currentRotation.z, currentRotation.w);
+
+        item.transform.rotation = newRotation;
+
+
+        Vector3 currentLocalScale = item.transform.localScale;
+
+        float scaleRangeHalf = manager.SauceScaleRange / 2;
+
+        float minScale = 0 - scaleRangeHalf;
+        float maxScale = 0 + scaleRangeHalf;
+
+        float newScaleValue = Random.Range(minScale, maxScale);
+
+        Vector3 newScale = new Vector3(currentLocalScale.x + newScaleValue, currentLocalScale.y + newScaleValue, currentLocalScale.z + newScaleValue);
+
+        item.transform.localScale = newScale;
         item.transform.SetParent(collectionPoint);
 
         manager.SwitchState(manager.SauceStackState);

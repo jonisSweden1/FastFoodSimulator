@@ -116,12 +116,15 @@ public class BurgerInfo : MonoBehaviour
             {
                 for(int i = 0; i < _burgerStackData.Capacity; i++)
                 {
+                    Debug.Log(_burgerStackData[i].Name);
+
                     if (_burgerStackData[i].Name == burgerItemId.ItemName)
                     {
                         _burgerStackData[i].Amount++;
                         break;
                     }
                 }
+                continue;
             }
 
             // If the item doesn't exist, then create a new item data

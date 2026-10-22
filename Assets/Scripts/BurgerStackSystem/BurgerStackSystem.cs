@@ -10,6 +10,10 @@ public class BurgerStackSystem : MonoBehaviour
     // The previous state to roll back
     BurgerStackBaseState _previousState;
 
+    [SerializeField] private float _sauceYRotationRange;
+
+    [SerializeField] private float _sauceScaleRange;
+
     public BurgerStackNoneState NoneState { get; private set; }
     public BurgerStackNormalState NormalState { get; private set; }
     public BurgerStackSauceStackState SauceStackState { get; private set; }
@@ -24,6 +28,10 @@ public class BurgerStackSystem : MonoBehaviour
     {
         get { return currentStackIndex; }
     }
+
+    public float SauceYRotationRange { get { return _sauceYRotationRange; } }
+
+    public float SauceScaleRange { get { return _sauceScaleRange; } }
 
     // Prefab field for the cucumber or pickle points prefab (this is going to have a collection of defined points for the cucumber or pickles to stack)
     [SerializeField] private GameObject _cucumberPicklePointsPrefab;
