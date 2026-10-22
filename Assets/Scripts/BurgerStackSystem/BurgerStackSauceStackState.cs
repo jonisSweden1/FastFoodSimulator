@@ -31,8 +31,6 @@ public class BurgerStackSauceStackState : BurgerStackBaseState
             return true;
         }
 
-        
-
         // If the current burger item is a cucumber pickle, then switch to the vegetable stack state and return false to prevent the normal stacking process from continuing
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle)
         {

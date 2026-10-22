@@ -140,6 +140,11 @@ public class BurgerStackSystem : MonoBehaviour
             currentStackIndex++;
         }
 
+        if(currentStackIndex > 0)
+        {
+            gameObject.GetComponent<ItemIdentifier>().AddBurgerItemToStack(this);
+        }
+
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.TopBun)
         {

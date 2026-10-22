@@ -63,7 +63,7 @@ public class BurgerStackNormalState : BurgerStackBaseState
         // Debug.Log(burgerStack[previousStackIndex]);
 
         // Either add burger item to the recent burger stack
-        item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
+        item.transform.position = burgerStack[currentStackIndex].transform.GetChild(1).position;
         item.transform.rotation = Quaternion.identity;
 
         // Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
@@ -86,12 +86,12 @@ public class BurgerStackNormalState : BurgerStackBaseState
 
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
 
-        manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
+        manager.SpawnCucumberPicklePoints(burgerStack[currentStackIndex].transform.GetChild(1));
 
         currentStackIndex = manager.CurrentStackIndex;
         previousStackIndex = currentStackIndex - 1;
 
-        Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
+        Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
 
         item.transform.position = collectionPoint.GetChild(0).position;
         item.transform.rotation = Quaternion.identity;

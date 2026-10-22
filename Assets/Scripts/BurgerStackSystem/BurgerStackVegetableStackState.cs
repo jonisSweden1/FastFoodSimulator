@@ -104,7 +104,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         ItemIdentifier burgerItemId = item.GetComponent<ItemIdentifier>();
 
         // Either add burger item to the recent burger stack
-        item.transform.position = burgerStack[previousStackIndex].transform.GetChild(1).position;
+        item.transform.position = burgerStack[currentStackIndex].transform.GetChild(1).position;
         item.transform.rotation = Quaternion.identity;
         //Debug.Log(burgerStack[previousStackIndex].transform.GetChild(1));
         //Debug.Log("Added");
@@ -122,7 +122,10 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         int currentStackIndex = manager.CurrentStackIndex;
         int previousStackIndex = currentStackIndex - 1;
 
-        manager.SpawnSaucePoint(burgerStack[previousStackIndex].transform.GetChild(1));
+        manager.SpawnSaucePoint(burgerStack[currentStackIndex].transform.GetChild(1));
+
+        currentStackIndex = manager.CurrentStackIndex;
+        previousStackIndex = currentStackIndex - 1;
 
         Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
 
