@@ -114,7 +114,7 @@ public class BurgerInfo : MonoBehaviour
             // Check if an item has the same name as the other item that exist to increase the amount of it.
             if (_burgerStackData.Count > 0)
             {
-                for(int i = 0; i < _burgerStackData.Capacity; i++)
+                for(int i = 0; i < _burgerStackData.Count; i++)
                 {
                     Debug.Log(_burgerStackData[i].Name);
 
