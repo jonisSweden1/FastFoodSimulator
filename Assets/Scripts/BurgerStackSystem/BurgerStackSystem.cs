@@ -92,6 +92,8 @@ public class BurgerStackSystem : MonoBehaviour
 
             wrappedPaper.GetComponent<BurgerInfo>().FillInfoData(_burgerStack.ToArray(), this);
 
+            wrappedPaper.transform.position = _burgerStack[0].transform.position;
+
             foreach(GameObject gameObject in _burgerStack)
             {
                 gameObject.SetActive(false);
