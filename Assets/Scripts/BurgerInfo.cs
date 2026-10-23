@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BurgerInfo : MonoBehaviour
 {
-    List<BurgerItemData> _burgerStackData;
+    Dictionary<string, int> _burgerStackData;
 
     GameObject[] _burgerStack;
 
@@ -24,120 +24,75 @@ public class BurgerInfo : MonoBehaviour
 
     public void FillInfoData(GameObject[] burgerStack, BurgerStackSystem burgerStackSystem)
     {
-        // Initialize the list of burger stack info
+        _burgerStackData = new Dictionary<string, int>();
 
-        _burgerStackData = new List<BurgerItemData>();
-
-        _burgerStack = burgerStack;
-
-        _burgerStackSystem = burgerStackSystem;
-
-        // Go through each of the item in the GameObject[] burgerStack
-        
         foreach (GameObject burgerItem in burgerStack)
         {
-            // Check if it is an item, otherwise, check the name of the game object
             ItemIdentifier burgerItemId;
 
             if(!burgerItem.TryGetComponent<ItemIdentifier>(out burgerItemId))
             {
-                // The name should include the corresponding points prefab
-
-                // If it is a vegetable stack point, then check each of the limited items in it
-
-                if (burgerItem.name.Contains("Vegetable-stacking-point"))
+                if(burgerItem.name.Contains("Vegetable-stacking-points"))
                 {
                     Transform collectionPoint = burgerItem.transform.GetChild(0);
 
-                    foreach (Transform child in collectionPoint)
+                    foreach (Transform vegetablePoint in collectionPoint)
                     {
-                        GameObject vegetableInBurger = child.GetChild(0).gameObject;
-                        ItemIdentifier vegetableInBurgerId = vegetableInBurger.GetComponent<ItemIdentifier>();
+                        GameObject vegetableBurgerItem = vegetablePoint.GetChild(0).gameObject;
 
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-                        if (_burgerStackData.Count > 0)
+                        ItemIdentifier vegetableBurgerItemId = vegetableBurgerItem.GetComponent<ItemIdentifier>();
+
+                        if (_burgerStackData.ContainsKey(vegetableBurgerItemId.ItemName))
                         {
-                            for (int i = 0; i < _burgerStackData.Capacity; i++)
-                            {
-                                if (_burgerStackData[i].Name == burgerItemId.ItemName)
-                                {
-                                    _burgerStackData[i].Amount++;
-                                    break;
-                                }
-                            }
+                            _burgerStackData[vegetableBurgerItemId.ItemName]++;
                         }
-
-                        // If the item doesn't exist, then create a new item data
-                        var burgerVegetableData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
-                        _burgerStackData.Add(burgerVegetableData);
+                        else
+                        {
+                            _burgerStackData.Add(vegetableBurgerItemId.ItemName, 1);
+                        }
                     }
-
-                    continue;
                 }
-
-                // If it is a sauce stack point, check every single item in it
-                else if (burgerItem.name.Contains("SauceStackPoint"))
+                else if(burgerItem.name.Contains("SauceStackPoint"))
                 {
                     Transform collectionPoint = burgerItem.transform.GetChild(0);
 
-                    foreach (Transform child in collectionPoint)
+                    foreach(GameObject sauceBurgerItem in collectionPoint)
                     {
-                        GameObject sauceInBurger = child.gameObject;
-                        ItemIdentifier sauceInBurgerId = sauceInBurger.GetComponent<ItemIdentifier>();
+                        ItemIdentifier sauceBurgerItemId = sauceBurgerItem.GetComponent<ItemIdentifier>();
 
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-                        if (_burgerStackData.Count > 0)
+                        if (_burgerStackData.ContainsKey(sauceBurgerItemId.ItemName))
                         {
-                            for (int i = 0; i < _burgerStackData.Capacity; i++)
-                            {
-                                if (_burgerStackData[i].Name == sauceInBurgerId.ItemName)
-                                {
-                                    _burgerStackData[i].Amount++;
-                                    break;
-                                }
-                            }
-                            continue;
+                            _burgerStackData[sauceBurgerItemId.ItemName]++;
                         }
-
-                        // If the item doesn't exist, then create a new item data
-                        var burgerSauceData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
-                        _burgerStackData.Add(burgerSauceData);
+                        else
+                        {
+                            _burgerStackData.Add(sauceBurgerItemId.ItemName, 1);
+                        }
                     }
-
-                    continue;
                 }
-                
             }
-
-            // Check if an item has the same name as the other item that exist to increase the amount of it.
-            if (_burgerStackData.Count > 0)
+            else
             {
-                for(int i = 0; i < _burgerStackData.Count; i++)
+                if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
                 {
-                    Debug.Log(_burgerStackData[i].Name);
-
-                    if (_burgerStackData[i].Name == burgerItemId.ItemName)
-                    {
-                        _burgerStackData[i].Amount++;
-                        break;
-                    }
+                    Debug.LogError("Wrapping paper is not part of the burger. It is already wrapped");
+                    continue;
                 }
-                continue;
+
+                if (_burgerStackData.ContainsKey(burgerItemId.ItemName))
+                {
+                    _burgerStackData[burgerItemId.ItemName]++;
+                }
+                else
+                {
+                    _burgerStackData.Add(burgerItemId.ItemName, 1);
+                }
             }
+        }
 
-            // If the item doesn't exist, then create a new item data
-            var burgerData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1};
-            _burgerStackData.Add(burgerData);
-
+        foreach (KeyValuePair<string, int> burgerInfo in _burgerStackData)
+        {
+            Debug.Log(burgerInfo.Key + ": " + burgerInfo.Value);
         }
     }
-}
-
-public class BurgerItemData
-{
-    public string Name;
-    public int Amount;
-    // Fill other info later
 }

@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionHandler
   playerInput: {fileID: 6791718056141417908}
+  _hoverMaterial: {fileID: 2100000, guid: e70fbef7d01c6f144b414f94089d38c8, type: 2}
 --- !u!1 &8982404771195473659
 GameObject:
   m_ObjectHideFlags: 0

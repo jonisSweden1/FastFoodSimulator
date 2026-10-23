@@ -41,7 +41,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             return true;
         }
 
-        Transform collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
+        Transform collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
 
         if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
         {
