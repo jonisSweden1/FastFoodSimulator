@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 8649995202418447580}
   - component: {fileID: 4718680010650104891}
   - component: {fileID: 5543076071331600554}
+  - component: {fileID: 8915324519736583941}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -218,8 +219,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da50779f30a0702449a5d3c34081a781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionHandler
+  interactDistance: 10
   playerInput: {fileID: 6791718056141417908}
+--- !u!114 &8915324519736583941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6018303803822000623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3ea137c2dd666469305eb2039013c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHoverHandler
   _hoverMaterial: {fileID: 2100000, guid: e70fbef7d01c6f144b414f94089d38c8, type: 2}
+  hoverDistance: 10
 --- !u!1 &8982404771195473659
 GameObject:
   m_ObjectHideFlags: 0

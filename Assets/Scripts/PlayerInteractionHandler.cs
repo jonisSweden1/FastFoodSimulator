@@ -4,20 +4,12 @@ using UnityEngine.InputSystem;
 // This script is to handle different interaction when the player use the Use action in the player input
 public class PlayerInteractionHandler : MonoBehaviour
 {
-    private float interactDistance = 10;
+    [SerializeField] private float interactDistance = 10;
 
     [SerializeField] private PlayerInput playerInput;
 
     private InputAction _interactAction;
     private InputAction _pickUpAction;
-
-    [SerializeField] private Material _hoverMaterial;
-
-    Material _originalMaterial;
-
-    GameObject _hoveredGameObject;
-
-    private bool hasHovered = false;
 
     private void OnEnable()
     {
@@ -32,8 +24,6 @@ public class PlayerInteractionHandler : MonoBehaviour
         if (PlayerPickAndDropSystem.Instance.HasObjectHold)
         {
             PlayerPickAndDropSystem.Instance.TryPickOrDropAction(transform);
-            _hoveredGameObject.GetComponent<Renderer>().material = _originalMaterial;
-            hasHovered = false;
             return;
         }
 
@@ -48,13 +38,6 @@ public class PlayerInteractionHandler : MonoBehaviour
                     PlayerPickAndDropSystem.Instance.TryPickOrDropAction(transform);
                     break;
             }
-
-            if(_hoveredGameObject != null)
-            {
-                _hoveredGameObject.GetComponent<Renderer>().material = _originalMaterial;
-                _hoveredGameObject = null;
-                hasHovered = false;
-            }
         }
     }
 
@@ -64,46 +47,6 @@ public class PlayerInteractionHandler : MonoBehaviour
         _pickUpAction.started -= _pickUpAction_started;
         _interactAction = null;
         _pickUpAction = null;
-    }
-
-    private void Update()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance))
-        {
-            if(_hoveredGameObject != null)
-            {
-                if(hit.collider.gameObject != _hoveredGameObject)
-                {
-                    _hoveredGameObject.GetComponent<Renderer>().material = _originalMaterial;
-                    _hoveredGameObject = null;
-                    hasHovered = false;
-                    return;
-                }
-            }
-
-            if(hit.collider.tag == "Item")
-            {
-                Renderer renderer;
-
-                if (!hit.collider.gameObject.TryGetComponent<Renderer>(out renderer))
-                {
-                    Debug.LogError("There is no renderer");
-                    return;
-                }
-
-                _hoveredGameObject = hit.collider.gameObject;
-                renderer = _hoveredGameObject.GetComponent<Renderer>();
-
-                if(!hasHovered)
-                {
-                    _originalMaterial = renderer.material;
-                    hasHovered = true;
-                }
-
-                _hoveredGameObject.GetComponent<Renderer>().material = _hoverMaterial;
-            }
-        }
     }
 
     private void _interactAction_started(InputAction.CallbackContext obj)

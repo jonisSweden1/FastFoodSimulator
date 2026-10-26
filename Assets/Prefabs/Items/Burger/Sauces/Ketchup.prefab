@@ -10,7 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 573033166321107412, guid: 979e3d1ecdfedd746bf7f17c5b9d63e4, type: 3}
       propertyPath: m_Name
-      value: Ketchup Variant
+      value: Ketchup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1148512982610482877, guid: 979e3d1ecdfedd746bf7f17c5b9d63e4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a789c692efc8fc4d9cd4c923c3abc43, type: 2}
+    - target: {fileID: 2763545547599331391, guid: 979e3d1ecdfedd746bf7f17c5b9d63e4, type: 3}
+      propertyPath: _itemName
+      value: Ketchup
       objectReference: {fileID: 0}
     - target: {fileID: 3465656084550633430, guid: 979e3d1ecdfedd746bf7f17c5b9d63e4, type: 3}
       propertyPath: m_LocalPosition.x

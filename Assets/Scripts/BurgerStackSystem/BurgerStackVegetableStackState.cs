@@ -63,7 +63,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
         if (_currentAvailableVegetableStackIndex > collectionPoint.childCount - 1)
         {
             Debug.Log("No more available stack points for vegetables. Adding a new point");
-            manager.SpawnCucumberPicklePoints(burgerStack[previousStackIndex].transform.GetChild(1));
+            manager.SpawnCucumberPicklePoints(burgerStack[currentStackIndex].transform.GetChild(1));
 
             _currentAvailableVegetableStackIndex = 0;
             Debug.Log("Current Available Vegetable Stack Index:" + _currentAvailableVegetableStackIndex);
@@ -71,7 +71,7 @@ public class BurgerStackVegetableStackState : BurgerStackBaseState
             currentStackIndex = manager.CurrentStackIndex;
             previousStackIndex = currentStackIndex - 1;
 
-            collectionPoint = burgerStack[previousStackIndex].transform.GetChild(0);
+            collectionPoint = burgerStack[currentStackIndex].transform.GetChild(0);
 
             // Debug.Log("currentStackIndex: " + currentStackIndex);
             // Debug.Log("previousStackIndex: " + previousStackIndex);

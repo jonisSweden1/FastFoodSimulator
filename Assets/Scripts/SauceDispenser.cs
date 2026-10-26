@@ -17,8 +17,6 @@ public class SauceDispenser : MonoBehaviour
     // Amount of sauce that is going to be sprayed
     [SerializeField] private float _spraySauceAmount = 5;
 
-    [SerializeField] private string _triggerName;
-
     private void Awake()
     {
         _leverAnimator = transform.GetChild(0).GetComponent<Animator>();

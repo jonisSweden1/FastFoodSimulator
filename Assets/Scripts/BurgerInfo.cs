@@ -36,19 +36,24 @@ public class BurgerInfo : MonoBehaviour
                 {
                     Transform collectionPoint = burgerItem.transform.GetChild(0);
 
+                    Debug.Log(collectionPoint);
+
                     foreach (Transform vegetablePoint in collectionPoint)
                     {
-                        GameObject vegetableBurgerItem = vegetablePoint.GetChild(0).gameObject;
-
-                        ItemIdentifier vegetableBurgerItemId = vegetableBurgerItem.GetComponent<ItemIdentifier>();
-
-                        if (_burgerStackData.ContainsKey(vegetableBurgerItemId.ItemName))
+                        if(vegetablePoint.childCount > 0)
                         {
-                            _burgerStackData[vegetableBurgerItemId.ItemName]++;
-                        }
-                        else
-                        {
-                            _burgerStackData.Add(vegetableBurgerItemId.ItemName, 1);
+                            GameObject vegetableBurgerItem = vegetablePoint.GetChild(0).gameObject;
+
+                            ItemIdentifier vegetableBurgerItemId = vegetableBurgerItem.GetComponent<ItemIdentifier>();
+
+                            if (_burgerStackData.ContainsKey(vegetableBurgerItemId.ItemName))
+                            {
+                                _burgerStackData[vegetableBurgerItemId.ItemName]++;
+                            }
+                            else
+                            {
+                                _burgerStackData.Add(vegetableBurgerItemId.ItemName, 1);
+                            }
                         }
                     }
                 }
@@ -56,7 +61,9 @@ public class BurgerInfo : MonoBehaviour
                 {
                     Transform collectionPoint = burgerItem.transform.GetChild(0);
 
-                    foreach(GameObject sauceBurgerItem in collectionPoint)
+                    Debug.Log(collectionPoint);
+
+                    foreach(Transform sauceBurgerItem in collectionPoint)
                     {
                         ItemIdentifier sauceBurgerItemId = sauceBurgerItem.GetComponent<ItemIdentifier>();
 
