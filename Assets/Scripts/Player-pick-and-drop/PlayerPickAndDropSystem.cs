@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -41,6 +42,10 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     // This is a distance for how long the player can drop an item.
     [SerializeField] private float dropDistance = 10;
+
+    [SerializeField] private Transform _holdPoint;
+
+    public Transform HoldPoint { get { return _holdPoint; } }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

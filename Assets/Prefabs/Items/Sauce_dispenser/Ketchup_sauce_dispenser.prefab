@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7597183163692693030, guid: 83643e74e7155ee498157a6858ef452b, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a789c692efc8fc4d9cd4c923c3abc43, type: 2}
     - target: {fileID: 8820122900890937180, guid: 83643e74e7155ee498157a6858ef452b, type: 3}
       propertyPath: m_Name
       value: Ketchup_sauce_dispenser

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BurgerInfo : MonoBehaviour
 {
-    List<BurgerItemData> _burgerStackData;
+    Dictionary<string, int> _burgerStackData;
 
     GameObject[] _burgerStack;
 
@@ -17,124 +17,96 @@ public class BurgerInfo : MonoBehaviour
             burgerItem.SetActive(true);
         }
 
+        _burgerStackSystem.transform.position = transform.position;
+        
         _burgerStackSystem.UnwrapPaper();
 
+        PlayerHoverHandler.Instance.ResetHover();
         Destroy(gameObject);
     }
 
     public void FillInfoData(GameObject[] burgerStack, BurgerStackSystem burgerStackSystem)
     {
-        // Initialize the list of burger stack info
+        _burgerStackData = new Dictionary<string, int>();
 
-        _burgerStackData = new List<BurgerItemData>();
+        foreach (GameObject burgerItem in burgerStack)
+        {
+            ItemIdentifier burgerItemId;
+
+            if(!burgerItem.TryGetComponent<ItemIdentifier>(out burgerItemId))
+            {
+                if(burgerItem.name.Contains("Vegetable-stacking-points"))
+                {
+                    Transform collectionPoint = burgerItem.transform.GetChild(0);
+
+                    Debug.Log(collectionPoint);
+
+                    foreach (Transform vegetablePoint in collectionPoint)
+                    {
+                        if(vegetablePoint.childCount > 0)
+                        {
+                            GameObject vegetableBurgerItem = vegetablePoint.GetChild(0).gameObject;
+
+                            ItemIdentifier vegetableBurgerItemId = vegetableBurgerItem.GetComponent<ItemIdentifier>();
+
+                            if (_burgerStackData.ContainsKey(vegetableBurgerItemId.ItemName))
+                            {
+                                _burgerStackData[vegetableBurgerItemId.ItemName]++;
+                            }
+                            else
+                            {
+                                _burgerStackData.Add(vegetableBurgerItemId.ItemName, 1);
+                            }
+                        }
+                    }
+                }
+                else if(burgerItem.name.Contains("SauceStackPoint"))
+                {
+                    Transform collectionPoint = burgerItem.transform.GetChild(0);
+
+                    Debug.Log(collectionPoint);
+
+                    foreach(Transform sauceBurgerItem in collectionPoint)
+                    {
+                        ItemIdentifier sauceBurgerItemId = sauceBurgerItem.GetComponent<ItemIdentifier>();
+
+                        if (_burgerStackData.ContainsKey(sauceBurgerItemId.ItemName))
+                        {
+                            _burgerStackData[sauceBurgerItemId.ItemName]++;
+                        }
+                        else
+                        {
+                            _burgerStackData.Add(sauceBurgerItemId.ItemName, 1);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
+                {
+                    continue;
+                }
+
+                if (_burgerStackData.ContainsKey(burgerItemId.ItemName))
+                {
+                    _burgerStackData[burgerItemId.ItemName]++;
+                }
+                else
+                {
+                    _burgerStackData.Add(burgerItemId.ItemName, 1);
+                }
+            }
+        }
 
         _burgerStack = burgerStack;
 
         _burgerStackSystem = burgerStackSystem;
 
-        // Go through each of the item in the GameObject[] burgerStack
-        
-        foreach (GameObject burgerItem in burgerStack)
+
+        foreach (KeyValuePair<string, int> burgerInfo in _burgerStackData)
         {
-            // Check if it is an item, otherwise, check the name of the game object
-            ItemIdentifier burgerItemId;
-
-            if(!burgerItem.TryGetComponent<ItemIdentifier>(out burgerItemId))
-            {
-                // The name should include the corresponding points prefab
-
-                // If it is a vegetable stack point, then check each of the limited items in it
-
-                if (burgerItem.name.Contains("Vegetable-stacking-point"))
-                {
-                    Transform collectionPoint = burgerItem.transform.GetChild(0);
-
-                    foreach (Transform child in collectionPoint)
-                    {
-                        GameObject vegetableInBurger = child.GetChild(0).gameObject;
-                        ItemIdentifier vegetableInBurgerId = vegetableInBurger.GetComponent<ItemIdentifier>();
-
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-                        if (_burgerStackData.Count > 0)
-                        {
-                            for (int i = 0; i < _burgerStackData.Capacity; i++)
-                            {
-                                if (_burgerStackData[i].Name == burgerItemId.ItemName)
-                                {
-                                    _burgerStackData[i].Amount++;
-                                    break;
-                                }
-                            }
-                        }
-
-                        // If the item doesn't exist, then create a new item data
-                        var burgerVegetableData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
-                        _burgerStackData.Add(burgerVegetableData);
-                    }
-
-                    continue;
-                }
-
-                // If it is a sauce stack point, check every single item in it
-                else if (burgerItem.name.Contains("SauceStackPoint"))
-                {
-                    Transform collectionPoint = burgerItem.transform.GetChild(0);
-
-                    foreach (Transform child in collectionPoint)
-                    {
-                        GameObject sauceInBurger = child.gameObject;
-                        ItemIdentifier sauceInBurgerId = sauceInBurger.GetComponent<ItemIdentifier>();
-
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-
-                        // Check if an item has the same name as the other item that exist to increase the amount of it.
-                        if (_burgerStackData.Count > 0)
-                        {
-                            for (int i = 0; i < _burgerStackData.Capacity; i++)
-                            {
-                                if (_burgerStackData[i].Name == sauceInBurgerId.ItemName)
-                                {
-                                    _burgerStackData[i].Amount++;
-                                    break;
-                                }
-                            }
-                            continue;
-                        }
-
-                        // If the item doesn't exist, then create a new item data
-                        var burgerSauceData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1 };
-                        _burgerStackData.Add(burgerSauceData);
-                    }
-
-                    continue;
-                }
-                
-            }
-
-            // Check if an item has the same name as the other item that exist to increase the amount of it.
-            if (_burgerStackData.Count > 0)
-            {
-                for(int i = 0; i < _burgerStackData.Capacity; i++)
-                {
-                    if (_burgerStackData[i].Name == burgerItemId.ItemName)
-                    {
-                        _burgerStackData[i].Amount++;
-                        break;
-                    }
-                }
-            }
-
-            // If the item doesn't exist, then create a new item data
-            var burgerData = new BurgerItemData { Name = burgerItemId.ItemName, Amount = 1};
-            _burgerStackData.Add(burgerData);
-
+            Debug.Log(burgerInfo.Key + ": " + burgerInfo.Value);
         }
     }
-}
-
-public class BurgerItemData
-{
-    public string Name;
-    public int Amount;
-    // Fill other info later
 }

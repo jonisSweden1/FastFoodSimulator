@@ -12,14 +12,26 @@ PrefabInstance:
       propertyPath: _sauceType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3721242817179695258, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
+      propertyPath: _saucePrefab
+      value: 
+      objectReference: {fileID: 2835149085970061456, guid: a7acc7f676a48654e9554f8e298e9b83, type: 3}
     - target: {fileID: 5651622580248338993, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
       propertyPath: currentSauceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651622580248338993, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
+      propertyPath: currentBurgerType
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5690044539093107211, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
       propertyPath: m_Name
       value: Mayonnaise_sauce_dispenser
       objectReference: {fileID: 0}
+    - target: {fileID: 6773092256562058097, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aa3a76553375ade4f90ff634236c61ee, type: 2}
     - target: {fileID: 8489394635343710569, guid: 0e8036622199f5f49b01380a2e71c078, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5786357

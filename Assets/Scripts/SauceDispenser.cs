@@ -17,8 +17,6 @@ public class SauceDispenser : MonoBehaviour
     // Amount of sauce that is going to be sprayed
     [SerializeField] private float _spraySauceAmount = 5;
 
-    [SerializeField] private string _triggerName;
-
     private void Awake()
     {
         _leverAnimator = transform.GetChild(0).GetComponent<Animator>();
@@ -40,7 +38,25 @@ public class SauceDispenser : MonoBehaviour
 
         GameObject sauceInstance = Instantiate(_saucePrefab);
 
-        if(!targetObject.GetComponent<ItemIdentifier>().BurgerSystem.TryAddItemToBurger(sauceInstance))
+        ItemIdentifier targerObId;
+
+        if(!targetObject.TryGetComponent<ItemIdentifier>(out targerObId))
+        {
+            Debug.LogError("Cannot find item identifier");
+            Destroy(sauceInstance);
+
+            return false;
+        }
+
+        if(!targerObId.IsBurgerStacked)
+        {
+            Debug.LogError("The burger item is not stacked");
+            Destroy(sauceInstance);
+
+            return false;
+        }
+
+        if(!targerObId.BurgerSystem.TryAddItemToBurger(sauceInstance))
         {
             Debug.LogError("Cannot add sauce to the burger stack");
             Destroy(sauceInstance);
@@ -48,9 +64,9 @@ public class SauceDispenser : MonoBehaviour
             return false;
         }
 
-        _leverAnimator.SetTrigger(_triggerName);
+        _leverAnimator.Play("Spray");
 
-        _currentAmountSauce = _currentAmountSauce - _spraySauceAmount;
+        _currentAmountSauce -= _spraySauceAmount;
 
         return true;
     }

@@ -13,8 +13,9 @@ public class BurgerStackWrapState : BurgerStackBaseState
 
     }
 
-    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack)
+    public override bool AddItemToBurger(BurgerStackSystem manager, GameObject item, List<GameObject> burgerStack, out bool stackAdded)
     {
+        stackAdded = false;
         return false;
     }
 

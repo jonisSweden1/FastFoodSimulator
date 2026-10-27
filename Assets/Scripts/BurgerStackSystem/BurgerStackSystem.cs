@@ -10,6 +10,10 @@ public class BurgerStackSystem : MonoBehaviour
     // The previous state to roll back
     BurgerStackBaseState _previousState;
 
+    [SerializeField] private float _sauceYRotationRange;
+
+    [SerializeField] private float _sauceScaleRange;
+
     public BurgerStackNoneState NoneState { get; private set; }
     public BurgerStackNormalState NormalState { get; private set; }
     public BurgerStackSauceStackState SauceStackState { get; private set; }
@@ -24,6 +28,10 @@ public class BurgerStackSystem : MonoBehaviour
     {
         get { return currentStackIndex; }
     }
+
+    public float SauceYRotationRange { get { return _sauceYRotationRange; } }
+
+    public float SauceScaleRange { get { return _sauceScaleRange; } }
 
     // Prefab field for the cucumber or pickle points prefab (this is going to have a collection of defined points for the cucumber or pickles to stack)
     [SerializeField] private GameObject _cucumberPicklePointsPrefab;
@@ -74,9 +82,19 @@ public class BurgerStackSystem : MonoBehaviour
     {
         if(_currentState != WrapState)
         {
+            if(currentStackIndex <= 0)
+            {
+                Debug.LogError("There is no burger item in the stack");
+                return;
+            }
+
             GameObject wrappedPaper = Instantiate(_wrappedPaperPrefab);
 
             wrappedPaper.GetComponent<BurgerInfo>().FillInfoData(_burgerStack.ToArray(), this);
+
+            wrappedPaper.transform.position = _burgerStack[0].transform.position;
+
+            PlayerHoverHandler.Instance.ResetHover();
 
             foreach(GameObject gameObject in _burgerStack)
             {
@@ -116,24 +134,27 @@ public class BurgerStackSystem : MonoBehaviour
 
         // Debug.Log("CurrentStackIndex: " + currentStackIndex);
 
-        currentStackIndex++;
+        bool stackAdded;
 
         // Call the add item to burger. If it fails, then send error message, and return false to avoid from continuing
-        if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack))
+        if (!_currentState.AddItemToBurger(this, burgerItem, _burgerStack, out stackAdded))
         {
             Debug.LogError("Failed to add burger item");
 
             // Subtract the current stack index
             // Debug.Log("Subtracting the currentStackIndex");
-            currentStackIndex--;
 
             return false;
         }
 
-        // If the current burger type is cucummberPickle or sauce, then subtract the current stack index
-        if(burgerItemId.CurrentBurgerType == TypeOfBurgerStack.CucumberPickle || burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Sauce)
+        if(stackAdded)
         {
-            currentStackIndex--;
+            currentStackIndex++;
+        }
+
+        if(currentStackIndex > 0)
+        {
+            gameObject.GetComponent<ItemIdentifier>().AddBurgerItemToStack(this);
         }
 
         // If the burger item that is stacked is a top bun, then shut down the ability to stack the burger

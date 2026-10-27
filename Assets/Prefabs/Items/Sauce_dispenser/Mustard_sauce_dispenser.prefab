@@ -8,10 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4299315920150551139, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
+      propertyPath: _sauceType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299315920150551139, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
+      propertyPath: _saucePrefab
+      value: 
+      objectReference: {fileID: 2445026503354719565, guid: a4d5ebc8feadd9b4fa4eff7dac8f006e, type: 3}
+    - target: {fileID: 5071096506597900488, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
+      propertyPath: currentSauceType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5114302405100609778, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
       propertyPath: m_Name
       value: Mustard_sauce_dispenser
       objectReference: {fileID: 0}
+    - target: {fileID: 6192559615871152520, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 83e049c784c4e3741883c5962a9b4383, type: 2}
     - target: {fileID: 9069929543614966672, guid: 9755ce25065235940aa258bd5b7799d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5786357

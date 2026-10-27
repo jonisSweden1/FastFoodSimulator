@@ -34,19 +34,28 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             // Check if the item is a burger item and is stacked
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsBurgerStacked)
             {
-                Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
-                if(raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
+                if(raycastItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
                 {
-                    manager.ItemObject = itemToTakeOut;
-                    manager.ItemObject.SetActive(false);
+                    Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
+                    if (raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
+                    {
+                        manager.ItemObject = itemToTakeOut;
 
-                    manager.SwitchState(manager.holdItemState);
-                    return;
-                }
-                else
-                {
-                    Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
-                    return;
+                        Transform itemTransformBurger = manager.ItemObject.transform;
+                        itemTransformBurger.position = manager.HoldPoint.position;
+                        itemTransformBurger.rotation = manager.HoldPoint.rotation;
+                        itemTransformBurger.SetParent(manager.HoldPoint);
+
+                        itemTransformBurger.GetChild(0).GetComponent<Collider>().enabled = false;
+
+                        manager.SwitchState(manager.holdItemState);
+                        return;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
+                        return;
+                    }
                 }
             }
 
@@ -55,7 +64,12 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             Debug.Log(parentObject);
 
             manager.ItemObject = raycastItemObject;
-            manager.ItemObject.SetActive(false);
+            Transform itemTransform = manager.ItemObject.transform;
+            itemTransform.position = manager.HoldPoint.position;
+            itemTransform.rotation = manager.HoldPoint.rotation;
+            itemTransform.SetParent(manager.HoldPoint);
+
+            itemTransform.GetChild(0).GetComponent<Collider>().enabled = false;
 
             manager.SwitchState(manager.holdItemState);
         }
