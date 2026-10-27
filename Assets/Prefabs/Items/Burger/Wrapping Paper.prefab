@@ -127,7 +127,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wrapping Paper
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 757409422102900954, guid: 2eadc5649262719439283aa9e2920928, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6914458099184048282, guid: 2eadc5649262719439283aa9e2920928, type: 3}

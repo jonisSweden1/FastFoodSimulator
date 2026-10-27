@@ -8,48 +8,68 @@ public class PlayerHoverHandler : MonoBehaviour
 
     GameObject _hoveredGameObject;
 
-    bool hasHovered = false;
-
     [SerializeField] private float hoverDistance;
+
+    public static PlayerHoverHandler Instance { get; private set; }
+
+    private void Start()
+    {
+        //Singleton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, hoverDistance))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, hoverDistance) && hit.collider.tag == "Item")
         {
-            if (_hoveredGameObject != null)
+            GameObject currentHitObj = hit.collider.gameObject;
+
+            // We want to always reset the material before assigning it with something
+            // This way, if the game object gets destroyed, then it will reset the material
+            if (_hoveredGameObject != null && _hoveredGameObject != currentHitObj)
             {
-                if (hit.collider.gameObject != _hoveredGameObject)
-                {
-                    _hoveredGameObject.GetComponent<Renderer>().material = _originalMaterial;
-                    _hoveredGameObject = null;
-                    hasHovered = false;
-                    return;
-                }
+                ResetHover();
             }
 
-            if (hit.collider.tag == "Item")
+            if (_hoveredGameObject == null)
             {
-                Renderer renderer;
-
-                if (!hit.collider.gameObject.TryGetComponent<Renderer>(out renderer))
+                if (currentHitObj.TryGetComponent<Renderer>(out Renderer renderer))
                 {
-                    Debug.LogError("There is no renderer");
-                    return;
-                }
-
-                _hoveredGameObject = hit.collider.gameObject;
-                renderer = _hoveredGameObject.GetComponent<Renderer>();
-
-                if (!hasHovered)
-                {
+                    _hoveredGameObject = currentHitObj;
                     _originalMaterial = renderer.material;
-                    hasHovered = true;
+                    renderer.material = _hoverMaterial;
                 }
-
-                _hoveredGameObject.GetComponent<Renderer>().material = _hoverMaterial;
             }
         }
+        else
+        {
+            if(_hoveredGameObject != null)
+            {
+                ResetHover();
+            }
+        }
+    }
+
+    public void ResetHover()
+    {
+        if (_hoveredGameObject != null)
+        {
+            if (_hoveredGameObject.TryGetComponent<Renderer>(out Renderer renderer))
+            {
+                renderer.material = _originalMaterial;
+            }
+        }
+
+        _hoveredGameObject = null;
+        _originalMaterial = null;
     }
 }

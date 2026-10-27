@@ -94,6 +94,8 @@ public class BurgerStackSystem : MonoBehaviour
 
             wrappedPaper.transform.position = _burgerStack[0].transform.position;
 
+            PlayerHoverHandler.Instance.ResetHover();
+
             foreach(GameObject gameObject in _burgerStack)
             {
                 gameObject.SetActive(false);

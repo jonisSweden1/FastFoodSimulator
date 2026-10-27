@@ -17,8 +17,11 @@ public class BurgerInfo : MonoBehaviour
             burgerItem.SetActive(true);
         }
 
+        _burgerStackSystem.transform.position = transform.position;
+        
         _burgerStackSystem.UnwrapPaper();
 
+        PlayerHoverHandler.Instance.ResetHover();
         Destroy(gameObject);
     }
 
@@ -96,6 +99,11 @@ public class BurgerInfo : MonoBehaviour
                 }
             }
         }
+
+        _burgerStack = burgerStack;
+
+        _burgerStackSystem = burgerStackSystem;
+
 
         foreach (KeyValuePair<string, int> burgerInfo in _burgerStackData)
         {
