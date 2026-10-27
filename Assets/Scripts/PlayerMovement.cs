@@ -100,7 +100,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Handle continuous movement input
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
-        Vector3 move = orientation.forward * moveInput.y + orientation.right * moveInput.x;
-        _controller.Move(move * _speed * Time.fixedDeltaTime);
+        Vector3 desiredMove = orientation.forward * moveInput.y + orientation.right * moveInput.x;
+
+        if(desiredMove.magnitude >= 0.1f)
+        {
+            _controller.Move(desiredMove.normalized * _speed * Time.fixedDeltaTime);
+        }
     }
 }

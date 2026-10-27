@@ -45,14 +45,14 @@ public class PlayerLookController : MonoBehaviour
         Vector2 lookInput = _lookAction.ReadValue<Vector2>();
 
         // Divide and convert the rotations by the input of look
-        yRotation += lookInput.x * mouseSensitivity * Time.fixedDeltaTime;
-        xRotation -= lookInput.y * mouseSensitivity * Time.fixedDeltaTime;
+        yRotation += lookInput.x;
+        xRotation -= lookInput.y;
 
         // Clamp the vertical rotation to prevent flipping
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // Apply the rotation to the camera and the orientation of the player
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        orientation.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(xRotation, 0f, 0f), mouseSensitivity * Time.fixedDeltaTime);
+        orientation.localRotation = Quaternion.Slerp(orientation.localRotation, Quaternion.Euler(0f, yRotation, 0f), mouseSensitivity * Time.fixedDeltaTime);
     }
 }
