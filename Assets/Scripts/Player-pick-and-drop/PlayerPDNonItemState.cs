@@ -34,25 +34,28 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             // Check if the item is a burger item and is stacked
             if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsBurgerStacked)
             {
-                Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
-                if(raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
+                if(raycastItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
                 {
-                    manager.ItemObject = itemToTakeOut;
+                    Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
+                    if (raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
+                    {
+                        manager.ItemObject = itemToTakeOut;
 
-                    Transform itemTransformBurger = manager.ItemObject.transform;
-                    itemTransformBurger.position = manager.HoldPoint.position;
-                    itemTransformBurger.rotation = manager.HoldPoint.rotation;
-                    itemTransformBurger.SetParent(manager.HoldPoint);
+                        Transform itemTransformBurger = manager.ItemObject.transform;
+                        itemTransformBurger.position = manager.HoldPoint.position;
+                        itemTransformBurger.rotation = manager.HoldPoint.rotation;
+                        itemTransformBurger.SetParent(manager.HoldPoint);
 
-                    itemTransformBurger.GetChild(0).GetComponent<Collider>().enabled = false;
+                        itemTransformBurger.GetChild(0).GetComponent<Collider>().enabled = false;
 
-                    manager.SwitchState(manager.holdItemState);
-                    return;
-                }
-                else
-                {
-                    Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
-                    return;
+                        manager.SwitchState(manager.holdItemState);
+                        return;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Item is a burger item but couldn't be removed from the stack.");
+                        return;
+                    }
                 }
             }
 

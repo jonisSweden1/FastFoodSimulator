@@ -85,7 +85,6 @@ public class BurgerInfo : MonoBehaviour
             {
                 if (burgerItemId.CurrentBurgerType == TypeOfBurgerStack.Paper)
                 {
-                    Debug.LogError("Wrapping paper is not part of the burger. It is already wrapped");
                     continue;
                 }
 
