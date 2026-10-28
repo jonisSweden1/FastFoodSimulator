@@ -11,25 +11,25 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private InventorySystem _inventorySystem;
 
+    [SerializeField]
+    private Transform _collectionObject;
+
     public void RefreshUI(InventorySlot[] slots, InventorySystem inventorySystem)
     {
-        // Get the object that collects all slots
-        Transform collectionObject = transform.GetChild(0);
-
         // If the there is no object that acts like a collection, then skip.
-        if (collectionObject == null) return;
+        if (_collectionObject == null) return;
 
         // Destroy all objects that were there.
-        for(int i = collectionObject.childCount - 1; i >= 0; i--)
+        for(int i = _collectionObject.childCount - 1; i >= 0; i--)
         {
-            Destroy(collectionObject.GetChild(i).gameObject);
+            Destroy(_collectionObject.GetChild(i).gameObject);
         }
 
         // Add new slots according to the inventory system
         for (int i = 0; i < slots.Length; i++)
         {
             // Instantitate slot
-            GameObject slot = Instantiate(_inventorySlotPrefab, collectionObject);
+            GameObject slot = Instantiate(_inventorySlotPrefab, _collectionObject);
 
             // Initialize the button's color based on whether the slot is empty or not
             // If the slot is empty, the color of the button is white

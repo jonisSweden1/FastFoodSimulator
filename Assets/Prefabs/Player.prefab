@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 8913982482825925368}
   - component: {fileID: 2942994705341111893}
   - component: {fileID: 6791718056141417908}
-  - component: {fileID: 5752400061599756956}
+  - component: {fileID: 619429496490855665}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -605,7 +605,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 7119733187514932251}
---- !u!114 &5752400061599756956
+--- !u!114 &619429496490855665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -616,4 +616,4 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d96b738d67c415444ad596f402524c2b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::ShowInventoryHandler
