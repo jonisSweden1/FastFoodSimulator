@@ -15,10 +15,6 @@ public class InventorySystem : MonoBehaviour
 
     private InventorySlot[] _inventorySlots;
 
-    // To interact between UI and the inventory system
-    [SerializeField]
-    private InventoryUI _inventoryUI;
-
     // To set the least available slot in the inventory
     private int currentAvailableSlotIndex = 0;
 
@@ -33,24 +29,14 @@ public class InventorySystem : MonoBehaviour
             _inventorySlots[i] = new InventorySlot();
             //Debug.Log(_inventorySlots[i]);
         }
-
-        // Sort items in the inventory
-        SortByName();
     }
 
-    public void SortByName()
+    public void OpenInventory()
     {
-        // Sort items by which is empty first, then by name
-        _inventorySlots = _inventorySlots
-            .ToList()
-            .OrderBy(slot => slot.IsEmpty)
-            .ThenBy(slot => slot.ItemName)
-            .ToArray();
+        Debug.Log(InventoryUI.Instance);
 
-        //Debug.Log(_inventorySlots.Count());
-
-        // Refresh UI
-        _inventoryUI.RefreshUI(_inventorySlots, this);
+        InventoryUI.Instance.RefreshUI(_inventorySlots, this);
+        InventoryUI.Instance.OpenUI();
     }
 
     // This method is to take an item from the inventory, or store it in the inventory slot.
@@ -106,7 +92,7 @@ public class InventorySystem : MonoBehaviour
             }
 
             // Sort items in the inventory
-            SortByName();
+            InventoryUI.Instance.RefreshUI(_inventorySlots, this);
         }
     }
 
@@ -117,12 +103,6 @@ public class InventorySystem : MonoBehaviour
         currentAvailableSlotIndex--;
 
         // Sort items in the inventory
-        SortByName();
-    }
-
-    // get the max of the slots
-    public int GetMaxSlots()
-    {
-        return _inventorySlots.Count();
+        InventoryUI.Instance.RefreshUI(_inventorySlots, this);
     }
 }

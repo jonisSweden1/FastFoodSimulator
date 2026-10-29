@@ -13,10 +13,12 @@ public class PlayerInteractionHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("Enabled");
+
         _interactAction = playerInput.actions.FindAction("Interact");
         _pickUpAction = playerInput.actions.FindAction("PickUp");
-        _interactAction.started += _interactAction_started;
-        _pickUpAction.started += _pickUpAction_started;
+        _interactAction.performed += _interactAction_started;
+        _pickUpAction.performed += _pickUpAction_started;
     }
 
     private void _pickUpAction_started(InputAction.CallbackContext obj)
@@ -43,14 +45,16 @@ public class PlayerInteractionHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _interactAction.started -= _interactAction_started;
-        _pickUpAction.started -= _pickUpAction_started;
+        _interactAction.performed -= _interactAction_started;
+        _pickUpAction.performed -= _pickUpAction_started;
         _interactAction = null;
         _pickUpAction = null;
     }
 
     private void _interactAction_started(InputAction.CallbackContext obj)
     {
+        Debug.Log("Interacting...");
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance))
         {
@@ -77,6 +81,12 @@ public class PlayerInteractionHandler : MonoBehaviour
                         }
                     }
                 }
+            }
+            else if(hit.collider.tag == "Storage")
+            {
+                Debug.Log("Found Storage, accessing the inventory");
+
+                hit.collider.GetComponent<StorageInteractionSystem>().InteractStorage();
             }
         }
     }
