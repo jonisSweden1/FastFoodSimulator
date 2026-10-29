@@ -39,6 +39,8 @@ public class UserInterfaceManager : MonoBehaviour
 
     private void Start()
     {
+        RefreshUI();
+
         if (m_Menus != null)
         {
             // Show the first menu at the start of the scene
@@ -50,9 +52,22 @@ public class UserInterfaceManager : MonoBehaviour
         }
     }
 
+    public void RefreshUI()
+    {
+        if (m_Menus != null)
+        {
+            foreach (GameObject menu in m_Menus)
+            {
+                menu.SetActive(false);
+            }
+        }
+    }
+
     // Go to the menu in the order
     public void GoToMenu(int index)
     {
+        RefreshUI();
+
         if (m_Menus != null)
         {
             _previousMenuIndex = _currentMenuIndex;
@@ -67,6 +82,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Go back to the previous menu that was in the order
     public void GoBack()
     {
+        RefreshUI();
+
         if (m_Menus != null)
         {
             m_Menus[_currentMenuIndex].SetActive(false);
@@ -80,6 +97,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Show the pop up message with an action whenever the player chooses "yes"
     public void ShowPopUp(string message, UnityAction action)
     {
+        RefreshUI();
+
         if (m_PopUpMessage != null)
         {
             Debug.Log(m_PopUpMessage.transform.GetChild(0));
@@ -96,6 +115,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Show the pop up message without an action
     public void ShowPopUp(string message)
     {
+        RefreshUI();
+
         if (m_PopUpMessage != null)
         {
             Debug.Log(m_PopUpMessage.transform.GetChild(0));
@@ -114,6 +135,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Close the pop up message
     public void ClosePopUp()
     {
+        RefreshUI();
+
         if (m_PopUpMessage != null)
         {
             m_PopUpMessage.SetActive(false);
@@ -123,6 +146,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Close the current menu
     public void CloseMenu()
     {
+        RefreshUI();
+
         _previousMenuIndex = _currentMenuIndex;
         m_Menus[_currentMenuIndex].SetActive(false);
         _currentMenuIndex = -1;
@@ -131,6 +156,8 @@ public class UserInterfaceManager : MonoBehaviour
     // Force another menu to pop up and close the other menu
     public void ForceMenu(int index)
     {
+        RefreshUI();
+
         Debug.Log("Force menu");
 
         if (_currentMenuIndex > -1)
