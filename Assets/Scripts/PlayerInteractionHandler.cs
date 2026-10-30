@@ -8,6 +8,8 @@ public class PlayerInteractionHandler : MonoBehaviour
 
     [SerializeField] private PlayerInput playerInput;
 
+    [SerializeField] private LayerMask _interactiveLayer;
+
     private InputAction _interactAction;
     private InputAction _pickUpAction;
 
@@ -30,7 +32,7 @@ public class PlayerInteractionHandler : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, interactDistance, _interactiveLayer))
         {
             string dataTag = hit.collider.tag;
 

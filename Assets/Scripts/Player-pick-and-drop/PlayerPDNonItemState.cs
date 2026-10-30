@@ -7,7 +7,7 @@ public class PlayerPDNonItemState : PlayerPDBaseState
     {
         // Perform a raycast to check if the player is looking at an item
         RaycastHit hit;
-        if(!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.PickDistance))
+        if(!Physics.Raycast(headTransform.position, headTransform.forward, out hit, manager.PickDistance, manager.InteractiveLayer))
         {
             Debug.LogError($"Raycast could hit anything.");
             return;

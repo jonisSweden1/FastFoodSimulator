@@ -10,7 +10,11 @@ public class PlayerPickAndDropSystem : MonoBehaviour
 
     public LayerMask LayerToDrop { get { return _layerToDrop; } }
 
+    public LayerMask InteractiveLayer { get { return _interactiveLayer; } }
+
     [SerializeField] private LayerMask _layerToDrop;
+
+    [SerializeField] private LayerMask _interactiveLayer;
 
     // State Machine
     PlayerPDBaseState currentState;

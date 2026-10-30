@@ -10,6 +10,8 @@ public class PlayerHoverHandler : MonoBehaviour
 
     [SerializeField] private float hoverDistance;
 
+    [SerializeField] private LayerMask _interactiveLayer;
+
     public static PlayerHoverHandler Instance { get; private set; }
 
     private void Start()
@@ -29,7 +31,7 @@ public class PlayerHoverHandler : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, hoverDistance) && hit.collider.tag == "Item")
+        if (Physics.Raycast(transform.position, transform.forward, out hit, hoverDistance, _interactiveLayer))
         {
             GameObject currentHitObj = hit.collider.gameObject;
 

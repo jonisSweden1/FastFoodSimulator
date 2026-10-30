@@ -23,7 +23,6 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             ItemIdentifier raycastItemId = raycastItem.GetComponent<ItemIdentifier>();
             ItemIdentifier holdItemId = holdItem.GetComponent<ItemIdentifier>();
 
-            // TODO: Reimplement the logic of activating the burger system when placing the wrapper paper and the burger system
             // Check if the raycasted item is a burger item
             if(raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.SauceDispenser)
             {
