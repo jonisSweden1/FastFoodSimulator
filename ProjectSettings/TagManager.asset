@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Storage
+  - Grill
   layers:
   - Default
   - TransparentFX
