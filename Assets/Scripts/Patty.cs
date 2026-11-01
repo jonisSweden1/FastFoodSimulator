@@ -16,6 +16,11 @@ public class Patty : MonoBehaviour
 
     private CollisionNotifier _colNotice;
 
+    public float TopGrillPerc { get { return _topGrillPerc; } }
+    public float BottomGrillPerc { get { return _bottomGrillPerc; } }
+
+    private float _pattyTemperature = 0; // Celsius
+
     private float _topGrillPerc = 0;
     private float _bottomGrillPerc = 0;
 
