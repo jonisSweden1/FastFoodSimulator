@@ -6,20 +6,21 @@ public class SaucePackDisplayer : MonoBehaviour
 
     [SerializeField] private Transform sauceObject;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
-        if(!transform.parent.TryGetComponent<SaucePackage>(out _saucePackage))
+        Debug.Log("SaucePackDisplayer Start");
+
+        if (!transform.parent.TryGetComponent<SaucePackage>(out _saucePackage))
         {
             Debug.LogError("Cannot find sauce package script");
             return;
         }
-    }
 
-    private void OnEnable()
-    {
+        Debug.Log(_saucePackage);
+
         if (_saucePackage != null)
         {
+            Debug.Log("Subscribing to OnSauceAmountChanged event");
             _saucePackage.OnSauceAmountChanged += UpdateSauceDisplay;
         }
     }
@@ -28,13 +29,16 @@ public class SaucePackDisplayer : MonoBehaviour
     {
         if (_saucePackage != null)
         {
+            Debug.Log("Unsubscribing from OnSauceAmountChanged event");
             _saucePackage.OnSauceAmountChanged -= UpdateSauceDisplay;
         }
     }
 
     private void UpdateSauceDisplay(float newAmountPercentage)
     {
-        if(sauceObject == null)
+        Debug.Log($"Updating sauce display to {newAmountPercentage * 100}%");
+
+        if (sauceObject == null)
         {
             Debug.LogError("Cannot find sauce object");
             return;
@@ -46,11 +50,5 @@ public class SaucePackDisplayer : MonoBehaviour
         sauceObject.localScale = newScale;
 
         // Update the visual display of the sauce amount
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

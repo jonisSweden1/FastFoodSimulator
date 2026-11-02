@@ -9,7 +9,7 @@ public class SauceDispenser : MonoBehaviour
 
     private Animator _leverAnimator;
 
-    private float _currentAmountSauce = 60;
+    private float _currentAmountSauce = 0;
 
     // Max amount of sauce
     [SerializeField] private float _maxAmountSauce = 60;
