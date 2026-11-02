@@ -14,6 +14,8 @@ public class SauceDispenser : MonoBehaviour
     // Max amount of sauce
     [SerializeField] private float _maxAmountSauce = 60;
 
+    public float MaxAmountSauce { get { return _maxAmountSauce; } }
+
     // Amount of sauce that is going to be sprayed
     [SerializeField] private float _spraySauceAmount = 5;
 
@@ -21,6 +23,8 @@ public class SauceDispenser : MonoBehaviour
     {
         _leverAnimator = transform.GetChild(0).GetComponent<Animator>();
     }
+
+   
 
     public bool SpraySauce(GameObject targetObject)
     {
