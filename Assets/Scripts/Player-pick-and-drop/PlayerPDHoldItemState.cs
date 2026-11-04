@@ -29,70 +29,86 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             ItemIdentifier holdItemId = holdItem.GetComponent<ItemIdentifier>();
 
             // Check if the raycasted item is a burger item
-            if(raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.SauceDispenser)
+            if(raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
-                Debug.Log("The burger item is raycasted and the hold item is sauce dispenser. Preparing to sauce the dispenser");
-
-                SauceDispenser sauceDispenser;
-
-                if(!holdItem.TryGetComponent<SauceDispenser>(out sauceDispenser))
+                if(holdItemId.CurrentType == TypeOfItem.PattySpatula)
                 {
-                    Debug.LogError("Cannot find sauce dispenser script");
-                    return;
-                }
-
-                if(!sauceDispenser.SpraySauce(raycastItem.gameObject))
-                {
-                    Debug.LogError("Couldn't spray sauce");
-                    return;
-                }
-
-                return;
-            }
-            else if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.BurgerItem)
-            {
-                Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
-
-                // Check if the raycasted item has a BurgerSystem component
-                if (raycastItem.TryGetComponent<BurgerStackSystem>(out BurgerStackSystem raycastBurgerSystem))
-                {
-                    Debug.Log("BurgerStackSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
-
-                    // Add the held burger item to the raycasted burger system
-                    if (!raycastBurgerSystem.TryAddItemToBurger(holdItem.gameObject))
+                    Debug.Log("The raycasted item is a burger item and the held item is a patty spatula. Attempting to flip the patty.");
+                    Patty pattyScript = raycastItem.GetComponent<Patty>();
+                    if (pattyScript == null)
                     {
-                        // Successfully added the held burger item to the raycasted burger system
-                        Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                        Debug.LogError("The raycasted burger item does not have a Patty script attached.");
+                        return;
+                    }
+                    // Flip the patty
+                    pattyScript.FlipPatty();
+                    return;
+                }
+                if(holdItemId.CurrentType == TypeOfItem.SauceDispenser)
+                {
+                    Debug.Log("The burger item is raycasted and the hold item is sauce dispenser. Preparing to sauce the dispenser");
+
+                    SauceDispenser sauceDispenser;
+
+                    if (!holdItem.TryGetComponent<SauceDispenser>(out sauceDispenser))
+                    {
+                        Debug.LogError("Cannot find sauce dispenser script");
                         return;
                     }
 
-                    manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
-                    manager.ItemObject = null;
-                    manager.SwitchState(manager.nonItemState);
-
-                    return;
-                }
-                else if (raycastItemId.BurgerSystem != null)
-                {
-                    // Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
-
-                    // Add the held burger item to the raycasted burger system
-                    if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem.gameObject))
+                    if (!sauceDispenser.SpraySauce(raycastItem.gameObject))
                     {
-                        // Successfully added the held burger item to the raycasted burger system
-                        Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                        Debug.LogError("Couldn't spray sauce");
                         return;
                     }
 
-                    manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
-                    manager.ItemObject = null;
-                    manager.SwitchState(manager.nonItemState);
                     return;
                 }
-                else
+                else if (holdItemId.CurrentType == TypeOfItem.BurgerItem)
                 {
-                    Debug.Log("Raycasted item does not have a BurgerSystem component or reference.");
-                    return;
+                    Debug.Log("Both the raycasted item and the held item are burger items. Attempting to add the held burger item to the raycasted burger system.");
+
+                    // Check if the raycasted item has a BurgerSystem component
+                    if (raycastItem.TryGetComponent<BurgerStackSystem>(out BurgerStackSystem raycastBurgerSystem))
+                    {
+                        Debug.Log("BurgerStackSystem component found on the raycasted item. Attempting to add the held burger item to the raycasted burger system.");
+
+                        // Add the held burger item to the raycasted burger system
+                        if (!raycastBurgerSystem.TryAddItemToBurger(holdItem.gameObject))
+                        {
+                            // Successfully added the held burger item to the raycasted burger system
+                            Debug.Log("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                            return;
+                        }
+
+                        manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
+                        manager.ItemObject = null;
+                        manager.SwitchState(manager.nonItemState);
+
+                        return;
+                    }
+                    else if (raycastItemId.BurgerSystem != null)
+                    {
+                        // Debug.Log("Raycasted item has a BurgerSystem reference. Attempting to add the held burger item to the raycasted burger system.");
+
+                        // Add the held burger item to the raycasted burger system
+                        if (!raycastItemId.BurgerSystem.TryAddItemToBurger(holdItem.gameObject))
+                        {
+                            // Successfully added the held burger item to the raycasted burger system
+                            Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                            return;
+                        }
+
+                        manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
+                        manager.ItemObject = null;
+                        manager.SwitchState(manager.nonItemState);
+                        return;
+                    }
+                    else
+                    {
+                        Debug.Log("Raycasted item does not have a BurgerSystem component or reference.");
+                        return;
+                    }
                 }
             }
         }

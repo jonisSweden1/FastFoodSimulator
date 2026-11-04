@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PattyGrillTexHandler : MonoBehaviour
+public class PattyModelHandler : MonoBehaviour
 {
     private Patty _patty;
     Material _pattyMaterial;
@@ -28,6 +28,9 @@ public class PattyGrillTexHandler : MonoBehaviour
     {
         float topGrillPerc = _patty.TopGrillPerc;
         float bottomGrillPerc = _patty.BottomGrillPerc;
+
+        Debug.Log(_pattyMaterial.GetFloat(_topGrillPercProperty));
+        Debug.Log(_pattyMaterial.GetFloat(_bottomGrillPercProperty));
 
         _pattyMaterial.SetFloat(_topGrillPercProperty, topGrillPerc);
         _pattyMaterial.SetFloat(_bottomGrillPercProperty, bottomGrillPerc);

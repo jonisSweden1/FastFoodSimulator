@@ -8,6 +8,8 @@ public class Patty : MonoBehaviour
 
     private bool _isGrilling = false;
     private bool _isTopSide = false;
+
+    // This is a feature for a future feature where you can upgrade the equipment to grill both sides of the patty at the same time.
     private bool _isBothSide = false;
 
     private float _grillPerSecond = 0;
@@ -39,6 +41,18 @@ public class Patty : MonoBehaviour
     {
         _isGrilling = false;
         _grillSystem = null;
+    }
+
+    public void FlipPatty()
+    {
+        if (_isTopSide)
+        {
+            _isTopSide = false;
+        }
+        else
+        {
+            _isTopSide = true;
+        }
     }
 
     private void _triNotice_OnCollided(Collider other)

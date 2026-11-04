@@ -62,4 +62,5 @@ public enum TypeOfItem
     BurgerItem,
     WrappedPaper,
     SauceDispenser,
+    PattySpatula,
 }
