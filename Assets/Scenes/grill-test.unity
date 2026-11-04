@@ -180,6 +180,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 12996990065803653, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.022
+      objectReference: {fileID: 0}
     - target: {fileID: 242636767696803877, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
       propertyPath: m_Name
       value: Patty
@@ -224,9 +228,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5006862868185720989, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
-      propertyPath: _reducedTemperaturePerSecond
-      value: 1
+    - target: {fileID: 8824615617870017567, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
+      propertyPath: m_Size.z
+      value: 0.005102841
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824615617870017567, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
+      propertyPath: m_Center.y
+      value: 1.2131423e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824615617870017567, guid: eb0aceb48aac0c2438ed35609db9cda5, type: 3}
+      propertyPath: m_Center.z
+      value: -0.0007742298
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

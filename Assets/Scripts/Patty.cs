@@ -37,6 +37,8 @@ public class Patty : MonoBehaviour
 
     private void _colNotice_OnUncollided(Collision collision)
     {
+        Debug.Log("Uncollided with: " + collision.collider.name);
+
         if (collision.collider.CompareTag("Grill"))
         {
             Debug.Log("It was a grill");
@@ -47,6 +49,8 @@ public class Patty : MonoBehaviour
 
     private void _colNotice_OnCollided(Collision collision)
     {
+        Debug.Log("Collided with: " + collision.collider.name);
+
         if(collision.collider.CompareTag("Grill"))
         {
             Debug.Log("There is a grill");
@@ -132,7 +136,7 @@ public class Patty : MonoBehaviour
                 math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 25, 79);
             }
         }
-        else
+        else if(_pattyTemperature > 0)
         {
             math.clamp(_pattyTemperature -= Time.deltaTime * _reducedTemperaturePerSecond, 1, 100);
         }
