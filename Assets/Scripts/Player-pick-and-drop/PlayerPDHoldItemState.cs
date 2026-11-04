@@ -10,6 +10,11 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             return;
         }
 
+        if(hit.collider.tag == "Obstacle")
+        {
+            return;
+        }
+
         if (hit.collider.tag == "Item")
         {
             // Get the parent transform of the hit collider (the item being raycasted)

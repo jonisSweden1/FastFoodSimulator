@@ -18,7 +18,7 @@ public class Patty : MonoBehaviour
 
     private GrillSystem _grillSystem = null;
 
-    private CollisionNotifier _colNotice;
+    private TriggerNotifier _triNotice;
 
     public float TopGrillPerc { get { return _topGrillPerc; } }
     public float BottomGrillPerc { get { return _bottomGrillPerc; } }
@@ -30,31 +30,25 @@ public class Patty : MonoBehaviour
 
     private void Awake()
     {
-        _colNotice = transform.GetChild(0).GetComponent<CollisionNotifier>();
-        _colNotice.OnCollided += _colNotice_OnCollided;
-        _colNotice.OnUncollided += _colNotice_OnUncollided;
+        _triNotice = transform.GetChild(0).GetComponent<TriggerNotifier>();
+        _triNotice.OnTriggerCollided += _triNotice_OnCollided;
+        _triNotice.OnTriggerUncollided += _triNotice_OnUncollided;
     }
 
-    private void _colNotice_OnUncollided(Collision collision)
+    private void _triNotice_OnUncollided(Collider other)
     {
-        Debug.Log("Uncollided with: " + collision.collider.name);
-
-        if (collision.collider.CompareTag("Grill"))
-        {
-            Debug.Log("It was a grill");
-            _isGrilling = false;
-            _grillSystem = null;
-        }
+        _isGrilling = false;
+        _grillSystem = null;
     }
 
-    private void _colNotice_OnCollided(Collision collision)
+    private void _triNotice_OnCollided(Collider other)
     {
-        Debug.Log("Collided with: " + collision.collider.name);
+        Debug.Log("Collided with: " + other.name);
 
-        if(collision.collider.CompareTag("Grill"))
+        if(other.CompareTag("Grill"))
         {
             Debug.Log("There is a grill");
-            if (collision.collider.TryGetComponent(out GrillSystem grillSystem))
+            if (other.transform.parent.TryGetComponent(out GrillSystem grillSystem))
             {
                 _grillSystem = grillSystem;
 
@@ -116,32 +110,33 @@ public class Patty : MonoBehaviour
 
         if(_isGrilling)
         {
-            if(_isBothSide)
+            Debug.Log($"Patty is grilling. Grill per second: {_grillPerSecond}, Grill temperature per second: {_grillTemperaturePerSecond}");
+            if (_isBothSide)
             {
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
-                math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
-                math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
-                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0, 177);
+                _topGrillPerc = math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0.0f, 2.0f);
+                _bottomGrillPerc = math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0.0f, 2.0f);
+                _pattyTemperature = math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0.0f, 177.0f);
             }
             else if(_isTopSide)
             {
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
-                math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
-                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0, 79);
+                _topGrillPerc = math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0.0f, 2.0f);
+                _pattyTemperature = math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0.0f, 79.0f);
             }
             else
             {
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
-                math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
-                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 25, 79);
+                _bottomGrillPerc = math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0.0f, 2.0f);
+                _pattyTemperature = math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 25.0f, 79.0f);
             }
         }
-        else if(_pattyTemperature > 0)
+        else
         {
-            math.clamp(_pattyTemperature -= Time.deltaTime * _reducedTemperaturePerSecond, 1, 100);
+            _pattyTemperature = math.clamp(_pattyTemperature -= Time.deltaTime * _reducedTemperaturePerSecond, 20.0f, 100.0f);
         }
 
-        Debug.Log($"Patty temperature: {_pattyTemperature}, Top grill percentage: {_topGrillPerc}, Bottom grill percentage: {_bottomGrillPerc}");
+        //Debug.Log($"Patty temperature: {_pattyTemperature}, Top grill percentage: {_topGrillPerc}, Bottom grill percentage: {_bottomGrillPerc}");
 
         NotifyCooked();
     }
