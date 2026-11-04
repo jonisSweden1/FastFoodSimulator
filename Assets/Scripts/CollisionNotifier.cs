@@ -8,6 +8,7 @@ public class CollisionNotifier : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"Collision detected with {collision.collider.name}");
         OnCollided?.Invoke(collision);
     }
 

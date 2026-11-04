@@ -4,7 +4,7 @@ public class GrillSystem : MonoBehaviour
 {
     [SerializeField] private float m_grillPerSecond = 0.025f;
 
-    private bool _isActivated = false;
+    private bool _isActivated = true;
 
     public bool CheckIfActivated(out float grillPerSecond)
     {

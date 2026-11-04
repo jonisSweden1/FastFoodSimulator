@@ -12,6 +12,10 @@ public class Patty : MonoBehaviour
 
     private float _grillPerSecond = 0;
 
+    [SerializeField] private float _reducedTemperaturePerSecond = 0;
+
+    [SerializeField] private float _grillTemperaturePerSecond = 0;
+
     private GrillSystem _grillSystem = null;
 
     private CollisionNotifier _colNotice;
@@ -113,18 +117,27 @@ public class Patty : MonoBehaviour
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
                 math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
                 math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
+                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0, 177);
             }
             else if(_isTopSide)
             {
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
                 math.clamp(_topGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
+                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 0, 79);
             }
             else
             {
                 // Percentage of grill on top and bottom side, clamped between 0 and 2 (0 = raw, 1 = cooked, 2 = burnt)
                 math.clamp(_bottomGrillPerc += Time.deltaTime * _grillPerSecond, 0, 2);
+                math.clamp(_pattyTemperature += Time.deltaTime * _grillTemperaturePerSecond * _grillPerSecond, 25, 79);
             }
         }
+        else
+        {
+            math.clamp(_pattyTemperature -= Time.deltaTime * _reducedTemperaturePerSecond, 1, 100);
+        }
+
+        Debug.Log($"Patty temperature: {_pattyTemperature}, Top grill percentage: {_topGrillPerc}, Bottom grill percentage: {_bottomGrillPerc}");
 
         NotifyCooked();
     }
