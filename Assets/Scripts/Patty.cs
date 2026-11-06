@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Patty : MonoBehaviour
 {
+    public delegate void PattyFlipped(bool isTopSide);
     public delegate void PattyGrillStateChanged(float topGrillPerc, float bottomGrillPerc);
     public event PattyGrillStateChanged OnPattyGrillStateChanged;
+    public event PattyFlipped OnPattyFlipped;
 
     private bool _isGrilling = false;
     private bool _isTopSide = false;
@@ -53,6 +55,8 @@ public class Patty : MonoBehaviour
         {
             _isTopSide = true;
         }
+
+        OnPattyFlipped?.Invoke(_isTopSide);
     }
 
     private void _triNotice_OnCollided(Collider other)
