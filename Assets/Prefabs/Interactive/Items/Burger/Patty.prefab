@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a208d8b677d7d4a875cdaede354f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PattyGrillTexHandler
-  _topGrillPercProperty: Top_side_grill
-  _bottomGrillPercProperty: Bottom_side_grill
+  _topGrillPercProperty: _Top_side_grill
+  _bottomGrillPercProperty: _Bottom_side_grill
 --- !u!1001 &7804687689923823658
 PrefabInstance:
   m_ObjectHideFlags: 0

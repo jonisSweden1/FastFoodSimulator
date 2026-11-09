@@ -8,9 +8,9 @@ public class PattyModelHandler : MonoBehaviour
     private float _xRotation = 0f;
 
     [SerializeField]
-    private string _topGrillPercProperty = "_TopGrillPerc";
+    private string _topGrillPercProperty = "_Top_side_grill";
     [SerializeField]
-    private string _bottomGrillPercProperty = "_BottomGrillPerc";
+    private string _bottomGrillPercProperty = "_Bottom_side_grill";
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,11 +36,12 @@ public class PattyModelHandler : MonoBehaviour
     {
         if (isTopSide)
         {
-            _xRotation = -270f;
+            _xRotation = -90f;
         }
         else
         {
-            _xRotation = -90f;
+            _xRotation = -270f;
+            
         }
         Vector3 currentRotation = transform.localEulerAngles;
         transform.localEulerAngles = new Vector3(_xRotation, currentRotation.y, currentRotation.z);
@@ -57,10 +58,17 @@ public class PattyModelHandler : MonoBehaviour
         float topGrillPerc = _patty.TopGrillPerc;
         float bottomGrillPerc = _patty.BottomGrillPerc;
 
-        Debug.Log(_pattyMaterial.GetFloat(_topGrillPercProperty));
-        Debug.Log(_pattyMaterial.GetFloat(_bottomGrillPercProperty));
+        // 1. Verify the shader actually has these property names
+        if (!_pattyMaterial.HasFloat(_topGrillPercProperty))
+        {
+            Debug.LogError($"Shader does NOT contain property: {_topGrillPercProperty}");
+            return;
+        }
 
         _pattyMaterial.SetFloat(_topGrillPercProperty, topGrillPerc);
         _pattyMaterial.SetFloat(_bottomGrillPercProperty, bottomGrillPerc);
+
+        // 2. Log both the source value and the applied material value
+        Debug.Log($"Source: {topGrillPerc} | Applied on Mat: {_pattyMaterial.GetFloat(_topGrillPercProperty)}");
     }
 }
