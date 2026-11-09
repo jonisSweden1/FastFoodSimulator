@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d12c244817c88c4095e91649d23680c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _smokeParticlePrefab: {fileID: 228668972230398497, guid: 63b2bb96868550f47b4684346d5af69c, type: 3}
   _reducedTemperaturePerSecond: 1
   _grillTemperaturePerSecond: 100
 --- !u!4 &3798132775918100007 stripped
