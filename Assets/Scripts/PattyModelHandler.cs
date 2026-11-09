@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Patty;
 
 public class PattyModelHandler : MonoBehaviour
 {
