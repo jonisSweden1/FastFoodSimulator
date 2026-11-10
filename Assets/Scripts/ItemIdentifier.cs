@@ -15,10 +15,10 @@ public class ItemIdentifier : MonoBehaviour
     public TypeOfSauce CurrentSauceType { get { return currentSauceType; } }
 
     public BurgerStackSystem BurgerSystem { get { return _burgerSystem; } }
-    public bool IsBurgerStacked { get { return _isBurgerStacked; } }
+    public bool IsStacked { get { return _isStacked; } }
 
     // To check if the item is in the burger stack
-    bool _isBurgerStacked = false;
+    bool _isStacked = false;
 
     // Identify the bottom bun to get the burger system
     BurgerStackSystem _burgerSystem = null;
@@ -38,10 +38,20 @@ public class ItemIdentifier : MonoBehaviour
     // Add the item to the stack
     public void AddBurgerItemToStack(BurgerStackSystem burgerSystem)
     {
-        _isBurgerStacked = true;
+        _isStacked = true;
 
         // Burger system is the burger system, so we need to store it in the item identifier to access the burger system later.
         _burgerSystem = burgerSystem;
+    }
+
+    public void AddItemToStack()
+    {
+        _isStacked = true;
+    }
+
+    public void RemoveItemFromStack()
+    {
+        _isStacked = false;
     }
 
     // Remove the burger item from the stack
@@ -51,7 +61,7 @@ public class ItemIdentifier : MonoBehaviour
         {
             // Nullify the burger system to avoid memory leak
             _burgerSystem = null;
-            _isBurgerStacked = false;
+            _isStacked = false;
         }
     }
 }

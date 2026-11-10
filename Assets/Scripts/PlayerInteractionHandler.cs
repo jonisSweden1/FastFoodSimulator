@@ -77,7 +77,7 @@ public class PlayerInteractionHandler : MonoBehaviour
                     else if (itemId.CurrentType == TypeOfItem.BurgerItem)
                     {
                         // Check if it is stacked on the burger
-                        if (itemId.IsBurgerStacked)
+                        if (itemId.IsStacked)
                         {
                             itemId.BurgerSystem.WrapPaper();
                         }

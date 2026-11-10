@@ -48,7 +48,7 @@ public class SauceDispenser : MonoBehaviour
             return false;
         }
 
-        if(!targerObId.IsBurgerStacked)
+        if(!targerObId.IsStacked)
         {
             Debug.LogError("The burger item is not stacked");
             Destroy(sauceInstance);
