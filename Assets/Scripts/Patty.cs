@@ -15,6 +15,8 @@ public class Patty : MonoBehaviour
     private bool _isGrilling = false;
     private bool _isTopSide = false;
 
+    public bool IsTopSide { get { return _isTopSide; } }
+
     private bool _isParticleInstantiated = false;
 
     // This is a feature for a future feature where you can upgrade the equipment to grill both sides of the patty at the same time.
@@ -50,7 +52,7 @@ public class Patty : MonoBehaviour
         _isGrilling = false;
         _grillSystem = null;
 
-        StopParticle();
+        //StopParticle();
     }
 
     public void FlipPatty()
@@ -86,8 +88,8 @@ public class Patty : MonoBehaviour
 
                     if (!_isParticleInstantiated)
                     {
-                        InstantiateSmokeParticle();
-                        _isParticleInstantiated = true;
+                        //InstantiateSmokeParticle();
+                        //_isParticleInstantiated = true;
                     }
                 }
             }
@@ -157,8 +159,8 @@ public class Patty : MonoBehaviour
 
                 if (!_isParticleInstantiated)
                 {
-                    InstantiateSmokeParticle();
-                    _isParticleInstantiated = true;
+                    //InstantiateSmokeParticle();
+                    //_isParticleInstantiated = true;
                 }
             }
             else
@@ -166,7 +168,7 @@ public class Patty : MonoBehaviour
                 _isGrilling = false;
                 _grillSystem = null;
 
-                StopParticle();
+                //StopParticle();
             }
         }
 

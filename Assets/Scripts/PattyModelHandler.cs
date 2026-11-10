@@ -5,6 +5,8 @@ public class PattyModelHandler : MonoBehaviour
     private Patty _patty;
     Material _pattyMaterial;
 
+    private Animator _animator;
+
     private float _xRotation = 0f;
 
     [SerializeField]
@@ -23,10 +25,21 @@ public class PattyModelHandler : MonoBehaviour
         _patty = transform.parent.GetComponent<Patty>();
         
 
+        _animator = transform.GetComponent<Animator>();
+
         if (_patty == null)
         {
             Debug.LogError($"PattyGrillTexHandler: Patty component not found on parent object.");
             return;
+        }
+
+        if (_patty.IsTopSide)
+        {
+            _animator.Play("patty_idle_bottom");
+        }
+        else
+        {
+            _animator.Play("patty_idle_top");
         }
 
         _patty.OnPattyFlipped += _patty_OnPattyFlipped;
@@ -36,12 +49,14 @@ public class PattyModelHandler : MonoBehaviour
     {
         if (isTopSide)
         {
-            _xRotation = -90f;
+            _animator.Play("Flip_patty_from_top");
+            
+            //_xRotation = -90f;
         }
         else
         {
-            _xRotation = -270f;
-            
+            _animator.Play("Flip_patty_from_bottom");
+            //_xRotation = -270f;
         }
         Vector3 currentRotation = transform.localEulerAngles;
         transform.localEulerAngles = new Vector3(_xRotation, currentRotation.y, currentRotation.z);
