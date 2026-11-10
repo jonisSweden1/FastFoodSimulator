@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8274599438039158078}
   - component: {fileID: 7628716972022975707}
   - component: {fileID: 118008587591400536}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Grill
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
