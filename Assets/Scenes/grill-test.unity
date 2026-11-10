@@ -4940,7 +4940,7 @@ PrefabInstance:
       objectReference: {fileID: 248492613}
     - target: {fileID: 3395792751073570547, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_VersionIndex
-      value: 4445
+      value: 4451
       objectReference: {fileID: 0}
     - target: {fileID: 4024803615516893075, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_Name
