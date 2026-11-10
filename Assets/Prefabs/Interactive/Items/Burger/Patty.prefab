@@ -92,6 +92,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1850095594273990872}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1410122213401457996}
   m_SourcePrefab: {fileID: 100100000, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
 --- !u!4 &12996990065803653 stripped
 Transform:
@@ -177,6 +180,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PattyGrillTexHandler
   _topGrillPercProperty: _Top_side_grill
   _bottomGrillPercProperty: _Bottom_side_grill
+--- !u!95 &1410122213401457996
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821339708728924991}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3391f053ede1a548ac25e0e53e8563d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7804687689923823658
 PrefabInstance:
   m_ObjectHideFlags: 0

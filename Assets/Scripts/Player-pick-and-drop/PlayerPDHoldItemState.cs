@@ -15,6 +15,9 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             return;
         }
 
+        // TODO: Refactor this code to be more modular and easier to read,
+        // possibly by creating strategy pattern for different item interactions,
+        // or by creating separate methods for each interaction type.
         if (hit.collider.tag == "Item")
         {
             // Get the parent transform of the hit collider (the item being raycasted)
@@ -44,7 +47,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                     pattyScript.FlipPatty();
                     return;
                 }
-                if(holdItemId.CurrentType == TypeOfItem.SauceDispenser)
+                else if(holdItemId.CurrentType == TypeOfItem.SauceDispenser)
                 {
                     Debug.Log("The burger item is raycasted and the hold item is sauce dispenser. Preparing to sauce the dispenser");
 
@@ -109,6 +112,29 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                         Debug.Log("Raycasted item does not have a BurgerSystem component or reference.");
                         return;
                     }
+                }
+            }
+            else if (raycastItemId.CurrentType == TypeOfItem.HeaterTray)
+            {
+                if (holdItemId.CurrentType == TypeOfItem.BurgerItem)
+                {
+                    Debug.Log("The raycasted item is a heater tray and the held item is a burger item. Attempting to add the held burger item to the heater tray.");
+                    TrayStackSystem heaterTrayScript = raycastItem.GetComponent<TrayStackSystem>();
+                    if (heaterTrayScript == null)
+                    {
+                        Debug.LogError("The raycasted heater tray does not have a TrayStackSystem script attached.");
+                        return;
+                    }
+                    // Add the held burger item to the heater tray
+                    if (!heaterTrayScript.TryAddToStack(holdItem.gameObject))
+                    {
+                        Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
+                        return;
+                    }
+                    manager.ItemObject.transform.GetChild(0).GetComponent<Collider>().enabled = true;
+                    manager.ItemObject = null;
+                    manager.SwitchState(manager.nonItemState);
+                    return;
                 }
             }
         }
