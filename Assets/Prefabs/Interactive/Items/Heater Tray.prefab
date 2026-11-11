@@ -894,7 +894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8174838129363477379}
   - component: {fileID: 3209504913475251478}
-  - component: {fileID: 9087217656812672484}
+  - component: {fileID: 7038189152408605085}
   m_Layer: 0
   m_Name: Heater Tray
   m_TagString: Untagged
@@ -935,7 +935,7 @@ MonoBehaviour:
   currentType: 5
   currentBurgerType: 0
   currentSauceType: 0
---- !u!114 &9087217656812672484
+--- !u!114 &7038189152408605085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -944,9 +944,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5963453943388228892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13afd8f12d7048b419d130f55e45feba, type: 3}
+  m_Script: {fileID: 11500000, guid: b7bb64aac0e6ff04da297833debb75c4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::StackingSystem
+  allowedBurgerType: 0
 --- !u!1 &6137565027124656310
 GameObject:
   m_ObjectHideFlags: 0

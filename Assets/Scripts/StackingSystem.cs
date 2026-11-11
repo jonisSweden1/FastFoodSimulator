@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrayStackSystem : MonoBehaviour
+public class StackingSystem : MonoBehaviour
 {
+    [SerializeField] private TypeOfBurgerStack allowedBurgerType; // The type of burger stack that this stacking system allows
+
     private int _currentStackIndex = 0;
 
     List<Transform> _stackedItems = new List<Transform>();
@@ -12,37 +14,36 @@ public class TrayStackSystem : MonoBehaviour
         if (transform.childCount > 1)
         {
             Transform collectionPoint = transform.GetChild(1);
-
             foreach (Transform row in collectionPoint)
             {
                 foreach (Transform pointItem in row)
                 {
-                    Debug.Log($"TrayStackSystem: Adding point item {pointItem.name} to stacked items.");
+                    Debug.Log($"StackingSystem: Adding point item {pointItem.name} to stacked items.");
                     _stackedItems.Add(pointItem);
                 }
             }
         }
     }
 
-    public bool TryAddToStack(GameObject burgerItem)
+    public bool TryAddItemOnStack(GameObject item)
     {
         // Get the ItemIdentifier component from the burger item
-        ItemIdentifier itemIdentifier = burgerItem.GetComponent<ItemIdentifier>();
+        ItemIdentifier itemIdentifier = item.GetComponent<ItemIdentifier>();
         if (itemIdentifier != null)
         {
             if (itemIdentifier.CurrentType == TypeOfItem.BurgerItem)
             {
-                if (itemIdentifier.CurrentBurgerType == TypeOfBurgerStack.Patty)
+                if (itemIdentifier.CurrentBurgerType == allowedBurgerType)
                 {
-                    if(_currentStackIndex >= _stackedItems.Count)
+                    if (_currentStackIndex >= _stackedItems.Count)
                     {
                         Debug.LogError($"TrayStackSystem: No more space to stack items.");
                         return false;
                     }
 
-                    burgerItem.transform.position = _stackedItems[_currentStackIndex].position;
-                    burgerItem.transform.rotation = Quaternion.identity;
-                    burgerItem.transform.SetParent(_stackedItems[_currentStackIndex]);
+                    item.transform.position = _stackedItems[_currentStackIndex].position;
+                    item.transform.rotation = Quaternion.identity;
+                    item.transform.SetParent(_stackedItems[_currentStackIndex]);
 
                     itemIdentifier.AddItemToStack(this);
                     _currentStackIndex++;
@@ -50,12 +51,12 @@ public class TrayStackSystem : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError($"TrayStackSystem: ItemIdentifier is not of type Patty on {burgerItem.name}.");
+                    Debug.LogError($"TrayStackSystem: ItemIdentifier is not of type Patty on {item.name}.");
                 }
             }
             else
             {
-                Debug.LogError($"TrayStackSystem: ItemIdentifier component not found on {burgerItem.name}.");
+                Debug.LogError($"TrayStackSystem: ItemIdentifier component not found on {item.name}.");
             }
         }
         return false;
@@ -63,7 +64,7 @@ public class TrayStackSystem : MonoBehaviour
 
     public bool TryRemoveFromStack(out GameObject burgerItem)
     {
-        if(_currentStackIndex <= 0)
+        if (_currentStackIndex <= 0)
         {
             Debug.LogError($"TrayStackSystem: No items to remove from stack.");
             burgerItem = null;

@@ -152,14 +152,14 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 if (holdItemId.CurrentType == TypeOfItem.BurgerItem)
                 {
                     Debug.Log("The raycasted item is a heater tray and the held item is a burger item. Attempting to add the held burger item to the heater tray.");
-                    TrayStackSystem heaterTrayScript = raycastItem.GetComponent<TrayStackSystem>();
-                    if (heaterTrayScript == null)
+                    StackingSystem stackSystem = raycastItem.GetComponent<StackingSystem>();
+                    if (stackSystem == null)
                     {
-                        Debug.LogError("The raycasted heater tray does not have a TrayStackSystem script attached.");
+                        Debug.LogError("The raycasted heater tray does not have a StackingSystem script attached.");
                         return;
                     }
                     // Add the held burger item to the heater tray
-                    if (!heaterTrayScript.TryAddToStack(holdItem.gameObject))
+                    if (!stackSystem.TryAddItemOnStack(holdItem.gameObject))
                     {
                         Debug.LogError("Failed to add " + holdItem.name + " to " + raycastItem.name);
                         return;
