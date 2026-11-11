@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0231
+      value: 0.0157
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -83,6 +83,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8824615617870017567}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2232681910862726121}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4029906991071948945}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1850095594273990872}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1410122213401457996}
   m_SourcePrefab: {fileID: 100100000, guid: ef735ee9afd171240aa9c908214ae45f, type: 3}
 --- !u!4 &12996990065803653 stripped
 Transform:
@@ -113,8 +125,83 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.020000001, z: 0.0035543856}
-  m_Center: {x: 0, y: 0, z: 1.1641532e-10}
+  m_Size: {x: 0.02, y: 0.020000001, z: 0.005396856}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2232681910862726121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821339708728924991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77554f08c044764cb76aa1431101052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionNotifier
+--- !u!54 &4029906991071948945
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821339708728924991}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &1850095594273990872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821339708728924991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7a208d8b677d7d4a875cdaede354f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PattyGrillTexHandler
+  _topGrillPercProperty: _Top_side_grill
+  _bottomGrillPercProperty: _Bottom_side_grill
+--- !u!95 &1410122213401457996
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821339708728924991}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3391f053ede1a548ac25e0e53e8563d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7804687689923823658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7596797638506854679, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0532
+      value: 0.0377
       objectReference: {fileID: 0}
     - target: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       propertyPath: m_Name
@@ -182,8 +269,31 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6411577450896807437, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
       insertIndex: 0
       addedObject: {fileID: 12996990065803653}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5006862868185720989}
   m_SourcePrefab: {fileID: 100100000, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
+--- !u!1 &242636767696803877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8003414135364800527, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}
+  m_PrefabInstance: {fileID: 7804687689923823658}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5006862868185720989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242636767696803877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d12c244817c88c4095e91649d23680c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _smokeParticlePrefab: {fileID: 228668972230398497, guid: 63b2bb96868550f47b4684346d5af69c, type: 3}
+  _reducedTemperaturePerSecond: 1
+  _grillTemperaturePerSecond: 100
 --- !u!4 &3798132775918100007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6411577450896807437, guid: 87b87ce410746fd4b8c302e1ff25f385, type: 3}

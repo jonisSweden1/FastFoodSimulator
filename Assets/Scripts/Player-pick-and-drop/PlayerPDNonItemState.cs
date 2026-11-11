@@ -32,9 +32,32 @@ public class PlayerPDNonItemState : PlayerPDBaseState
             GameObject itemToTakeOut;
 
             // Check if the item is a burger item and is stacked
-            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsBurgerStacked)
+            if (raycastItemId.CurrentType == TypeOfItem.BurgerItem && raycastItemId.IsStacked)
             {
-                if(raycastItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
+                if(raycastItemId.BurgerSystem == null && raycastItemId.TraySystem == null)
+                {
+                    Debug.LogError($"Item is a burger item but doesn't have a burger system or tray system.");
+                    return;
+                }
+
+                if(raycastItemId.TraySystem != null)
+                {
+                    if (raycastItemId.TraySystem.TryRemoveFromStack(out itemToTakeOut))
+                    {
+                        manager.ItemObject = itemToTakeOut;
+                        Transform itemTrayTransform = manager.ItemObject.transform;
+                        itemTrayTransform.position = manager.HoldPoint.position;
+                        itemTrayTransform.rotation = manager.HoldPoint.rotation;
+                        itemTrayTransform.SetParent(manager.HoldPoint);
+
+                        itemTrayTransform.GetChild(0).GetComponent<Collider>().enabled = false;
+
+                        manager.SwitchState(manager.holdItemState);
+                        return;
+                    }
+                }
+
+                if (raycastItemId.CurrentBurgerType != TypeOfBurgerStack.Paper)
                 {
                     Debug.Log("Raycasted item is a burger item and is stacked. Attempting to remove it from the stack.");
                     if (raycastItemId.BurgerSystem.TryRemoveItemFromBurger(out itemToTakeOut))
