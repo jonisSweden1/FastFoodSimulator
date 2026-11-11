@@ -631,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 1049830202}
     - target: {fileID: 3395792751073570547, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_VersionIndex
-      value: 4433
+      value: 4436
       objectReference: {fileID: 0}
     - target: {fileID: 5299803096207983095, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_Name
@@ -1814,10 +1814,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickAndDropSystem
   _layerToDrop:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 456
   _interactiveLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   pickDistance: 5
   dropDistance: 10
   _holdPoint: {fileID: 8376001645424578342}
