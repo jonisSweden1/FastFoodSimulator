@@ -1517,6 +1517,9 @@ MonoBehaviour:
   _layerToDrop:
     serializedVersion: 2
     m_Bits: 136
+  _interactiveLayer:
+    serializedVersion: 2
+    m_Bits: 0
   pickDistance: 5
   dropDistance: 10
   _holdPoint: {fileID: 8376001645424578342}

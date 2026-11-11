@@ -49,8 +49,7 @@ MonoBehaviour:
   _saucePrefab: {fileID: 573033166321107412, guid: 979e3d1ecdfedd746bf7f17c5b9d63e4, type: 3}
   _sauceType: 0
   _maxAmountSauce: 60
-  _spraySauceAmount: 5
-  _triggerName: Spray
+  _spraySauceAmount: 3
 --- !u!114 &8862765875731154790
 MonoBehaviour:
   m_ObjectHideFlags: 0

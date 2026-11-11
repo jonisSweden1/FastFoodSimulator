@@ -77,6 +77,19 @@ public enum TypeOfItem
     BurgerItem,
     WrappedPaper,
     SauceDispenser,
+    SaucePackage, 
+    BunPackage,
+    CardboardBoxPackage,
+    TrashBin,
+    TrashBag
+}
+
+public enum  TypeOfCardboardPackage
+{
+    Patty,
+    Fries,
+    Nuggets,
+    Drink,
     PattySpatula,
     HeaterTray
 }

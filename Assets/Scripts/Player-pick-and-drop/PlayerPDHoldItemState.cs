@@ -32,6 +32,40 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
             ItemIdentifier holdItemId = holdItem.GetComponent<ItemIdentifier>();
 
             // Check if the raycasted item is a burger item
+            if(raycastItemId.CurrentType == TypeOfItem.SauceDispenser && holdItemId.CurrentType == TypeOfItem.SaucePackage)
+            {
+                Debug.Log("The raycasted item is a sauce dispenser and the held item is a sauce package. Preparing to fill the dispenser.");
+                SaucePackage saucePackage;
+                SauceDispenser sauceDispenser;
+
+                if (!raycastItem.TryGetComponent<SauceDispenser>(out sauceDispenser))
+                {
+                    Debug.LogError("Cannot find sauce dispenser script");
+                    return;
+                }
+
+                if (!holdItem.TryGetComponent<SaucePackage>(out saucePackage))
+                {
+                    Debug.LogError("Cannot find sauce package script");
+                    return;
+                }
+
+                if(raycastItemId.CurrentSauceType != holdItemId.CurrentSauceType)
+                {
+                    Debug.LogError("The sauce types of the dispenser and package do not match.");
+                    return;
+                }
+
+                float amountToFill = sauceDispenser.MaxAmountSauce - (sauceDispenser.GetCurrentAmountPercentage() * sauceDispenser.MaxAmountSauce);
+
+                // Use the sauce from the sauce package
+                float usedSauceAmount = saucePackage.UseSauce(amountToFill); // Use the required amount of sauce
+
+                // Here you can implement logic to apply the used sauce amount to the burger item
+                Debug.Log($"Applied {usedSauceAmount} units of sauce to {raycastItem.name}.");
+                return;
+            }
+            else if(raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.SauceDispenser)
             if(raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
                 if(holdItemId.CurrentType == TypeOfItem.PattySpatula)
