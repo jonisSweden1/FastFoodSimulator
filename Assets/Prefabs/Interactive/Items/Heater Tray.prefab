@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 5018753447508606554}
   - component: {fileID: 867346512919057837}
   - component: {fileID: 3128186007329624320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -798,7 +798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5157831264291399446}
   m_Layer: 0
-  m_Name: Points-column
+  m_Name: Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
