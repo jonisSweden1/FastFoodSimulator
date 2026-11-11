@@ -65,8 +65,7 @@ public class PlayerPDHoldItemState : PlayerPDBaseState
                 Debug.Log($"Applied {usedSauceAmount} units of sauce to {raycastItem.name}.");
                 return;
             }
-            else if(raycastItemId.CurrentType == TypeOfItem.BurgerItem && holdItemId.CurrentType == TypeOfItem.SauceDispenser)
-            if(raycastItemId.CurrentType == TypeOfItem.BurgerItem)
+            else if(raycastItemId.CurrentType == TypeOfItem.BurgerItem)
             {
                 if(holdItemId.CurrentType == TypeOfItem.PattySpatula)
                 {

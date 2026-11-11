@@ -81,7 +81,9 @@ public enum TypeOfItem
     BunPackage,
     CardboardBoxPackage,
     TrashBin,
-    TrashBag
+    TrashBag,
+    PattySpatula,
+    HeaterTray
 }
 
 public enum  TypeOfCardboardPackage
@@ -90,6 +92,4 @@ public enum  TypeOfCardboardPackage
     Fries,
     Nuggets,
     Drink,
-    PattySpatula,
-    HeaterTray
 }
