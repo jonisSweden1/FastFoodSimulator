@@ -67,6 +67,9 @@ public class PlayerPickAndDropSystem : MonoBehaviour
         nonItemState = new PlayerPDNonItemState();
         holdItemState = new PlayerPDHoldItemState();
 
+        nonItemState.InitializeState(this);
+        holdItemState.InitializeState(this);
+
         currentState = nonItemState;
     }
 
