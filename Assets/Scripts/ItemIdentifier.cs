@@ -15,16 +15,15 @@ public class ItemIdentifier : MonoBehaviour
     public TypeOfSauce CurrentSauceType { get { return currentSauceType; } }
 
     public BurgerStackSystem BurgerSystem { get { return _burgerSystem; } }
-    public TrayStackSystem TraySystem { get { return _traySystem; } }
-    public bool IsStacked { get { return _isStacked; } }
+    public StackingSystem StackSystem { get { return _stackSystem; } }
+    public bool IsStacked { get { return _stackSystem != null; } }
 
-    // To check if the item is in the burger stack
-    bool _isStacked = false;
+    public bool isBurgerStacked { get { return _burgerSystem != null; } }
 
     // Identify the bottom bun to get the burger system
     BurgerStackSystem _burgerSystem = null;
 
-    TrayStackSystem _traySystem = null;
+    StackingSystem _stackSystem = null;
 
     // Name of the item field
     [SerializeField] private string _itemName;
@@ -41,22 +40,22 @@ public class ItemIdentifier : MonoBehaviour
     // Add the item to the stack
     public void AddBurgerItemToStack(BurgerStackSystem burgerSystem)
     {
-        _isStacked = true;
-
         // Burger system is the burger system, so we need to store it in the item identifier to access the burger system later.
         _burgerSystem = burgerSystem;
     }
 
-    public void AddItemToStack(TrayStackSystem traySystem)
+    public void AddItemToStack(StackingSystem stackSystem)
     {
-        _isStacked = true;
-        _traySystem = traySystem;
+        _stackSystem = stackSystem;
     }
 
     public void RemoveItemFromStack()
     {
-        _isStacked = false;
-        _traySystem = null;
+        if (_stackSystem != null)
+        {
+            // Nullify the stack system to avoid memory leak
+            _stackSystem = null;
+        }
     }
 
     // Remove the burger item from the stack
@@ -66,7 +65,6 @@ public class ItemIdentifier : MonoBehaviour
         {
             // Nullify the burger system to avoid memory leak
             _burgerSystem = null;
-            _isStacked = false;
         }
     }
 }
@@ -84,12 +82,4 @@ public enum TypeOfItem
     TrashBag,
     PattySpatula,
     HeaterTray
-}
-
-public enum  TypeOfCardboardPackage
-{
-    Patty,
-    Fries,
-    Nuggets,
-    Drink,
 }
