@@ -18,7 +18,7 @@ public class ItemIdentifier : MonoBehaviour
     public StackingSystem StackSystem { get { return _stackSystem; } }
     public bool IsStacked { get { return _stackSystem != null; } }
 
-    public bool isBurgerStacked { get { return _burgerSystem != null; } }
+    public bool IsBurgerStacked { get { return _burgerSystem != null; } }
 
     // Identify the bottom bun to get the burger system
     BurgerStackSystem _burgerSystem = null;
