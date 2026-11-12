@@ -2,7 +2,6 @@
 
 public class PlayerPDNonItemState : PlayerPDBaseState
 {
-    // TODO: Change the script where the object that is holding is not disabled, but is shown to be holding it, with transition
     public override void EnterButton(PlayerPickAndDropSystem manager, Transform headTransform)
     {
         // Perform a raycast to check if the player is looking at an item
@@ -96,5 +95,10 @@ public class PlayerPDNonItemState : PlayerPDBaseState
 
             manager.SwitchState(manager.holdItemState);
         }
+    }
+
+    public override void InitializeState(PlayerPickAndDropSystem manager)
+    {
+        
     }
 }
