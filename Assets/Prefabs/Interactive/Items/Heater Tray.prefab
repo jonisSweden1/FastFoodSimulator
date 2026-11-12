@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemIdentifier
   _itemName: Heater Tray
-  currentType: 5
+  currentType: 10
   currentBurgerType: 0
   currentSauceType: 0
 --- !u!114 &7038189152408605085
@@ -947,7 +947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bb64aac0e6ff04da297833debb75c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StackingSystem
-  allowedBurgerType: 0
+  _allowedBurgerType: 0
+  _currentStackStrategy: 0
 --- !u!1 &6137565027124656310
 GameObject:
   m_ObjectHideFlags: 0
