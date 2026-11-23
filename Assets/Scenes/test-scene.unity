@@ -673,7 +673,7 @@ PrefabInstance:
       objectReference: {fileID: 1441539363}
     - target: {fileID: 3395792751073570547, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_VersionIndex
-      value: 4445
+      value: 4448
       objectReference: {fileID: 0}
     - target: {fileID: 5299803096207983095, guid: 228fc73d61bd5244e9e6c5af81ef2584, type: 3}
       propertyPath: m_Name
@@ -1934,6 +1934,48 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 680ef1aa80e679141944c775af3d360b, type: 3}
+--- !u!1001 &2385780691362210494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5332470563904270965, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_Name
+      value: Bun Plastic Bag
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.1101294
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000004779335
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.046021845
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 92976761707418031, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
 --- !u!1001 &2486819778860910139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1991,6 +2033,64 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eadc5649262719439283aa9e2920928, type: 3}
+--- !u!1001 &3666961725502855132
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3246907358272053667, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_Name
+      value: Bun Plastic Bag Crate
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.19077
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744296510571981699, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 2202943506500936080, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a40ec883c4598d64ea065890e5fe3221, type: 3}
 --- !u!1001 &5100184291092919721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2168,11 +2268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3614675643449550582, guid: f9dd5b49e0bc1584491235b051786d85, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000000028016814
+      value: -0.035
       objectReference: {fileID: 0}
     - target: {fileID: 3614675643449550582, guid: f9dd5b49e0bc1584491235b051786d85, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.9577155
+      value: -4.142
       objectReference: {fileID: 0}
     - target: {fileID: 3614675643449550582, guid: f9dd5b49e0bc1584491235b051786d85, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2263,15 +2363,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9112792789500754517, guid: a055b668d8692a7478e405cc697d938c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6788701
+      value: -2.303
       objectReference: {fileID: 0}
     - target: {fileID: 9112792789500754517, guid: a055b668d8692a7478e405cc697d938c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000000017989805
+      value: 0.061
       objectReference: {fileID: 0}
     - target: {fileID: 9112792789500754517, guid: a055b668d8692a7478e405cc697d938c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.431065
+      value: -1.632
       objectReference: {fileID: 0}
     - target: {fileID: 9112792789500754517, guid: a055b668d8692a7478e405cc697d938c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2400,3 +2500,5 @@ SceneRoots:
   - {fileID: 936228841}
   - {fileID: 209503851}
   - {fileID: 5924322787088167043}
+  - {fileID: 2385780691362210494}
+  - {fileID: 3666961725502855132}

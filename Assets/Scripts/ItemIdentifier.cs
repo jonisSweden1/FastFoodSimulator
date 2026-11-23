@@ -81,5 +81,6 @@ public enum TypeOfItem
     TrashBin,
     TrashBag,
     PattySpatula,
-    HeaterTray
+    HeaterTray,
+    BunPackageCrate
 }
