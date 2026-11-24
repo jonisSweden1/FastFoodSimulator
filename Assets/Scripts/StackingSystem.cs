@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StackingSystem : MonoBehaviour
 {
+    [SerializeField] private bool _canAddToStack;
+
     [SerializeField] private TypeOfBurgerStack _allowedBurgerType; // The type of burger stack that this stacking system allows
 
     [SerializeField] private TypeOfStackStrategy _currentStackStrategy;
@@ -18,7 +20,8 @@ public class StackingSystem : MonoBehaviour
         _stackingStrategies = new Dictionary<TypeOfStackStrategy, IStackSetupStrategy>
         {
             { TypeOfStackStrategy.StackColumnOfRows, new RowColumnStackSetupStrategy() },
-            { TypeOfStackStrategy.StackRow, new RowStackSetupStrategy() }
+            { TypeOfStackStrategy.StackRow, new RowStackSetupStrategy() },
+            { TypeOfStackStrategy.SingleItem, new SingleItemSetupStrategy() }
         };
 
         _stackingStrategies[_currentStackStrategy].SetupStack(transform, _allowedBurgerType, this, _stackedItems);
@@ -26,31 +29,49 @@ public class StackingSystem : MonoBehaviour
 
     public bool TryAddItemOnStack(GameObject item)
     {
-        if (_currentStackIndex < _stackedItems.Count)
+        if(_canAddToStack)
         {
-            Transform stackPoint = _stackedItems[_currentStackIndex];
-            item.transform.position = stackPoint.position;
-            item.transform.rotation = stackPoint.rotation;
-            item.transform.SetParent(stackPoint);
-            _currentStackIndex++;
-            return true;
+            if (_currentStackIndex < _stackedItems.Count)
+            {
+                Transform stackPoint = _stackedItems[_currentStackIndex];
+                item.transform.position = stackPoint.position;
+                item.transform.rotation = stackPoint.rotation;
+                item.transform.SetParent(stackPoint);
+                _currentStackIndex++;
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Stack is full. Cannot add more items.");
+                return false;
+            }
         }
-        else
-        {
-            Debug.LogWarning("Stack is full. Cannot add more items.");
-            return false;
-        }
+
+        Debug.LogError("Adding item to stack is disable. Cannot add items to stack");
+        return false;
     }
 
     public bool TryRemoveFromStack(out GameObject burgerItem)
     {
-        if(_currentStackIndex > 0)
+        if (_currentStackIndex > 0)
         {
-            _currentStackIndex--;
-            Transform stackPoint = _stackedItems[_currentStackIndex];
-            burgerItem = stackPoint.GetChild(0).gameObject;
-            burgerItem.transform.SetParent(null);
-            return true;
+            Transform stackPoint = _stackedItems[_currentStackIndex - 1];
+
+            if (stackPoint.childCount > 1)
+            {
+                stackPoint = _stackedItems[_currentStackIndex - 1];
+                burgerItem = stackPoint.GetChild(stackPoint.childCount - 1).gameObject;
+                burgerItem.transform.SetParent(null);
+                return true;
+            }
+            else
+            {
+                _currentStackIndex--;
+                stackPoint = _stackedItems[_currentStackIndex];
+                burgerItem = stackPoint.GetChild(0).gameObject;
+                burgerItem.transform.SetParent(null);
+                return true;
+            }
         }
         else
         {
@@ -65,4 +86,5 @@ public enum TypeOfStackStrategy
 {
     StackColumnOfRows,
     StackRow,
+    SingleItem
 }

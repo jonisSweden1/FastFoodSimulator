@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3744296510571981699}
   - component: {fileID: 4724305973465456552}
+  - component: {fileID: 4475908384670398765}
   m_Layer: 0
   m_Name: Bun Plastic Bag Crate
   m_TagString: Untagged
@@ -31,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7336189784081502662}
+  - {fileID: 3665782132636010704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4724305973465456552
@@ -49,6 +51,108 @@ MonoBehaviour:
   currentType: 11
   currentBurgerType: 0
   currentSauceType: 0
+--- !u!114 &4475908384670398765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246907358272053667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7bb64aac0e6ff04da297833debb75c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StackingSystem
+  _canAddToStack: 0
+  _allowedBurgerType: 0
+  _currentStackStrategy: 2
+--- !u!1 &4117042128338590353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3665782132636010704}
+  m_Layer: 0
+  m_Name: collectionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3665782132636010704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4117042128338590353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1585045905242600650}
+  m_Father: {fileID: 3744296510571981699}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4850565416315028834
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3665782132636010704}
+    m_Modifications:
+    - target: {fileID: 5332470563904270965, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_Name
+      value: Bun Plastic Bag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653312579718306810, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.864
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.16476989
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.062000036
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791345818093002901, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b73aacc2cc77a4640b257e0c6a7c5b28, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 92976761707418031, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+--- !u!4 &1585045905242600650 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6246384182120722856, guid: e4520bb440ddac3499dbac025757b89c, type: 3}
+  m_PrefabInstance: {fileID: 4850565416315028834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7081304308720498221
 PrefabInstance:
   m_ObjectHideFlags: 0

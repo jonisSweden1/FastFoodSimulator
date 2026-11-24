@@ -84,6 +84,6 @@ public class PattyModelHandler : MonoBehaviour
         _pattyMaterial.SetFloat(_bottomGrillPercProperty, bottomGrillPerc);
 
         // 2. Log both the source value and the applied material value
-        Debug.Log($"Source: {topGrillPerc} | Applied on Mat: {_pattyMaterial.GetFloat(_topGrillPercProperty)}");
+        // Debug.Log($"Source: {topGrillPerc} | Applied on Mat: {_pattyMaterial.GetFloat(_topGrillPercProperty)}");
     }
 }

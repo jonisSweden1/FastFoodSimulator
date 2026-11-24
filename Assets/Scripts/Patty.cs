@@ -200,7 +200,7 @@ public class Patty : MonoBehaviour
             _pattyTemperature = math.clamp(_pattyTemperature -= Time.deltaTime * _reducedTemperaturePerSecond, 20.0f, 100.0f);
         }
 
-        Debug.Log($"Patty temperature: {_pattyTemperature}, Top grill percentage: {_topGrillPerc}, Bottom grill percentage: {_bottomGrillPerc}");
+        // Debug.Log($"Patty temperature: {_pattyTemperature}, Top grill percentage: {_topGrillPerc}, Bottom grill percentage: {_bottomGrillPerc}");
 
         NotifyCooked();
     }
